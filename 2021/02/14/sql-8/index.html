@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-8.Using NULL | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-8.Using NULL</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-14&nbsp;&nbsp;14:36:22</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/14/sql-8/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-8.Using NULL">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Using-Null-zh"><a href="#Using-Null-zh" class="headerlink" title="Using Null/zh"></a>Using Null/zh</h2><p><img src="https://i.loli.net/2021/02/14/6RoDNsmydMYZVkC.png" alt="9LH_JU_@_GC_ZCIBGA_J__F.png"></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>列出學系department是<span class="keyword">NULL</span>值的老師。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> teacher</span><br><span class="line"><span class="keyword">where</span> dept <span class="keyword">is</span> <span class="keyword">null</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>注意<span class="keyword">INNER</span> <span class="keyword">JOIN</span> 不理會沒有學系的老師及沒有老師的學系。</span><br><span class="line"><span class="keyword">SELECT</span> teacher.name, dept.name</span><br><span class="line"> <span class="keyword">FROM</span> teacher <span class="keyword">INNER</span> <span class="keyword">JOIN</span> dept</span><br><span class="line">           <span class="keyword">ON</span> (teacher.dept=dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>使用不同的<span class="keyword">JOIN</span>(外連接)，來列出全部老師。</span><br><span class="line"><span class="keyword">select</span> teacher.name,</span><br><span class="line"> <span class="keyword">case</span> <span class="keyword">when</span> dept.name <span class="keyword">is</span> <span class="keyword">null</span> <span class="keyword">then</span> <span class="keyword">null</span> </span><br><span class="line">      <span class="keyword">else</span> dept.name <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">from</span> teacher <span class="keyword">left join</span> dept <span class="keyword">on</span> (teacher.dept=dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>使用不同的<span class="keyword">JOIN</span>(外連接)，來列出全部學系。</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">case</span> <span class="keyword">when</span> teacher.name <span class="keyword">is</span> <span class="keyword">null</span> <span class="keyword">then</span> <span class="keyword">null</span> <span class="keyword">else</span> teacher.name <span class="keyword">end</span>,dept.name</span><br><span class="line"><span class="keyword">from</span> dept <span class="keyword">left join</span> teacher <span class="keyword">on</span> (teacher.dept=dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>Use COALESCE <span class="keyword">to</span> print the mobile number. Use the number <span class="string">'07986 444 2266'</span> <span class="keyword">if</span> there <span class="keyword">is</span> <span class="keyword">no</span> number given. <span class="keyword">Show</span> teacher <span class="type">name</span> <span class="keyword">and</span> mobile number <span class="keyword">or</span> <span class="string">'07986 444 2266'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,coalesce(mobile,<span class="string">'07986 444 2266'</span>)</span><br><span class="line"><span class="keyword">from</span> teacher</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>Use the COALESCE <span class="keyword">function</span> <span class="keyword">and</span> a <span class="keyword">LEFT JOIN</span> <span class="keyword">to</span> print the teacher <span class="type">name</span> <span class="keyword">and</span> department <span class="type">name</span>. Use the string <span class="string">'None'</span> <span class="keyword">where</span> there <span class="keyword">is</span> <span class="keyword">no</span> department.</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> teacher.name,coalesce(dept.name,<span class="string">'None'</span>)</span><br><span class="line"><span class="keyword">from</span> teacher <span class="keyword">left join</span> dept <span class="keyword">on</span> (teacher.dept=dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sqf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7</span>.使用<span class="built_in">COUNT</span>來數算老師和流動電話數目。</span><br><span class="line"><span class="built_in">select</span> <span class="built_in">count</span>(<span class="built_in">name</span>),<span class="built_in">count</span>(mobile) <span class="keyword">from</span> teacher</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">8.使用COUNT 和<span class="built_in"> GROUP </span>BY dept.name來顯示每一學系的老師數目。 使用 RIGHT JOIN 以確保工程系Engineering 是在當中。</span><br><span class="line">select dept.name,count(teacher.id)</span><br><span class="line"><span class="keyword">from</span> teacher right join dept on (teacher.<span class="attribute">dept</span>=dept.id)</span><br><span class="line">group by dept.name</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.</span>Use <span class="keyword">CASE</span> <span class="keyword">to</span> <span class="keyword">show</span> the <span class="type">name</span> <span class="keyword">of</span> <span class="keyword">each</span> teacher followed <span class="keyword">by</span> <span class="string">'Sci'</span> <span class="keyword">if</span> the teacher <span class="keyword">is</span> <span class="keyword">in</span> dept <span class="number">1</span> <span class="keyword">or</span> <span class="number">2</span> <span class="keyword">and</span> <span class="string">'Art'</span> otherwise.</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> teacher.name,</span><br><span class="line"> <span class="keyword">case</span> <span class="keyword">when</span> dept.id = <span class="number">1</span> <span class="keyword">or</span> dept.id = <span class="number">2</span> <span class="keyword">then</span> <span class="string">'Sci'</span></span><br><span class="line">      <span class="keyword">else</span> <span class="string">'Art'</span> </span><br><span class="line"> <span class="keyword">end</span></span><br><span class="line"><span class="keyword">from</span> teacher <span class="keyword">left join</span> dept <span class="keyword">on</span> (teacher.dept=dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.</span>Use <span class="keyword">CASE</span> <span class="keyword">to</span> <span class="keyword">show</span> the <span class="type">name</span> <span class="keyword">of</span> <span class="keyword">each</span> teacher followed <span class="keyword">by</span> <span class="string">'Sci'</span> <span class="keyword">if</span> the teacher <span class="keyword">is</span> <span class="keyword">in</span> dept <span class="number">1</span> <span class="keyword">or</span> <span class="number">2</span>, <span class="keyword">show</span> <span class="string">'Art'</span> <span class="keyword">if</span> the teacher<span class="string">'s dept is 3 and '</span>Non<span class="string">e' otherwise.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">select teacher.name,</span></span><br><span class="line"><span class="string"> case when dept.id = 1 or dept.id = 2 then '</span>Sci<span class="string">'</span></span><br><span class="line"><span class="string">      when dept.id = 3 then '</span>Art<span class="string">'</span></span><br><span class="line"><span class="string">      else '</span>Non<span class="string">e'</span></span><br><span class="line"><span class="string"> end</span></span><br><span class="line"><span class="string">from teacher left join dept on (teacher.dept=dept.id)</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Scottish-Parliament-zh"><a href="#Scottish-Parliament-zh" class="headerlink" title="Scottish Parliament/zh"></a>Scottish Parliament/zh</h2><p><img src="https://i.loli.net/2021/02/14/sCaIqcAu5tQPxDg.png" alt="_6BKA0RGE_MX__6_F58_J_7.png"></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>一個成員被工黨逐出黨，現沒屬任何黨。找出他。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> msp</span><br><span class="line"><span class="keyword">where</span> party <span class="keyword">is</span> <span class="keyword">null</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sqf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>.列出每個黨及其領導人。</span><br><span class="line"><span class="built_in">select</span> <span class="built_in">name</span>,<span class="built_in">leader</span> <span class="keyword">from</span> party</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>列出每個黨及其領導人，這些黨其實是沒有領導人的。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,leader <span class="keyword">from</span> party</span><br><span class="line"><span class="keyword">where</span> leader <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">null</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4.列出政黨名單，當中最少有一名黨員在議會內。</span><br><span class="line">select party.name</span><br><span class="line"><span class="keyword">from</span> party left join msp on (msp.<span class="attribute">party</span>=party.code)</span><br><span class="line">group by party.code,party.name</span><br><span class="line">having count(msp.name) &gt;= 1</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>列出議會成員的名單，如有所屬政黨，一同列出。確保 Canavan MSP, Dennis 是在名單中。 按msp.name順序排列。</span><br><span class="line"><span class="keyword">select</span> msp.name,party.name</span><br><span class="line"><span class="keyword">from</span> msp <span class="keyword">left join</span> party <span class="keyword">on</span> (msp.party=party.code)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> msp.name</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">6.列出議會中每一政黨的黨員人數。</span><br><span class="line">select party.name,count(msp.name)</span><br><span class="line"><span class="keyword">from</span> party inner join msp on (msp.<span class="attribute">party</span>=party.code)</span><br><span class="line">group by party.code,party.name</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7.列出每一政黨的議會中黨員人數，包括沒有黨員在議會中的政黨。</span><br><span class="line">select party.name,count(msp.name)</span><br><span class="line"><span class="keyword">from</span> party left join msp on (msp.<span class="attribute">party</span>=party.code)</span><br><span class="line">group by party.code,party.name</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/14/cdFlsQSketbHwvx.png" alt="QF_F6S_Y3X___MO_E7YT_RG.png"><br>1.Select the code which uses an outer join correctly.<br><strong>Answer：</strong></p>
+<figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> teacher.name, dept.name <span class="keyword">FROM</span> teacher <span class="keyword">LEFT</span> <span class="keyword">OUTER</span> <span class="keyword">JOIN</span> dept <span class="keyword">ON</span> (teacher.dept = dept.id)</span><br></pre></td></tr></tbody></table></figure>
+<p>2.Select the correct statement that shows the name of department which employs Cutflower<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> dept.name <span class="keyword">FROM</span> teacher <span class="keyword">JOIN</span> dept <span class="keyword">ON</span> (dept.id = teacher.dept) <span class="keyword">WHERE</span> teacher.name = <span class="string">'Cutflower'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>3.Select out of following the code which uses a JOIN to show a list of all the departments and number of employed teachers<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT dept.name, COUNT(teacher.name) <span class="keyword">FROM</span> teacher RIGHT JOIN dept ON dept.id = teacher.dept<span class="built_in"> GROUP </span>BY dept.name</span><br></pre></td></tr></tbody></table></figure>
+<p>4.Using SELECT name, dept, COALESCE(dept, 0) AS result FROM teacher on teacher table will:<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">display <span class="number">0</span> <span class="keyword">in</span> result <span class="keyword">column</span> <span class="keyword">for</span> <span class="keyword">all</span> teachers <span class="keyword">without</span> department</span><br></pre></td></tr></tbody></table></figure>
+<p>5.Query:</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>,</span><br><span class="line">       <span class="keyword">CASE</span> <span class="keyword">WHEN</span> phone = <span class="number">2752</span> <span class="keyword">THEN</span> <span class="string">'two'</span></span><br><span class="line">            <span class="keyword">WHEN</span> phone = <span class="number">2753</span> <span class="keyword">THEN</span> <span class="string">'three'</span></span><br><span class="line">            <span class="keyword">WHEN</span> phone = <span class="number">2754</span> <span class="keyword">THEN</span> <span class="string">'four'</span></span><br><span class="line">            <span class="keyword">END</span> <span class="keyword">AS</span> digit</span><br><span class="line">  <span class="keyword">FROM</span> teacher</span><br></pre></td></tr></tbody></table></figure>
+<p>shows following ‘digit’:<br><strong>Answer：</strong></p>
+<figure class="highlight 1c"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'four' for Throd</span><br></pre></td></tr></tbody></table></figure>
+<p>6.Select the result that would be obtained from the following code:</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, </span><br><span class="line">     <span class="keyword">CASE</span> </span><br><span class="line">      <span class="keyword">WHEN</span> dept </span><br><span class="line">       <span class="keyword">IN</span> (<span class="number">1</span>) </span><br><span class="line">       <span class="keyword">THEN</span> <span class="string">'Computing'</span> </span><br><span class="line">      <span class="keyword">ELSE</span> <span class="string">'Other'</span> </span><br><span class="line">     <span class="keyword">END</span> </span><br><span class="line"> <span class="keyword">FROM</span> teacher</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/14/eODiK19XuYcl2nt.png" alt="JBN2P9HB5AW_VWH_9O97WWR.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>图源自<a target="_blank" rel="noopener" href="https://www.runoob.com/sql/sql-join.html">菜鸟教程</a><br><img src="https://i.loli.net/2021/02/12/OEb6fnrHqUAPpXI.png" alt="sql-join.png"></li>
+<li><strong>coalesce(x,y,…)</strong> 函数：返回第一个不是空的值，用于重置空值，也可以用<strong>case</strong>函数完成，例如coalesce(NULL,NULL,X)的返回值是x</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-14&nbsp;&nbsp;14:36:22</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/14/sql-8/">http://a123wyn.studio/2021/02/14/sql-8/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/15/sql-9/">【SQLZOO】Tutorials-9.Self JOIN</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/13/sql-7/">【SQLZOO】Tutorials-7.More JOIN</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【英语学习-IELTS】备考雅思感想与总结 | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【英语学习-IELTS】备考雅思感想与总结</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2020-11-06&nbsp;&nbsp;19:41:13</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2020/11/06/el-1/" class="leancloud-visitors view" data-flag-title="【英语学习-IELTS】备考雅思感想与总结">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/English-Learning/">English Learning</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/IELTS/"># IELTS</a>
+                            
+                                <a href="/tags/Thoughts/"># Thoughts</a>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>长文预警！！！（不知道要看多久，看着办吧）<br>今天刚出的成绩，先上成绩单！！！<br><img src="/2020/11/06/el-1/%E6%88%90%E7%BB%A9%E5%8D%95.png" alt="transcript"><br>对于自己来说已经达到目标分了，6.5我已经很知足了，所以非常开心，决定写个博客来纪念一下备考雅思的全过程。（以下只是个人的备考过程，一点儿也不分享仅供参考哦~）</p>
+<h2 id="1-基本介绍"><a href="#1-基本介绍" class="headerlink" title="1. 基本介绍"></a>1. 基本介绍</h2><p>先介绍下我自己个人的基本情况吧~</p>
+<ul>
+<li><strong>四级520，六级459。</strong> 个人的英语的四六级均准备不够充分，都是在考前大概一个星期背背单词然后参加的考试，自己也不知道咋评价自己的英语水平，反正肯定不算好但也不会很差（其实个人认为四六级跟雅思关系并不是很大）</li>
+<li><strong>雅思的目标分是6.5。</strong> 我是按均分6.25来给自己定目标的，听力阅读写作口语分别是<strong>6.5 7 6 5.5</strong>,因为自己主要申请港中深，具体的目标肯定还是依据具体学校来定的啦</li>
+<li><strong>准备时间大概1个月半月。</strong> 大致从9月初到10月24日，其实我没有仔细计算过时间，现在想想当时其实计划得挺不好的（逃</li>
+<li><strong>主要是自学。</strong> 主要是因为我有搭配看一些网课还有蹭一些免费的学习资料啥的，整体感觉还可以，我觉得到底是报班还是自学得看自己对成绩的要求，如果觉得自学遇到瓶颈了当然可以考虑报班，如果觉得对目标分有把握的话可以尝试自学</li>
+</ul>
+<hr>
+<p>感想：</p>
+<ul>
+<li>到最后的几天真的焦虑到要吐了，因为港校和港中深的项目的这一轮截止日期是11月底，如果考不出来的话只能又等下一轮，真的不想再拖了，如果这次出分失败的话我估计会非常崩溃吧，但还是要振作起来继续学雅思（边哭边学</li>
+<li>记得备考过程中还同时在实验室帮忙以及准备申请的材料，半DIY的我真的头都要大了，但是还是感谢自己能坚持下来</li>
+<li>雅思确实有运气成分，但是个人认为自身实力肯定还是占大头的，因为我感觉在整个备考过程中，我的英语能力确实提高了一点，光是必背的那些单词或多或少都有点作用，还有被逼的练口语，备考期间说英语的时间比我上大学以来总共说英语的时间还要久</li>
+<li>感觉自己还是很幸运的，毕竟是第一次考试，而且也没钱报班学习所以只好依靠自己（哭泣），非常感谢周围鼓励我的朋友和家长（呜呜呜</li>
+<li>这次的备考确实准备不够充分，好好反省好好反省…</li>
+</ul>
+<h2 id="2-备考过程"><a href="#2-备考过程" class="headerlink" title="2. 备考过程"></a>2. 备考过程</h2><p>《剑桥雅思真题4-15》当然是必备！！（但其实4 5 6根本没写，最后没时间写了，主要开始拿11-15来模考）还顺带着蹭了好多免费的资料网课app雅思哥的公开课和考满分的模考（dbq<br>总费用（大概2800元左右）：</p>
+<ul>
+<li>报名费2170元</li>
+<li>由于害怕考不过报了下一场结果考过了又退考产生的手续费450元</li>
+<li>复印、打印资料以及答题卡blahblah我就算50元左右</li>
+<li>考满分大礼包19.9元（dbq其实主要喜欢那个小本本和小计时器</li>
+<li>剑雅真题4-15、雅思王听力、顾家北写作书费100元</li>
+<li>tb写作批改19.9元（其实就批改了一次23333</li>
+<li>好像没了</li>
+</ul>
+<h3 id="2-1-听力"><a href="#2-1-听力" class="headerlink" title="2.1 听力"></a>2.1 听力</h3><hr>
+<p>学习材料：《雅思王听力语料库》</p>
+<p>网课：无</p>
+<p>APP：每日英语听力、新东方雅思pro、欧路词典</p>
+<hr>
+<p>听力的词汇是去欧路词典背雅思王听力词汇以及807场景词汇汇总</p>
+<p>刚开始看知乎上的备考经验所以买来了语料库，但是自己真的没法坚持下去，听了大概两轮3、4、8、11章节后就弃了，前面的正确率在85%左右，词组开始就是75%左右，我觉得语料库因人而异吧，我实在坚持不下去了，我还是选择听真题。（呜呜呜</p>
+<p>听力没有去找一些网课，完全就是真题锻炼出来的，用每日英语听力听真题，然后有用新东方雅思pro是因为每日里面剑15没有文本所以就用了它，我觉得精不精听也因人而异，我也坚持不了精听（俺累了），上午一开始听力练习，做完立马对答案然后开始从头到尾听答案句，将所有不懂的同义替换摘抄在笔记本上（不是所有同义替换，只是不懂的），然后在闲暇时间再多听几遍完整的。</p>
+<p>听力其实没啥捷径，还是得磨耳朵吧，如果有时间可以拓展一下听力库，但是我没时间所以只有真题听力陪着我（哭了），还有就是也不知道有啥其他可以听的…等等，听歌算吗（逃</p>
+<h3 id="2-2-阅读"><a href="#2-2-阅读" class="headerlink" title="2.2 阅读"></a>2.2 阅读</h3><hr>
+<p>学习资料：《雅思哥阅读预测机经》</p>
+<p>网课：无</p>
+<p>APP：雅思哥、欧路词典</p>
+<hr>
+<p>阅读的词汇同样是去欧路词典背刘洪波真经考点词</p>
+<p>真题阅读当然也是必备的，一开始我就给自己限时50分钟（那结果必然是超时），后面慢慢就是正好一个小时，然后变成50分钟内做完，我觉得设置50分钟是有道理的，因为考试中还需要填写答题卡（最后统一填答题卡也可以），总之你必须花费一定时间去填写答题卡，给自己预留10分钟还是可以滴，不过我还是建议大家在训练的时候就学会边写边填，比如填空题（再抄一遍单词感觉有点浪费时间，还不如在原文直接先圈出来然后统一写在答题卡上）</p>
+<p>计时做完后就开始每道题找答案句，NOTGIVEN就不用了，所以每次做完后文章全是圈圈，但是看起来很有成就感啊！然后我会将错题中不会的同义替换抄在笔记本，除此之外还有题干的所有不认识的单词，没错是题干，连题目都读不懂怎么能做题呢？！（震怒</p>
+<p>后面大概是在考前一个星期左右开始复印雅思哥的阅读机经，其实没有期待真的会预测中，只是听说是真实考场的一些回忆题，所以想见识一下题型和难度（命中概率感觉应该还是很低的）</p>
+<p>一些小技巧？</p>
+<ul>
+<li>题目大部分都是按照文章顺序的，T/F/NG题型的时候，如果在文章看了很久没有找到啥先别忙NG，接着看下一题，如果下一题在文章有对应句出现的话，就在上一题对应地方与下一题对应地方之间找一下有没有这道题消息，没有就NG</li>
+<li>匹配题，如果是人名的话，我习惯先把他们在文中出现过的所有地方先圈起来，然后从头到尾挨个匹配（可能是我定位比较快，反正这方法百试不爽，匹配我基本没错过）</li>
+<li>关于F还是NG我的方法是，你假设它就是对的，然后看跟原文有没有冲突，如果有，就是F，如果没有就是NG，例如：原文说A是最棒的，题干说A是第二棒的，那我就假设题干说的对啊，A就是第二棒的，那A怎么可能又是最棒的又是第二棒的呢，所以应该是F；同理，题干说A是最漂亮的，那我就假设A是最漂亮，那不冲突，A可以是最棒也可以是最漂亮的，所以是NG，懂我意思吧（不懂就算了，开玩笑哈哈，这只是我的小方法啦，也不知道对不对= 。 =</li>
+</ul>
+<h3 id="2-3-写作"><a href="#2-3-写作" class="headerlink" title="2.3 写作"></a>2.3 写作</h3><hr>
+<p>学习资料：《顾家北手把手教你雅思写作6.0》《忘了从哪个姐妹那里拿的大作文话题语料》《Simon的小作文+大作文范文》《simon的观点库》</p>
+<p>网课：杜仕明老师的网课</p>
+<p>APP：羊驼雅思</p>
+<hr>
+<p>我强烈建议如果对写作小分有要求的话最好还是准备久一点！！或者报班？？但本人不知道有啥靠谱的orz</p>
+<p>我一开始的打算是2个月备考，前1个月主攻听力和阅读，后1个月主攻写作和口语（但是依然要保证听力和阅读的训练量），事实上是阅读只花了10天左右，口语大概7天吧（哭了），当时一口气打印40张作文纸，最后可能只用了15张左右（小+大），建议还是大作文每个话题（犯罪、环保、媒体、科技、教育、社会、政府、文化艺术旅游等等）都过一遍，小作文每个类型（柱状图、饼图、折线图、混合图、表格、流程图、地图等等）过一遍。</p>
+<p>讲真的，这次考试的大作文我偏题了，crime看成了criminals，我先是肯定曝光他们确实有不好的影响，但是不能因此进行限制，具体理由我忘了，但我知道肯定偏了，因为我理解的是罪犯细节（身高 体重 面貌 家庭住址 电话号码啥的），但是题目说是犯罪细节（类似于犯了啥罪？做了些啥？在哪儿？啥时候？被害者是谁？犯人是谁？），我写完才发现自己偏题，这真是太难过了，我望着我工整的笔迹和还差一分钟的就宣告结束的钟，想哭又想笑（抱头痛哭），非常感激我的阅卷人最终给了我6分。</p>
+<p>咳咳跑题了，顾老师的书我基本没用过，翻了一下就放到旁边吃灰了（顾老师对不起），我觉得我可能没时间，小作文我直接看simon的（它短啊），我觉得固定的词背下来，学习simon的四段论，效果海星。大作文的话强推杜老师网课，豁然开朗，我觉得很有用，搭配看几篇simon的大作文范文，当然还要搭配simon的观点库以及积累每个话题下固定的一些词伙搭配（我之前忘了从哪位姐妹那里拿来的，好像就是在知乎上认识的，感谢那位不知名姐妹的分享！！），每天坚持练一篇小/大作文，我是在羊驼雅思app上练习的，它有分类整理好真题里面的写作，还有范文提供，感觉还不错，每次写完就看看真题背后的范文或是那上面的范文，小作文我主要总结一下表达，大作文主要看观点和思路。</p>
+<p>当然这些只是满足写作6分左右的方法，我觉得只要逻辑清晰，字数足够，不要偏题，当然语法错误要少，拿6分应该不是特别难的事（认真脸）。</p>
+<h3 id="2-4-口语"><a href="#2-4-口语" class="headerlink" title="2.4 口语"></a>2.4 口语</h3><hr>
+<p>学习资料：《各大机构免费9-12月口语题库+答案》</p>
+<p>网课：无</p>
+<p>APP：雅思哥</p>
+<hr>
+<p>口语准备卑微至极，毕竟我是一个速成型选手，当我开始准备口语时搜刮了全部我能看到的免费答案，但是我不背，没错我不背，我就看看答案，坚持每天读一遍。</p>
+<p>part1我采用的策略是只看题不看任何答案，就用最最最最原始简单的句子回答这个问题，说多三四句就ok，并且一直保持一种自信美丽大方的姿态（尽管内心慌得一批），我还记得考官第一句是hello, where are you from？然后我答I’m from China.（蠢，这不是废话吗？）Oh!（好像突然又记起什么似的）Actually I’m from Shenzhen, an innovative city. Do you know it? 话音刚落我就感觉不妙，我竟然在反问他？？我在想什么？？？？然后考官一脸“你在教我做事？”的表情（对不起我错了）</p>
+<hr>
+<p>part2的话我在疯狂串题，我具体忘了我是怎么串的，我只记得50个话题被我压缩的只需要准备13个故事就好了，比如我自己准备的<strong>甘肃旅行</strong>的经历可以用到：</p>
+<ul>
+<li>重新联系的老朋友（司机是初中同学）</li>
+<li>令人惊讶的相遇（司机竟然是初中同学？）</li>
+<li>成功的冒险（司机带我们穿过无人区，好刺激）</li>
+<li>汽车旅行（都有司机了肯定是汽车旅行）</li>
+<li>迷路的经历（在无人区迷路了）</li>
+<li>想再去一次的城市（好像再去敦煌一次啊）</li>
+<li>被污染的地方（那边污染很严重blahblah，甘肃人民不要打我，只是强行添上去的）</li>
+<li>一张照片（在甘肃拍的，回忆起那段经历）</li>
+</ul>
+<p>或者是准备的<strong>年夜饭</strong>可以用到：</p>
+<ul>
+<li>国家传统（春节嘛）</li>
+<li>享受的晚餐（晚上吃的嘛）</li>
+<li>穿最好的衫（新年当然要穿新衣服啊）</li>
+<li>贵贵的活动（吃一顿很贵的，要买好多东西）</li>
+<li>一群人的快乐时光（聚在一起很快乐）</li>
+</ul>
+<p>还有<strong>数学建模</strong>比赛的经历：</p>
+<ul>
+<li>领导力强的朋友（xxx是个好队长blahblah）</li>
+<li>团队合作</li>
+<li>从错误中学习（犯了错误）</li>
+<li>很开心认识的人（很开心认识xxx，他是个好队长）</li>
+<li>聪明的人（xxx真聪明，他是个好队长）</li>
+<li>精力充沛的人（xxx精力充沛，他是个好队长）</li>
+<li>乐于助人的人（xxx乐于助人，他是个好队长）</li>
+<li>直率的人（xxx很直率，他是个好队长）</li>
+<li>忘记重要的事（犯了错误）</li>
+<li>获过的奖（最终得奖了，很开心）</li>
+</ul>
+<p>所以发挥聪明才智，串起来串起来，把你的心，我的心串一串，串一株幸运草，串一个同心圆~</p>
+<p>然而本人part2自信说了不到两分钟被打断了，至今仍不知道为什么= 。 =（我们仍未知道那天考官为什么打断我）但是part3时间明显变长了。</p>
+<hr>
+<p>part3我完全没有准备，语感都是part1练出来的，然后顺着part2的内容就实话实说，句子也都用的很简单的不会很复杂，但是整体part3我没有停顿过，基本一直在说。</p>
+<p>最后口语5.5还是非常高兴的哈哈哈哈，小分达到要求我就很开心，我觉得我主要是part2没发挥好，可能偏题了，话题是让人放松的地方，结果我说了甘肃那次旅行，被打断后考官直接问了句你上次去哪儿是什么时候，我说是两年前，我觉得可能这个话题应该讨论的是类似于公园啥的会让你感觉放松的地方，而不是旅行（捂脸）。</p>
+<h2 id="3-最终结果"><a href="#3-最终结果" class="headerlink" title="3. 最终结果"></a>3. 最终结果</h2><p>老实说结果还挺出乎意料的，没想到竟然差0.5分还能上7，我一开始给自己定的就是6.5 7 6 5.5，总的来说听力和阅读挺令我意外的，尤其是听力，我对完答案真的觉得自己就是6-6.5的水平了，事实证明答案不一定可靠，我看了好多机构推的答案，对完真的就是6.5的水平，所以还是要相信自己鸭！！主要就是不要被其他的答案影响到你自己</p>
+<p>首考6.5真滴很开心，备考过程应该比较经济实惠（毕竟真滴没钱），想想如果没过的话费用再+2170元就好肉疼= 。 =</p>
+<hr>
+<p>感想：<br>如果之后还要备考的话我一定要提前准备写作和口语，我不想再极限准备part2和part3了，累了（吐血</p>
+<p>还有一个考试过程中的感想，我记得我那一场阅读第二篇有点难，当时我看完后不会做题然后就冷汗直冒，当时我就决定先写第三篇，第三篇相比起来比较容易，后面我是极限三分钟选完第二篇的段落匹配题，总的来说应该不亏，我感觉以后如果觉得不妙就果断放弃吧，前面听力的时候也是，我记得有一道匹配题我只听出来了第一个，接着的三个空好像是走神了反正就是没听到，然后当时心态有点受影响不过还是马上开始看后面的题目，当时蒙了还一直试图回忆（你都没听到啊你回忆啥！），后来心想时间宝贵赶紧看后面的题目吧哈哈哈哈</p>
+<p>总的来说我感觉时间还是有点紧的，主要是因为太菜了，阅读和写作基本都是掐点完成，写作写完即收卷也不知道自己有没有犯一下低级语法错误，记得考完后还郁闷了好久，觉得肯定要二战了害</p>
+<p>最后还是很开心！希望之后的申请道路也能比较顺利（呜呜呜</p>
+<p>溜了，继续学习（逃</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2020-11-06&nbsp;&nbsp;19:41:13</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2020/11/06/el-1/">http://a123wyn.studio/2020/11/06/el-1/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/IELTS/"># IELTS</a>
+                    
+                        <a href="/tags/Thoughts/"># Thoughts</a>
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/11/11/stat-4/">【Stat 110-Probability】Theme 4</a>
+            
+            
+                <a class="next" rel="next" href="/2020/11/05/stat-3/">【Stat 110-Probability】Theme 3</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

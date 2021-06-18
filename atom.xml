@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Nananan&#39;s warehouse</title>
+  
+  <subtitle>Nananan</subtitle>
+  <link href="http://a123wyn.studio/atom.xml" rel="self"/>
+  
+  <link href="http://a123wyn.studio/"/>
+  <updated>2021-06-13T10:32:51.835Z</updated>
+  <id>http://a123wyn.studio/</id>
+  
+  <author>
+    <name>Nananan</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【毕业设计】学术垃圾的毕业之路杂记</title>
+    <link href="http://a123wyn.studio/2021/05/06/paper/"/>
+    <id>http://a123wyn.studio/2021/05/06/paper/</id>
+    <published>2021-05-06T09:12:59.000Z</published>
+    <updated>2021-06-13T10:32:51.835Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;2021-05-03&quot;&gt;&lt;a href=&quot;#2021-05-03&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Share" scheme="http://a123wyn.studio/categories/Share/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【HiveQL】Some Notes(updating)</title>
+    <link href="http://a123wyn.studio/2021/03/29/sql-14/"/>
+    <id>http://a123wyn.studio/2021/03/29/sql-14/</id>
+    <published>2021-03-29T07:44:25.000Z</published>
+    <updated>2021-06-13T10:53:47.170Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;主要是工作中写Hive QL积累的一些经验= 。 =&lt;/p&gt;
+&lt;h3 id=&quot;窗口函数&quot;&gt;&lt;a href=&quot;#窗口函数&quot; class=&quot;headerlink&quot; title=&quot;窗口函数&quot;&gt;&lt;/a&gt;窗口函数&lt;/h3&gt;&lt;h4 id=&quot;利用Frame子句进行滚动计和&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="Hive" scheme="http://a123wyn.studio/tags/Hive/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【BEGTUT-MySQL】Window functions-Summary</title>
+    <link href="http://a123wyn.studio/2021/03/03/sql-13/"/>
+    <id>http://a123wyn.studio/2021/03/03/sql-13/</id>
+    <published>2021-03-03T08:01:36.000Z</published>
+    <updated>2021-06-13T10:32:51.852Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这几天终于在成都安顿下来了，总算有时间开始整理一下了…&lt;br&gt;主要通过&lt;a href=&quot;https://www.begtut.com/&quot;&gt;BEGTUT&lt;/a&gt;网站进行学（zhao）习（chao）的&lt;/p&gt;
+&lt;h2 id=&quot;窗口函数的通用形式&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="BEGTUT" scheme="http://a123wyn.studio/tags/BEGTUT/"/>
+    
+    <category term="MySQL" scheme="http://a123wyn.studio/tags/MySQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-9+.COVID 19</title>
+    <link href="http://a123wyn.studio/2021/02/18/sql-12/"/>
+    <id>http://a123wyn.studio/2021/02/18/sql-12/</id>
+    <published>2021-02-18T08:41:20.000Z</published>
+    <updated>2021-06-13T10:32:51.852Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;这一章也是讲窗口函数，主要是LAG&lt;/p&gt;
+&lt;h2 id=&quot;Window-LAG&quot;&gt;&lt;a href=&quot;#Window-LAG&quot; class=&quot;headerlink&quot; title=&quot;Window LAG&quot;&gt;&lt;/a&gt;Window LAG&lt;/h2&gt;&lt;figure</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】References</title>
+    <link href="http://a123wyn.studio/2021/02/18/sql-11/"/>
+    <id>http://a123wyn.studio/2021/02/18/sql-11/</id>
+    <published>2021-02-18T02:54:08.000Z</published>
+    <updated>2021-06-13T10:32:51.851Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;References里主要是一些其他用法指令，像个手册一样&lt;br&gt;&lt;a href=&quot;https://sqlzoo.net/wiki/SELECT_Reference&quot;&gt;1.SELECT&lt;/a&gt;&lt;br&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-9-.Window functions</title>
+    <link href="http://a123wyn.studio/2021/02/16/sql-10/"/>
+    <id>http://a123wyn.studio/2021/02/16/sql-10/</id>
+    <published>2021-02-16T01:58:38.000Z</published>
+    <updated>2021-06-13T10:32:51.851Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Window-functions&quot;&gt;&lt;a href=&quot;#Window-functions&quot; class=&quot;headerlink&quot; title=&quot;Window functions&quot;&gt;&lt;/a&gt;Window functions&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-9.Self JOIN</title>
+    <link href="http://a123wyn.studio/2021/02/15/sql-9/"/>
+    <id>http://a123wyn.studio/2021/02/15/sql-9/</id>
+    <published>2021-02-15T04:08:03.000Z</published>
+    <updated>2021-06-13T10:32:51.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Self-join-zh&quot;&gt;&lt;a href=&quot;#Self-join-zh&quot; class=&quot;headerlink&quot; title=&quot;Self join/zh&quot;&gt;&lt;/a&gt;Self join/zh&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-8.Using NULL</title>
+    <link href="http://a123wyn.studio/2021/02/14/sql-8/"/>
+    <id>http://a123wyn.studio/2021/02/14/sql-8/</id>
+    <published>2021-02-14T06:36:22.000Z</published>
+    <updated>2021-06-13T10:32:51.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Using-Null-zh&quot;&gt;&lt;a href=&quot;#Using-Null-zh&quot; class=&quot;headerlink&quot; title=&quot;Using Null/zh&quot;&gt;&lt;/a&gt;Using Null/zh&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-7.More JOIN</title>
+    <link href="http://a123wyn.studio/2021/02/13/sql-7/"/>
+    <id>http://a123wyn.studio/2021/02/13/sql-7/</id>
+    <published>2021-02-13T06:17:42.000Z</published>
+    <updated>2021-06-13T10:32:51.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;More-JOIN-operations-zh&quot;&gt;&lt;a href=&quot;#More-JOIN-operations-zh&quot; class=&quot;headerlink&quot; title=&quot;More JOIN operations/zh&quot;&gt;&lt;/a&gt;More JOIN</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-6.JOIN(合并表格)</title>
+    <link href="http://a123wyn.studio/2021/02/12/sql-6/"/>
+    <id>http://a123wyn.studio/2021/02/12/sql-6/</id>
+    <published>2021-02-12T06:19:23.000Z</published>
+    <updated>2021-06-13T10:32:51.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;The-JOIN-operation-zh&quot;&gt;&lt;a href=&quot;#The-JOIN-operation-zh&quot; class=&quot;headerlink&quot; title=&quot;The JOIN operation/zh&quot;&gt;&lt;/a&gt;The JOIN</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</title>
+    <link href="http://a123wyn.studio/2021/02/10/sql-5/"/>
+    <id>http://a123wyn.studio/2021/02/10/sql-5/</id>
+    <published>2021-02-10T02:59:47.000Z</published>
+    <updated>2021-06-13T10:32:51.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;world表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;continent&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;area&lt;/th&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</title>
+    <link href="http://a123wyn.studio/2021/02/08/sql-4/"/>
+    <id>http://a123wyn.studio/2021/02/08/sql-4/</id>
+    <published>2021-02-08T06:34:59.000Z</published>
+    <updated>2021-06-13T10:32:51.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;world表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;continent&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;area&lt;/th&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-3.SELECT from Nobel</title>
+    <link href="http://a123wyn.studio/2021/02/05/sql-3/"/>
+    <id>http://a123wyn.studio/2021/02/05/sql-3/</id>
+    <published>2021-02-05T04:08:45.000Z</published>
+    <updated>2021-06-13T10:32:51.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;nobel表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;center&quot;&gt;yr&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;subject&lt;/th&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-2.SELECT from World</title>
+    <link href="http://a123wyn.studio/2021/02/05/sql-2/"/>
+    <id>http://a123wyn.studio/2021/02/05/sql-2/</id>
+    <published>2021-02-05T02:48:14.000Z</published>
+    <updated>2021-06-13T10:32:51.853Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;自己做的主要是中文版，但是目前发现中英文的题目并不完全相同…有部分是摘自英文版&lt;/p&gt;
+&lt;p&gt;world表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
+&lt;th</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【SQLZOO】Tutorials-1.SELECT name</title>
+    <link href="http://a123wyn.studio/2021/02/03/sql-1/"/>
+    <id>http://a123wyn.studio/2021/02/03/sql-1/</id>
+    <published>2021-02-03T08:18:33.000Z</published>
+    <updated>2021-06-13T10:32:51.851Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;world表：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
+&lt;th align=&quot;center&quot;&gt;continent&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Project】学生健康信息平台（微信小程序）</title>
+    <link href="http://a123wyn.studio/2021/01/08/project1/"/>
+    <id>http://a123wyn.studio/2021/01/08/project1/</id>
+    <published>2021-01-07T16:16:39.000Z</published>
+    <updated>2021-06-13T10:32:51.837Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;空间与小程序appID设置&quot;&gt;&lt;a href=&quot;#空间与小程序appID设置&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="CS" scheme="http://a123wyn.studio/categories/CS/"/>
+    
+    
+    <category term="Project" scheme="http://a123wyn.studio/tags/Project/"/>
+    
+    <category term="Mini Program" scheme="http://a123wyn.studio/tags/Mini-Program/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 10</title>
+    <link href="http://a123wyn.studio/2020/12/07/stat-10/"/>
+    <id>http://a123wyn.studio/2020/12/07/stat-10/</id>
+    <published>2020-12-07T15:53:29.000Z</published>
+    <updated>2021-06-13T10:32:51.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 9</title>
+    <link href="http://a123wyn.studio/2020/12/05/stat-9/"/>
+    <id>http://a123wyn.studio/2020/12/05/stat-9/</id>
+    <published>2020-12-05T12:05:56.000Z</published>
+    <updated>2021-06-13T10:32:51.918Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 8</title>
+    <link href="http://a123wyn.studio/2020/12/02/stat-8/"/>
+    <id>http://a123wyn.studio/2020/12/02/stat-8/</id>
+    <published>2020-12-02T06:09:12.000Z</published>
+    <updated>2021-06-13T10:32:51.917Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 7</title>
+    <link href="http://a123wyn.studio/2020/11/29/stat-7/"/>
+    <id>http://a123wyn.studio/2020/11/29/stat-7/</id>
+    <published>2020-11-29T14:43:46.000Z</published>
+    <updated>2021-06-13T10:32:51.893Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+</feed>

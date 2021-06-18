@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-9.Self JOIN | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-9.Self JOIN</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-15&nbsp;&nbsp;12:08:03</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/15/sql-9/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-9.Self JOIN">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="Self-join-zh"><a href="#Self-join-zh" class="headerlink" title="Self join/zh"></a>Self join/zh</h2><p><img src="https://i.loli.net/2021/02/15/dcxSergpF12RLjh.png" alt="Edinburgh.png"></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.數據庫中有多少個站stops。</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">count</span>(<span class="keyword">id</span>) <span class="keyword">from</span> stops</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>找出車站<span class="string">'Craiglockhart'</span>的id</span><br><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> stops</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Craiglockhart'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">3.列出巴士公司<span class="string">'LRT'</span>的<span class="string">'4'</span>號巴士線的站編號id和站名name</span><br><span class="line">select id,name <span class="keyword">from</span><span class="built_in"> route </span>join stops on (<span class="attribute">id</span>=stop)</span><br><span class="line">where company = <span class="string">'LRT'</span> <span class="keyword">and</span> num = <span class="string">'4'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">4.以下查詢列出途經 London Road (149) 或 Craiglockhart (53)的巴士線號碼。注意有兩條路線會經過這兩個站兩次。 加入 HAVING 語句來限制只列出這兩條路線。</span><br><span class="line">SELECT company, num, count(stop)</span><br><span class="line"><span class="keyword">FROM</span><span class="built_in"> route </span>WHERE <span class="attribute">stop</span>=149 <span class="keyword">OR</span> <span class="attribute">stop</span>=53</span><br><span class="line">GROUP BY company, num</span><br><span class="line">HAVING count(stop) = 2</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5.執行自我合拼來，留意b.stop代表由Craiglockhart出發不用轉車可前住的地方。 修改它來顯示由Craiglockhart到 London Road的服務資料。</span><br><span class="line">SELECT a.company, a.num, a.stop, b.stop</span><br><span class="line"><span class="keyword">FROM</span><span class="built_in"> route </span>a JOIN<span class="built_in"> route </span>b ON</span><br><span class="line">  (a.<span class="attribute">company</span>=b.company <span class="keyword">AND</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">WHERE a.<span class="attribute">stop</span>=53 <span class="keyword">and</span> b.<span class="attribute">stop</span>=149</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">6.此題和上題相似，但是用兩個stops表來自我合拼。這樣我們可以用站名而非站編號。 修改它來顯示由Craiglockhart到 London Road的服務資料。 如你太悶，可試一試由 <span class="string">'Fairmilehead'</span> 到 <span class="string">'Tollcross'</span> (系統會當答錯的。正確有3條路線:11,15,315)</span><br><span class="line">SELECT a.company, a.num, stopa.name, stopb.name</span><br><span class="line"><span class="keyword">FROM</span><span class="built_in"> route </span>a JOIN<span class="built_in"> route </span>b ON</span><br><span class="line">  (a.<span class="attribute">company</span>=b.company <span class="keyword">AND</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.<span class="attribute">stop</span>=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.<span class="attribute">stop</span>=stopb.id)</span><br><span class="line">WHERE stopa.<span class="attribute">name</span>=<span class="string">'Craiglockhart'</span> <span class="keyword">and</span> stopb.<span class="attribute">name</span>=<span class="string">'London Road'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7.列出連接115 和 137 (<span class="string">'Haymarket'</span> 和 <span class="string">'Leith'</span>) 的公司名和路線號碼。不要重覆。</span><br><span class="line">select distinct a.company,a.num</span><br><span class="line"><span class="keyword">from</span><span class="built_in"> route </span>a join<span class="built_in"> route </span>b on (a.<span class="attribute">company</span>=b.company <span class="keyword">and</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">where a.stop = 115 <span class="keyword">and</span> b.stop = 137</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">8.列出連接車站stops <span class="string">'Craiglockhart'</span> 到 <span class="string">'Tollcross'</span> 的公司名和路線號碼。</span><br><span class="line">SELECT a.company, a.num</span><br><span class="line"><span class="keyword">FROM</span><span class="built_in"> route </span>a JOIN<span class="built_in"> route </span>b ON</span><br><span class="line">  (a.<span class="attribute">company</span>=b.company <span class="keyword">AND</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.<span class="attribute">stop</span>=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.<span class="attribute">stop</span>=stopb.id)</span><br><span class="line">WHERE stopa.<span class="attribute">name</span>=<span class="string">'Craiglockhart'</span> <span class="keyword">and</span> stopb.<span class="attribute">name</span>=<span class="string">'Tollcross'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">9.不重覆列出可以由 <span class="string">'Craiglockhart'</span> 乘一程車到達的站stops，包括<span class="string">'Craiglockhart'</span>本身。 列出站名，公司名和路線號碼。</span><br><span class="line">SELECT stopb.name,a.company,a.num</span><br><span class="line"><span class="keyword">FROM</span><span class="built_in"> route </span>a JOIN<span class="built_in"> route </span>b ON</span><br><span class="line">  (a.<span class="attribute">company</span>=b.company <span class="keyword">AND</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.<span class="attribute">stop</span>=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.<span class="attribute">stop</span>=stopb.id)</span><br><span class="line">WHERE stopa.<span class="attribute">name</span>=<span class="string">'Craiglockhart'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">10.<span class="builtin-name">Find</span> the routes involving two buses that can go <span class="keyword">from</span> Craiglockhart <span class="keyword">to</span> Lochend.</span><br><span class="line">Show the bus <span class="literal">no</span>. <span class="keyword">and</span> company <span class="keyword">for</span> the first bus, the name of the stop <span class="keyword">for</span> the transfer,</span><br><span class="line"><span class="keyword">and</span> the bus <span class="literal">no</span>. <span class="keyword">and</span> company <span class="keyword">for</span> the second bus.</span><br><span class="line"></span><br><span class="line">根据Hint的方法(先Craiglockhart-&gt;transfer,再从transfer-&gt;Lochend,最后join on 中转站相等)</span><br><span class="line">select distinct first.num,first.company,name,second.num,second.company <span class="keyword">from</span></span><br><span class="line">(select a.num,a.company,b.stop</span><br><span class="line"> <span class="keyword">from</span><span class="built_in"> route </span>a join<span class="built_in"> route </span>b on (a.<span class="attribute">num</span>=b.num <span class="keyword">and</span> a.<span class="attribute">company</span>=b.company <span class="keyword">and</span> a.stop!=b.stop)</span><br><span class="line">              join stops stopa on (stopa.<span class="attribute">id</span>=a.stop)</span><br><span class="line"> where stopa.name = <span class="string">'Craiglockhart'</span>)as first</span><br><span class="line">join</span><br><span class="line">(select c.num,c.company,c.stop</span><br><span class="line"> <span class="keyword">from</span><span class="built_in"> route </span>c join<span class="built_in"> route </span>d on (c.<span class="attribute">num</span>=d.num <span class="keyword">and</span> c.<span class="attribute">company</span>=d.company <span class="keyword">and</span> c.stop!=d.stop)</span><br><span class="line">              join stops stopd on (stopd.<span class="attribute">id</span>=d.stop)</span><br><span class="line"> where stopd.name = <span class="string">'Lochend'</span>)as second</span><br><span class="line">on first.<span class="attribute">stop</span>=second.stop</span><br><span class="line">join stops on (stops.<span class="attribute">id</span>=first.stop)</span><br><span class="line">order by first.num,name,second.num</span><br><span class="line"></span><br><span class="line">直接疯狂join,最后得到的就是<span class="string">'起始点-中转站-目的地'</span>的表</span><br><span class="line">select distinct a.num,a.company,stopb.name,d.num,d.company</span><br><span class="line"><span class="keyword">from</span><span class="built_in"> route </span>a join<span class="built_in"> route </span>b on (a.<span class="attribute">num</span>=b.num <span class="keyword">and</span> a.<span class="attribute">company</span>=b.company <span class="keyword">and</span> a.stop!=b.stop)</span><br><span class="line">             join<span class="built_in"> route </span>c on (b.<span class="attribute">stop</span>=c.stop)</span><br><span class="line">             join<span class="built_in"> route </span>d on (c.<span class="attribute">num</span>=d.num <span class="keyword">and</span> c.<span class="attribute">company</span>=d.company <span class="keyword">and</span> c.stop!=d.stop)</span><br><span class="line">             join stops stopa on (stopa.<span class="attribute">id</span>=a.stop)</span><br><span class="line">             join stops stopb on (stopb.<span class="attribute">id</span>=b.stop)</span><br><span class="line">             join stops stopd on (stopd.<span class="attribute">id</span>=d.stop)</span><br><span class="line">where stopa.name = <span class="string">'Craiglockhart'</span> <span class="keyword">and</span> stopd.name = <span class="string">'Lochend'</span></span><br><span class="line">order by a.num,name,d.num</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p>1.Select the code that would show it is possible to get from Craiglockhart to Haymarket<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT a.name, b.name</span><br><span class="line">  <span class="keyword">FROM</span> stops a JOIN<span class="built_in"> route </span>z ON a.<span class="attribute">id</span>=z.stop</span><br><span class="line">  JOIN<span class="built_in"> route </span>y ON y.num = z.num</span><br><span class="line">  JOIN stops b ON y.<span class="attribute">stop</span>=b.id</span><br><span class="line"> WHERE a.<span class="attribute">name</span>=<span class="string">'Craiglockhart'</span> <span class="keyword">AND</span> b.name =<span class="string">'Haymarket'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>2.Select the code that shows the stops that are on route.num ‘2A’ which can be reached with one bus from Haymarket?<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT S2.id, S2.name, R2.company, R2.num</span><br><span class="line">  <span class="keyword">FROM</span> stops S1, stops S2,<span class="built_in"> route </span>R1,<span class="built_in"> route </span>R2</span><br><span class="line"> WHERE S1.<span class="attribute">name</span>=<span class="string">'Haymarket'</span> <span class="keyword">AND</span> S1.<span class="attribute">id</span>=R1.stop</span><br><span class="line">   <span class="keyword">AND</span> R1.<span class="attribute">company</span>=R2.company <span class="keyword">AND</span> R1.<span class="attribute">num</span>=R2.num</span><br><span class="line">   <span class="keyword">AND</span> R2.<span class="attribute">stop</span>=S2.id <span class="keyword">AND</span> R2.<span class="attribute">num</span>=<span class="string">'2A'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>3.Select the code that shows the services available from Tollcross?<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT a.company, a.num, stopa.name, stopb.name</span><br><span class="line">  <span class="keyword">FROM</span><span class="built_in"> route </span>a JOIN<span class="built_in"> route </span>b ON (a.<span class="attribute">company</span>=b.company <span class="keyword">AND</span> a.<span class="attribute">num</span>=b.num)</span><br><span class="line">  JOIN stops stopa ON (a.<span class="attribute">stop</span>=stopa.id)</span><br><span class="line">  JOIN stops stopb ON (b.<span class="attribute">stop</span>=stopb.id)</span><br><span class="line"> WHERE stopa.<span class="attribute">name</span>=<span class="string">'Tollcross'</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>Self JOIN有点像自身做笛卡尔积</li>
+<li>本例数据库的route表Self JOIN的难点主要在于是on(num,company)还是on(stop)，详情可见<a target="_blank" rel="noopener" href="https://sqlzoo.net/wiki/Using_a_self_join">Using a self join</a>链接<br><strong>on(num,company):</strong><br>同公司，同编号车可到达的站情况<br>The result is a list of all pairs of stops which share a service.<br><strong>on(stop):</strong><br>同站里可到达的车情况<br>The result is a list of all pairs of services which share a stop.</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-15&nbsp;&nbsp;12:08:03</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/15/sql-9/">http://a123wyn.studio/2021/02/15/sql-9/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/16/sql-10/">【SQLZOO】Tutorials-9-.Window functions</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/14/sql-8/">【SQLZOO】Tutorials-8.Using NULL</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

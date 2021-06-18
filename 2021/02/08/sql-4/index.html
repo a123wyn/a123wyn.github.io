@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-4.SELECT within SELECT(子查询) | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-08&nbsp;&nbsp;14:34:59</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/08/sql-4/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>world表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">continent</th>
+<th align="center">area</th>
+<th align="center">population</th>
+<th align="center">gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Afghanistan</td>
+<td align="center">Asia</td>
+<td align="center">652230</td>
+<td align="center">25500100</td>
+<td align="center">20343000000</td>
+</tr>
+<tr>
+<td align="center">Albania</td>
+<td align="center">Europe</td>
+<td align="center">28748</td>
+<td align="center">2831741</td>
+<td align="center">12960000000</td>
+</tr>
+<tr>
+<td align="center">Algeria</td>
+<td align="center">Africa</td>
+<td align="center">2381741</td>
+<td align="center">37100000</td>
+<td align="center">188681000000</td>
+</tr>
+<tr>
+<td align="center">Andorra</td>
+<td align="center">Europe</td>
+<td align="center">468</td>
+<td align="center">78115</td>
+<td align="center">3712000000</td>
+</tr>
+<tr>
+<td align="center">Angola</td>
+<td align="center">Africa</td>
+<td align="center">1246700</td>
+<td align="center">20609294</td>
+<td align="center">100990000000</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p><strong>name:</strong> 国家名称<br><strong>continent:</strong> 洲<br><strong>area:</strong> 面积<br><strong>population:</strong> 人口<br><strong>gdp:</strong> 国内生产总值</p>
+<h2 id="SELECT-within-SELECT-Tutorial-zh"><a href="#SELECT-within-SELECT-Tutorial-zh" class="headerlink" title="SELECT within SELECT Tutorial/zh"></a>SELECT within SELECT Tutorial/zh</h2><figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>列出每個國家的名字 <span class="type">name</span>，當中人口 population 是高於俄羅斯<span class="string">'Russia'</span>的人口。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> world</span><br><span class="line">  <span class="keyword">WHERE</span> population &gt;</span><br><span class="line">     (<span class="keyword">SELECT</span> population <span class="keyword">FROM</span> world</span><br><span class="line">      <span class="keyword">WHERE</span> <span class="type">name</span>=<span class="string">'Russia'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>列出歐州每國家的人均GDP，當中人均GDP要高於英國<span class="string">'United Kingdom'</span>的數值。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> continent = <span class="string">'Europe'</span> <span class="keyword">and</span> gdp/population &gt;</span><br><span class="line">(<span class="keyword">select</span> gdp/population <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'United Kingdom'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>在阿根廷Argentina 及 澳大利亞 Australia所在的洲份中，列出當中的國家名字 <span class="type">name</span> 及洲分 continent 。按國字名字順序排序</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,continent <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> continent <span class="keyword">in</span> </span><br><span class="line">(<span class="keyword">select</span> continent <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> <span class="keyword">in</span> (<span class="string">'Argentina'</span>,<span class="string">'Australia'</span>))</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="type">name</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>哪一個國家的人口比加拿大Canada的多，但比波蘭Poland的少?列出國家名字<span class="type">name</span>和人口population 。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,population <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> population &gt;</span><br><span class="line">(<span class="keyword">select</span> population <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Canada'</span>)</span><br><span class="line"><span class="keyword">and</span> population &lt; </span><br><span class="line">(<span class="keyword">select</span> population <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Poland'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>Germany德國（人口<span class="number">8000</span>萬），在Europe歐洲國家的人口最多。Austria奧地利（人口<span class="number">850</span>萬）擁有德國總人口的<span class="number">11</span>％。</span><br><span class="line">顯示歐洲的國家名稱<span class="type">name</span>和每個國家的人口population。以德國的人口的百分比作人口顯示。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,concat(round((population/(<span class="keyword">select</span> population <span class="keyword">from</span> world <span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Germany'</span>))*<span class="number">100</span>,<span class="number">0</span>),<span class="string">'%'</span>) <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> continent = <span class="string">'Europe'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>哪些國家的GDP比Europe歐洲的全部國家都要高呢? [只需列出 <span class="type">name</span> 。] (有些國家的記錄中，GDP是<span class="keyword">NULL</span>，沒有填入資料的。)</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> gdp &gt; <span class="keyword">all</span>(<span class="keyword">select</span> gdp <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> gdp &gt; <span class="number">0</span> <span class="keyword">and</span> continent = <span class="string">'Europe'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">7.在每一個州中找出最大面積的國家，列出洲份 continent, 國家名字 name 及面積 area。 (有些國家的記錄中，AREA是<span class="literal">NULL</span>，沒有填入資料的。)</span><br><span class="line">SELECT continent, name,<span class="built_in"> area </span><span class="keyword">FROM</span> world x</span><br><span class="line">  WHERE<span class="built_in"> area </span>&gt;= ALL</span><br><span class="line">    (SELECT<span class="built_in"> area </span><span class="keyword">FROM</span> world y</span><br><span class="line">        WHERE y.<span class="attribute">continent</span>=x.continent</span><br><span class="line">          <span class="keyword">AND</span> area&gt;0)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8.</span>列出洲份名稱，和每個洲份中國家名字按子母順序是排首位的國家名。(即每洲只有列一國)</span><br><span class="line"><span class="keyword">select</span> continent,<span class="type">name</span> <span class="keyword">from</span> world w1</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = (<span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> world w2</span><br><span class="line"><span class="keyword">where</span> w1.continent = w2.continent</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="type">name</span> <span class="keyword">limit</span> <span class="number">1</span>)</span><br><span class="line">另一种方法，直接使用<span class="keyword">group</span> <span class="keyword">by</span></span><br><span class="line"><span class="keyword">select</span> continent,min(<span class="type">name</span>) <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> continent</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>More difficult</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.</span>找出洲份，當中全部國家都有少於或等於 <span class="number">25000000</span> 人口. 在這些洲份中，列出國家名字<span class="type">name</span>，continent 洲份和population人口。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,continent,population <span class="keyword">from</span> world w1</span><br><span class="line"><span class="keyword">where</span> <span class="number">25000000</span> &gt;= <span class="keyword">all</span>(<span class="keyword">select</span> population <span class="keyword">from</span> world w2</span><br><span class="line"><span class="keyword">where</span> w2.continent = w1.continent)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">10</span>.有些國家的人口是同洲份的所有其他國的<span class="number">3</span>倍或以上。列出 國家名字name 和 洲份 continent。</span><br><span class="line"><span class="attribute">select</span> name,continent from world w<span class="number">1</span></span><br><span class="line"><span class="attribute">where</span> w<span class="number">1</span>.population &gt;= <span class="literal">all</span>(select <span class="number">3</span>*population from world w<span class="number">2</span></span><br><span class="line"><span class="attribute">where</span> w<span class="number">1</span>.continent = w<span class="number">2</span>.continent and w<span class="number">2</span>.population &gt; <span class="number">0</span> and w<span class="number">1</span>.name != w<span class="number">2</span>.name)</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="The-nobel-table-can-be-used-to-practice-more-subquery-zh"><a href="#The-nobel-table-can-be-used-to-practice-more-subquery-zh" class="headerlink" title="The nobel table can be used to practice more subquery./zh"></a>The nobel table can be used to practice more subquery./zh</h2><figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>紅十字國際委員會 (International Committee <span class="keyword">of</span> the Red <span class="keyword">Cross</span>) 曾多次獲得和平獎。 試找出與紅十字國際委員會同年得獎的文學獎(Literature)得獎者和年份。</span><br><span class="line"><span class="keyword">select</span> winner,yr <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> subject = <span class="string">'Literature'</span> <span class="keyword">and</span> yr <span class="keyword">in</span> (<span class="keyword">select</span> yr <span class="keyword">from</span> nobel </span><br><span class="line"><span class="keyword">where</span> winner = <span class="string">'International Committee of the Red Cross'</span> <span class="keyword">and</span> subject = <span class="string">'Peace'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>日本物理學家益川敏英 (Toshihide Maskawa) 曾獲得物理獎。同年還有兩位日本人一同獲得物理獎。試列出這<span class="number">2</span>位日本人的名稱。</span><br><span class="line"><span class="keyword">select</span> winner <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> winner != <span class="string">'Toshihide Maskawa'</span> and subject = <span class="string">'Physics'</span> and yr = (<span class="keyword">select</span> yr <span class="keyword">from</span> nobel <span class="keyword">where</span> winner = <span class="string">'Toshihide Maskawa'</span> and subject = <span class="string">'Physics'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>首次頒發的經濟獎 (Economics)的得獎者是誰?</span><br><span class="line"><span class="keyword">select</span> winner <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> subject = <span class="string">'Economics'</span> and yr = (<span class="function"><span class="keyword">select</span> <span class="title">min</span>(<span class="params">yr</span>) <span class="keyword">from</span> nobel</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> subject</span> = <span class="string">'Economics'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4</span>.哪幾年頒發了物理獎，但沒有頒發化學獎?</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> yr <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> subject = <span class="string">'Physics'</span> <span class="keyword">and</span> yr <span class="keyword">not</span> <span class="keyword">in</span> (<span class="keyword">select</span> <span class="keyword">distinct</span> yr <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> subject = <span class="string">'Chemistry'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">5.哪幾年的得獎者人數多於12人呢? 列出得獎人數多於12人的年份，獎項和得獎者。</span><br><span class="line">select yr,subject,winner <span class="keyword">from</span> nobel</span><br><span class="line">where yr <span class="keyword">in</span> (select yr <span class="keyword">from</span> nobel</span><br><span class="line">group by yr</span><br><span class="line">having count(winner) &gt; 12)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">6.哪些得獎者獲獎多於1次呢？他們是哪一年獲得哪項獎項呢？ 列出他們的名字，獲獎年份及獎項。先按名字，再按年份順序排序。</span><br><span class="line">select winner,yr,subject <span class="keyword">from</span> nobel</span><br><span class="line">where winner <span class="keyword">in</span> (select winner <span class="keyword">from</span> nobel</span><br><span class="line">group by winner having count(yr) &gt; 1)</span><br><span class="line">order by winner,yr</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/09/jC3YROmWFeHpo8I.png" alt="_5X1B_63_NIY~__@O_P_7VX.png"><br>1.選擇代碼以顯示在每個區域人口最小的國家的國家名稱，區域和人口。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> region, <span class="type">name</span>, population <span class="keyword">FROM</span> bbc x <span class="keyword">WHERE</span> population &lt;= <span class="keyword">ALL</span> (<span class="keyword">SELECT</span> population <span class="keyword">FROM</span> bbc y <span class="keyword">WHERE</span> y.region=x.region <span class="keyword">AND</span> population&gt;<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>2.選擇代碼以顯示國家名稱，該國所在的地區每國人口都超過50000。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>,region,population <span class="keyword">FROM</span> bbc x <span class="keyword">WHERE</span> <span class="number">50000</span> &lt; <span class="keyword">ALL</span> (<span class="keyword">SELECT</span> population <span class="keyword">FROM</span> bbc y <span class="keyword">WHERE</span> x.region=y.region <span class="keyword">AND</span> y.population&gt;<span class="number">0</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>3.選擇代碼以顯示國家名稱，該國家人口少於它周圍的全部國家的人口三分之一。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, region <span class="keyword">FROM</span> bbc x</span><br><span class="line"> <span class="keyword">WHERE</span> population &lt; <span class="keyword">ALL</span> (<span class="keyword">SELECT</span> population/<span class="number">3</span> <span class="keyword">FROM</span> bbc y <span class="keyword">WHERE</span> y.region = x.region <span class="keyword">AND</span> y.name != x.name)</span><br></pre></td></tr></tbody></table></figure>
+<p>4.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> bbc</span><br><span class="line"> <span class="keyword">WHERE</span> population &gt;</span><br><span class="line">       (<span class="keyword">SELECT</span> population</span><br><span class="line">          <span class="keyword">FROM</span> bbc</span><br><span class="line">         <span class="keyword">WHERE</span> <span class="type">name</span>=<span class="string">'United Kingdom'</span>)</span><br><span class="line">   <span class="keyword">AND</span> region <span class="keyword">IN</span></span><br><span class="line">       (<span class="keyword">SELECT</span> region</span><br><span class="line">          <span class="keyword">FROM</span> bbc</span><br><span class="line">         <span class="keyword">WHERE</span> <span class="type">name</span> = <span class="string">'United Kingdom'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/10/arSUPTKjLGE5iA3.png" alt="t4.png"><br>5.選擇代碼以顯示國家名稱，該國有比非洲任何國家更大的國內生產總值GDP。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> bbc</span><br><span class="line"> <span class="keyword">WHERE</span> gdp &gt; <span class="keyword">ALL</span> (<span class="keyword">SELECT</span> MAX(gdp) <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> region = <span class="string">'Africa'</span> <span class="keyword">AND</span> gdp <span class="keyword">IS</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>6.選擇代碼以顯示國家名稱，該國人口比俄羅斯少，但比丹麥的多。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> bbc</span><br><span class="line"> <span class="keyword">WHERE</span> population &lt; (<span class="keyword">SELECT</span> population <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> <span class="type">name</span>=<span class="string">'Russia'</span>)</span><br><span class="line">   <span class="keyword">AND</span> population &gt; (<span class="keyword">SELECT</span> population <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> <span class="type">name</span>=<span class="string">'Denmark'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>7.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> bbc</span><br><span class="line"> <span class="keyword">WHERE</span> population &gt; <span class="keyword">ALL</span></span><br><span class="line">       (<span class="keyword">SELECT</span> MAX(population)</span><br><span class="line">          <span class="keyword">FROM</span> bbc</span><br><span class="line">         <span class="keyword">WHERE</span> region = <span class="string">'Europe'</span>)</span><br><span class="line">   <span class="keyword">AND</span> region = <span class="string">'South Asia'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/10/5ANtkR1bKEwPxJF.png" alt="t7.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>其实感觉all和max，min相似…</li>
+<li>有多个非指定数值的筛选条件的话一般都存在子查询，多重查询</li>
+<li>select的结果可能一行也有可能是多行，注意外层分别用’=’和’in’的情况</li>
+<li>多重查询记得考虑内外表是否有关联</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-08&nbsp;&nbsp;14:34:59</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/08/sql-4/">http://a123wyn.studio/2021/02/08/sql-4/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/10/sql-5/">【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/05/sql-3/">【SQLZOO】Tutorials-3.SELECT from Nobel</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

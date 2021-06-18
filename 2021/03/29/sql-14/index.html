@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【HiveQL】Some Notes(updating) | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【HiveQL】Some Notes(updating)</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-03-29&nbsp;&nbsp;15:44:25</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/03/29/sql-14/" class="leancloud-visitors view" data-flag-title="【HiveQL】Some Notes(updating)">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/Hive/"># Hive</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>主要是工作中写Hive QL积累的一些经验= 。 =</p>
+<h3 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h3><h4 id="利用Frame子句进行滚动计和"><a href="#利用Frame子句进行滚动计和" class="headerlink" title="利用Frame子句进行滚动计和"></a>利用Frame子句进行滚动计和</h4><p>如果说需要针对每个商品统计滚动统计过去一周的总销量，可以在frame子句中指定分区范围：</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> [<span class="keyword">partition</span> clause]</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> [<span class="keyword">order</span> clause]</span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> [frame_start] <span class="keyword">and</span> [frame_end]</span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h3><h4 id="字符串拼接函数"><a href="#字符串拼接函数" class="headerlink" title="字符串拼接函数"></a>字符串拼接函数</h4><p>MySQL里的聚合字符串拼接函数是group_concat，但是hive里面好像不能用，得用另一种方法来代替这个函数：</p>
+<figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group<span class="constructor">_concat([<span class="params">distinct</span>] 连接字段 [<span class="params">order</span> <span class="params">by</span> 排序字段 <span class="params">asc</span><span class="operator">/</span><span class="params">desc</span> ] [<span class="params">separator</span> 分隔符])</span></span><br><span class="line">=</span><br><span class="line">concat<span class="constructor">_ws(',', <span class="params">collect_set</span>(<span class="params">cast</span>(连接字段 <span class="params">as</span> <span class="params">string</span>)</span>))</span><br></pre></td></tr></tbody></table></figure>
+<ol>
+<li>因为concat_ws必须是字符串类型，所以需要用cast转换一下。</li>
+<li>collect相关函数是将分组后的某列转成数组返回，collect_set作用是把group by后的非分组字段<strong>去重</strong>‘收集’起来，而collect_list是<strong>不去重</strong>的。</li>
+</ol>
+<h4 id="求分位数函数"><a href="#求分位数函数" class="headerlink" title="求分位数函数"></a>求分位数函数</h4><figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">percentile<span class="constructor">_approx(<span class="params">col</span>,<span class="params">p</span>)</span></span><br><span class="line">col为待求列，p为分位数，p=<span class="number">2</span>表示求二分位数</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="多维分析子句"><a href="#多维分析子句" class="headerlink" title="多维分析子句"></a>多维分析子句</h4><h5 id="grouping-sets"><a href="#grouping-sets" class="headerlink" title="grouping sets"></a>grouping sets</h5><p>个人认为是group by的优化版本，grouping sets里面只能是group by的字段，适合多维统计，实际上就是在原来group by的结构中的增加了”全部”字段</p>
+<figure class="highlight crmsh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">by</span> 一般是到最细粒度，grouping sets允许<span class="keyword">group</span> <span class="title">by</span>字段的任意组合，如果<span class="keyword">group</span> <span class="title">by</span>字段未出现，则统一为'null'值</span><br><span class="line">grouping sets(...)</span><br></pre></td></tr></tbody></table></figure>
+<h5 id="with-cube"><a href="#with-cube" class="headerlink" title="with cube"></a>with cube</h5><figure class="highlight excel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c with cube</span><br><span class="line">=</span><br><span class="line">group by a,b,c grouping sets ((a,b,c),(a,b),(b,c),(a,c),(c),())</span><br></pre></td></tr></tbody></table></figure>
+<h5 id="with-rollup"><a href="#with-rollup" class="headerlink" title="with rollup"></a>with rollup</h5><figure class="highlight excel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c with rollup</span><br><span class="line">=</span><br><span class="line">group by a,b,c grouping sets((a,b,c),(a,b),(a),())</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h3><h4 id="next-day"><a href="#next-day" class="headerlink" title="next_day"></a>next_day</h4><p>next_day(date,weekday)<br>weekday可以是’MONDAY’,’TUESDAY’…<br>比如周内数据汇总到周一那天，则可以用：<br>group by next_day(date_sub(dt,7),’MON’)</p>
+<h4 id="日期加减法"><a href="#日期加减法" class="headerlink" title="日期加减法"></a>日期加减法</h4><p>在hive中是用date_sub/date_add(dt,8)表示</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-03-29&nbsp;&nbsp;15:44:25</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:53:47</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/03/29/sql-14/">http://a123wyn.studio/2021/03/29/sql-14/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/Hive/"># Hive</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/05/06/paper/">【毕业设计】学术垃圾的毕业之路杂记</a>
+            
+            
+                <a class="next" rel="next" href="/2021/03/03/sql-13/">【BEGTUT-MySQL】Window functions-Summary</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【Project】学生健康信息平台（微信小程序） | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【Project】学生健康信息平台（微信小程序）</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-01-08&nbsp;&nbsp;00:16:39</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/01/08/project1/" class="leancloud-visitors view" data-flag-title="【Project】学生健康信息平台（微信小程序）">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/CS/">CS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Project/"># Project</a>
+                            
+                                <a href="/tags/Mini-Program/"># Mini Program</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="空间与小程序appID设置"><a href="#空间与小程序appID设置" class="headerlink" title="空间与小程序appID设置"></a>空间与小程序appID设置</h3><ul>
+<li>在<code>main.js</code>中设置空间的<code>spaceId</code>、<code>clientSecret</code>；</li>
+<li>在<code>manifest.json</code>中设置微信小程序的<code>appID</code>，否则微信端获取的code为：<code>the code is a mock one</code>；</li>
+<li>在<code>cloudfunctions-dev/src/utils/constants.js</code>中设置<code>AppId</code>、<code>AppSecret</code>、<code>passSecret</code>字段，否则不能获取<code>openid</code>;</li>
+</ul>
+<h3 id="项目运行和部署说明"><a href="#项目运行和部署说明" class="headerlink" title="项目运行和部署说明"></a>项目运行和部署说明</h3><ul>
+<li><p>本项目需要<a target="_blank" rel="noopener" href="https://www.dcloud.io/hbuilderx.html">HBuilderX 2.5.8（Alpha版）</a>以上版本才能运行。  </p>
+</li>
+<li><p>项目需要<a target="_blank" rel="noopener" href="https://dev.dcloud.net.cn/">注册</a>和开通uniCloud ,因阿里云审核要求,需要实名认证。</p>
+</li>
+<li><p>拉取项目源码后,对<code>cloudfunctions</code>目录点右键,选择你的服务空间。如果没有服务空间,需要创建,创建时会引导登录和注册uniCloud。</p>
+</li>
+<li><p>配好服务空间后,请根据项目下的<a href="db.md">db.md</a>文件,在你的云数据库中创建相应的表。具体方式是对<code>cloudfunctions</code>目录点右键,打开uniCloud web控制台,在里面的云数据库界面点击”新建表”,表名里把<a href="db.md">db.md</a>涉及的表名都创建一遍。</p>
+</li>
+<li><p>对每个云函数（文件夹）点右键，”上传并部署”到你的服务空间中。</p>
+</li>
+<li><p>修改<code>manifest.json</code>中的<code>DCloud_AppID</code>为自己的。</p>
+</li>
+<li><p>最后，可以运行了。如果是win版,可以直接运行在内置浏览器。如果是mac版,内置浏览器也有跨域问题,需要运行到小程序模拟器或app中,或者给mac的外部浏览器<a target="_blank" rel="noopener" href="https://ask.dcloud.net.cn/article/35267">安装跨域插件</a>。</p>
+</li>
+</ul>
+<ul>
+<li>项目前端基于uni-app框架开发，它是一个通过vue.js编写所有平台应用的多端框架。你需要了解uni-app以便于更深度的定制。uni-app的文档详见：<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/README">https://uniapp.dcloud.io/README</a></li>
+<li>项目后端基于uniCloud，它是一个基于js的云开发模式，与微信、支付宝小程序的云开发类似，但可以跨端使用。它基于serverless模型，优势众多。建议开发者通读一遍uniCloud的介绍和快速上手，以方便做二次开发。uniCloud的文档详见：<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/uniCloud/README">https://uniapp.dcloud.io/uniCloud/README</a></li>
+</ul>
+<h3 id="大致介绍"><a href="#大致介绍" class="headerlink" title="大致介绍"></a>大致介绍</h3><h4 id="登录界面"><a href="#登录界面" class="headerlink" title="登录界面"></a>登录界面</h4><p>学生可自行注册登录，老师目前后台数据库注册了信息学院和电子科学与技术学院老师</p>
+<p>用户名：信息学院                   密码：12345678<br>用户名：电子科学与技术学院          密码：12345678</p>
+<h4 id="学生端"><a href="#学生端" class="headerlink" title="学生端"></a>学生端</h4><p>主要步骤：</p>
+<ol>
+<li>进入学生端口后，学生可以进行注册并绑定其学生信息（如学院、年级、专业学号、姓名）以便于后面的老师端口进行管理</li>
+<li>绑定信息后，便可以进入每日登记健康信息的界面进行体温等健康信息的登记</li>
+</ol>
+<h4 id="老师端"><a href="#老师端" class="headerlink" title="老师端"></a>老师端</h4><p>主要步骤：</p>
+<ol>
+<li>进入老师端口后，老师可以对学生的名单进行管理以及查看学生报备上了的总数据</li>
+<li>对学生的名单进行管理时可以对所管理的学生班级/年级进行查看修改删除等操作</li>
+<li>查看学生报备情况时可以选择相应的班级/年级查看实时学生信息报备的情况</li>
+</ol>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>此外，还可以在登陆界面查看全国以及全球实时疫情状况，了解疫情的实时情况。此模块用了网上的接口，运用反向代理实现页面跳转，但因为非企业小程序无法使用反向代理的业务域名，所以体验版无法展示疫情动态实时信息，截图取自开发者工具的预览。</p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a target="_blank" rel="noopener" href="https://github.com/a123wyn/Student-information-reporting-system">Github地址</a></p>
+<p><a href="./%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E5%A4%A7%E9%A1%B9%E7%9B%AE.zip">文档+代码+PPT</a></p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-01-08&nbsp;&nbsp;00:16:39</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/01/08/project1/">http://a123wyn.studio/2021/01/08/project1/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Project/"># Project</a>
+                    
+                        <a href="/tags/Mini-Program/"># Mini Program</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/03/sql-1/">【SQLZOO】Tutorials-1.SELECT name</a>
+            
+            
+                <a class="next" rel="next" href="/2020/12/07/stat-10/">【Stat 110-Probability】Theme 10</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

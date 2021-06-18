@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【数学建模】优化类模型 | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: ["STIX","TeX"],
+        linebreaks: { automatic:true },
+        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
+    },
+    tex2jax: {
+        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
+        processEscapes: true,
+        ignoreClass: "tex2jax_ignore|dno",
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        equationNumbers: { autoNumber: "AMS" },
+        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
+        Macros: { href: "{}" }
+    },
+    messageStyle: "none"
+    });
+</script>
+<!-- 给MathJax元素添加has-jax class -->
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<!-- 通过连接CDN加载MathJax的js代码 -->
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【数学建模】优化类模型</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2020-09-06&nbsp;&nbsp;12:15:57</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2020/09/06/math-model-1/" class="leancloud-visitors view" data-flag-title="【数学建模】优化类模型">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/Math/">Math</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Notes/"># Notes</a>
+                            
+                                <a href="/tags/Mathematical-Modeling/"># Mathematical Modeling</a>
+                            
+                                <a href="/tags/MATLAB/"># MATLAB</a>
+                            
+                                <a href="/tags/Optimization/"># Optimization</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="1-线性规划"><a href="#1-线性规划" class="headerlink" title="1. 线性规划"></a>1. 线性规划</h2><h3 id="1-1-模型描述"><a href="#1-1-模型描述" class="headerlink" title="1.1 模型描述"></a>1.1 模型描述</h3><p>目标函数为线性函数，约束条件为一组线性等式或不等式的规划问题。通式标准型一般为：<br>$$\min _{x} c^{T}x$$</p>
+<p>$$s.t. = \left\lbrace<br>   \begin{array}{ll}<br>Ax \leq b\newline<br>Aeq \cdot x = beq\newline<br>lb \leq x \leq ub<br>\end{array} \right. $$</p>
+<p>在MATLAB中的调用函数为：<br>$$[x,fval] = linprog(c,A,b,Aeq,beq,lb,ub,x_{0},OPTIONS)$$</p>
+<p>返回待求解向量$x$以及目标函数值$fval$，参数中$x_{0}$是初始值，OPTIONS是控制参数，其余的参数根据标准型可以知道其含有的意义。<br>需要注意的是</p>
+<ol>
+<li>调用函数形式默认是求最小化问题$\min$，如果求最大化问题$\max$，则可以将函数中的$c$取反为$-c$，将最大化问题转移为最小化问题</li>
+<li>同样地默认形式的不等式符号是$\leq$，若为$\geq$则需要两边取反使符号变反，所以$A$与$b$都需要取反。</li>
+</ol>
+<h3 id="1-2-MATLAB程序演示"><a href="#1-2-MATLAB程序演示" class="headerlink" title="1.2 MATLAB程序演示"></a>1.2 MATLAB程序演示</h3><p>MATLAB中自带有求解该模型最优解的函数，上面一节已提到，下面是一个示例，假设问题为：<br>$$\max z=2x_{1}+3x_{2}-5x_{3}$$</p>
+<p>$$s.t. = \left\lbrace<br>\begin{array}{rl}<br>x_{1}+x_{2}+x_{3}&amp;=&amp;7\newline<br>2x_{1}-5x_{2}+x_{3}&amp;\geq&amp;10\newline<br>x_{1}+3x_{2}+x_{3}&amp;\leq&amp;12\newline<br>x_{1},x_{2},x_{3}&amp;\geq&amp;0<br>\end{array} \right. $$</p>
+<p>MATLAB代码如下：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">c=[<span class="number">2</span>,<span class="number">3</span>,<span class="number">-5</span>];</span><br><span class="line">A=[<span class="number">-2</span>,<span class="number">5</span>,<span class="number">-1</span>;<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>];% 需要将&gt;=号换成&lt;=号，两边取反</span><br><span class="line">b=[<span class="number">-10</span>;<span class="number">12</span>];</span><br><span class="line">Aeq=[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>];</span><br><span class="line">beq=<span class="number">7</span>;</span><br><span class="line">lb=[<span class="number">0</span>;<span class="number">0</span>;<span class="number">0</span>];</span><br><span class="line">ub=[inf;inf;inf];</span><br><span class="line">x0=zeros(<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">% 最大化问题转换为最小化，所以c取反</span><br><span class="line">[x,fval]=linprog(-c,A,b,Aeq,beq,lb,ub,x0)</span><br><span class="line">value=c*x</span><br></pre></td></tr></tbody></table></figure>
+<p>运行结果：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">    <span class="number">6.4286</span></span><br><span class="line">    <span class="number">0.5714</span></span><br><span class="line">         <span class="number">0</span></span><br><span class="line"></span><br><span class="line">fval =</span><br><span class="line"></span><br><span class="line">  <span class="number">-14.5714</span></span><br><span class="line"></span><br><span class="line">value =</span><br><span class="line"></span><br><span class="line">   <span class="number">14.5714</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="2-非线性规划"><a href="#2-非线性规划" class="headerlink" title="2. 非线性规划"></a>2. 非线性规划</h2><h3 id="2-1-模型描述"><a href="#2-1-模型描述" class="headerlink" title="2.1 模型描述"></a>2.1 模型描述</h3><p>在一组等式或不等式的约束下的最优化问题，其中至少一个为非线性函数，标准型一般为：<br>$$\min f(x)$$</p>
+<p>$$s.t. = \left\lbrace<br>   \begin{array}{ll}<br>Ax \leq b\newline<br>Aeq \cdot x = beq\newline<br>C(x) \leq 0\newline<br>Ceq(x) = 0\newline<br>lb \leq x \leq ub<br>\end{array} \right. $$</p>
+<p>$f(x)$为标量函数，$C(x)$和$Ceq(x)$是非线性向量函数。<br>在MATLAB中的调用函数为：<br>$$[x,fval]=fmincon(fun,x_{0},A,b,Aeq,beq,lb,ub,nonlcon,options)$$</p>
+<p>$fun$是m文件定义的$f(x)$,$nonlcon$是m文件定义的$C(x)$和$Ceq(x)$<br>需要注意的默认形式与线性约束一致，都是默认最小化问题，不等式为$\leq$形式。</p>
+<h3 id="2-2-MATLAB程序演示"><a href="#2-2-MATLAB程序演示" class="headerlink" title="2.2 MATLAB程序演示"></a>2.2 MATLAB程序演示</h3><p>示例：<br>$$\min f(x)=x_{1}^{2}+x_{2}^{2}+x_{3}^{2}+8$$</p>
+<p>$$s.t. = \left\lbrace<br>\begin{array}{rl}<br>x_{1}^{2}-x_{2}+x_{3}^{2}&amp;\geq&amp;0\newline<br>x_{1}+x_{2}^{2}+x_{3}^{3}&amp;\leq&amp;20\newline<br>-x_{1}-x_{2}^{2}+2&amp;=&amp;0\newline<br>x_{2}+2x_{3}^{2}&amp;=&amp;3\newline<br>x_{1},x_{2},x_{3}&amp;\geq&amp;0<br>\end{array} \right. $$</p>
+<p>MATLAB代码如下：<br>$f$函数fun.m:</p>
+<figure class="highlight crystal"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">% x为待求解向量</span><br><span class="line">function f = <span class="function"><span class="keyword">fun</span>(<span class="title">x</span></span>)</span><br><span class="line">f = x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">2</span>)^<span class="number">2</span>+x(<span class="number">3</span>)^<span class="number">2</span>+<span class="number">8</span>;</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>定义了$f(x)$。<br>$C(x)$和$Ceq(x)$的定义在nonlcon.m:</p>
+<figure class="highlight lsl"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function [c,ceq] = nonlcon(x)</span><br><span class="line">c = [-x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">2</span>)-x(<span class="number">3</span>)^<span class="number">2</span>;x(<span class="number">1</span>)+x(<span class="number">2</span>)^<span class="number">2</span>+x(<span class="number">3</span>)^<span class="number">3</span><span class="number">-20</span>];% 非线性不等式约束C(x)</span><br><span class="line">ceq = [-x(<span class="number">1</span>)-x(<span class="number">2</span>)^<span class="number">2</span>+<span class="number">2</span>;x(<span class="number">2</span>)+<span class="number">2</span>*x(<span class="number">3</span>)^<span class="number">2</span><span class="number">-3</span>];         % 非线性等式约束Ceq(x)</span><br><span class="line">end</span><br></pre></td></tr></tbody></table></figure>
+<p>主文件main.m:</p>
+<figure class="highlight prolog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lb=[<span class="number">0</span>;<span class="number">0</span>;<span class="number">0</span>];</span><br><span class="line">ub=[inf;inf;inf];</span><br><span class="line">x0=zeros(<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">[x,fval]=fmincon(<span class="string">'fun'</span>,x0,[],[],[],[],lb,ub,<span class="string">'nonlcon'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>执行前需要保证拥有optimization toolbox，不然会报错“函数或变量 ‘getIpOptions’ 无法识别。”添加附加功能即可。<br>结果如下：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">    <span class="number">0.5522</span></span><br><span class="line">    <span class="number">1.2033</span></span><br><span class="line">    <span class="number">0.9478</span></span><br><span class="line"></span><br><span class="line">fval =</span><br><span class="line"></span><br><span class="line">   <span class="number">10.6511</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="3-二次规划"><a href="#3-二次规划" class="headerlink" title="3. 二次规划"></a>3. 二次规划</h2><h3 id="3-1-模型描述"><a href="#3-1-模型描述" class="headerlink" title="3.1 模型描述"></a>3.1 模型描述</h3><p>目标函数为决策变量$x$的二次函数，且约束条件都是线性的，标准型一般为：<br>$$\min \frac{1}{2}x^{T}Hx+f^{T}x$$</p>
+<p>$$s.t. Ax \leq b$$</p>
+<p>其中$H$是实对称矩阵。关于H的确定可以参考二次型及矩阵的标准型相关知识，总体来说便是，$x_{i}x_{j}$与$x_{j}x_{i}$两项计算最终结果是标量，最终的系数是相加后的结果，因为$H$是实对称矩阵所以元素$a_{ij}$和$a_{ji}$的项是$\frac{系数}{2}$，而平方项的生成只有一种情况，系数即为对称矩阵的对角线元素，标准型前面有$\frac{1}{2}$，所以矩阵结果还需要再×2生成$H$。<br>在MATLAB中的调用函数为：<br>$$[x,fval]=quadprog(H,f,A,b,Aeq,beq,lb,ub,x_{0},options)$$</p>
+<h3 id="3-2-MATLAB程序演示"><a href="#3-2-MATLAB程序演示" class="headerlink" title="3.2 MATLAB程序演示"></a>3.2 MATLAB程序演示</h3><p>求解二次规划：<br>$$\min f(x) = 2x_{1}^{2}-4x_{1}x_{2}+4x_{2}^{2}-6x_{1}-3x_{2}$$</p>
+<p>$$s.t. = \left\lbrace<br>\begin{array}{rl}<br>x_{1}+x_{2}&amp;\leq&amp;3\newline<br>4x_{1}+x_{2}&amp;\leq&amp;9\newline<br>x_{1},x_{2}&amp;\geq&amp;0<br>\end{array} \right. $$</p>
+<p>MATLAB程序：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">H=[<span class="number">4</span>,<span class="number">-4</span>;<span class="number">-4</span>,<span class="number">8</span>];</span><br><span class="line">f=[<span class="number">-6</span>;<span class="number">-3</span>];</span><br><span class="line">A=[<span class="number">1</span>,<span class="number">1</span>;<span class="number">4</span>,<span class="number">1</span>];</span><br><span class="line">b=[<span class="number">3</span>;<span class="number">9</span>];</span><br><span class="line">lb=[<span class="number">0</span>;<span class="number">0</span>];</span><br><span class="line">ub=[inf;inf];</span><br><span class="line">x0=zeros(<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">[x,fval]=quadprog(H,f,A,b,[],[],lb,ub,x0)</span><br></pre></td></tr></tbody></table></figure>
+<p>结果如下：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">    <span class="number">1.9500</span></span><br><span class="line">    <span class="number">1.0500</span></span><br><span class="line"></span><br><span class="line">fval =</span><br><span class="line"></span><br><span class="line">  <span class="number">-11.0250</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="4-整数规划"><a href="#4-整数规划" class="headerlink" title="4. 整数规划"></a>4. 整数规划</h2><h3 id="4-1-模型描述"><a href="#4-1-模型描述" class="headerlink" title="4.1 模型描述"></a>4.1 模型描述</h3><p>特殊的线性规划，部分或全部决策变量$x$被限制为整数，标准型也与之前一致。<br>在MATLAB中的调用函数为：<br>$$[x,fval,exitflag]=intlinprog(f,intcon,A,b,Aeq,beq,lb,ub,x_{0},options)$$</p>
+<p>$f$与线性规划的$c$一致，表示目标函数的系数;返回值多出一个$exitflag$，表示是否存在这么一个整数值;$intcon$为有整数约束的变量位置，例如如果第一个变量限制为整数，则$intcon=[1]$，如果第一个第二个均被限制为整数，则$intcon=[1,2]$。</p>
+<p>不再演示。（懒= 。 =）</p>
+<h2 id="5-目标规划"><a href="#5-目标规划" class="headerlink" title="5. 目标规划"></a>5. 目标规划</h2><h3 id="5-1-模型描述"><a href="#5-1-模型描述" class="headerlink" title="5.1 模型描述"></a>5.1 模型描述</h3><p>在线性规划基础上为适应多目标决策而发展起来的。<br>异同点：</p>
+<ul>
+<li>线性规划求的是一组约束条件下的极值，目标规划是多个目标决策，可求得实际的解。</li>
+<li>线性规划-最优解，目标规划-满意解。</li>
+<li>线性规划中的约束条件重要度是一样的，而目标规划中有主次之分，重要度有优先级，即优先满足什么再满足什么。</li>
+</ul>
+<p>正负偏差变量：<br>目标值：预先给定的某个目标的期望值<br>决策值：选定决策变量后的函数对应值<br>正偏差变量：决策值达到目标值部分，为 $d^{+}=\max \lbrace d-d_{0},0\rbrace$<br>负偏差变量：决策值未达到目标值部分，为 $d^{-}=-\min \lbrace d-d_{0},0\rbrace$<br>决策值不可能既超过目标值又未到达目标值，所以 $d^{+}\times d^{-}=0$，因为叉乘为0意味着两个向量是平行的。</p>
+<p>当目标值确定后，所要做的是尽量靠近目标值，所以目标函数即为一个最小化问题，最小化与目标值的距离，目标函数为:<br>$$\min z=f(d^{+},d^{-})$$</p>
+<p>一共有三种形式：</p>
+<ol>
+<li><p>要求恰好达到目标值。正、负偏差变量均要小：<br>$$\min z=f(d^{+}+d^{-})$$</p>
+</li>
+<li><p>仅不超过目标值，正偏差变量尽可能小：<br>$$\min z=f(d^{+})$$</p>
+</li>
+<li><p>仅超过目标值，负偏差变量尽可能小：<br>$$\min z=f(d^{-})$$</p>
+</li>
+</ol>
+<p>拥有优先级顺序的目标规划算法基本上使用序贯式算法求解，用LINGO求解。</p>
+<h3 id="5-2-基于遗传算法的MATLAB函数"><a href="#5-2-基于遗传算法的MATLAB函数" class="headerlink" title="5.2 基于遗传算法的MATLAB函数"></a>5.2 基于遗传算法的MATLAB函数</h3><h4 id="5-2-1-遗传算法"><a href="#5-2-1-遗传算法" class="headerlink" title="5.2.1 遗传算法"></a>5.2.1 遗传算法</h4><p>根据目标函数构造一个适应度函数，种群中的每个个体即为问题的每个解，理论思想基于进化论，最先开始初始化种群，然后对每个个体（即问题的解）进行评估（计算适应度）、选择（基于适应度选择）、交叉和变异，不断多轮迭代以生成一个适应度最好的个体为最优解，则算法停止。</p>
+<h4 id="5-2-2-MATLAB程序"><a href="#5-2-2-MATLAB程序" class="headerlink" title="5.2.2 MATLAB程序"></a>5.2.2 MATLAB程序</h4><p>MATLAB自带了$gamultiobj$函数来求解多目标优化问题，它是基于遗传算法的，形式为：<br>$$[x,fval] = gamultiobj(fitnessfcn,nvars,A,b,Aeq,beq,lb,ub,options)$$</p>
+<p>$fitnessfcn$表示目标函数（适应度函数）,$nvars$表示变量个数。<br>下面是一个实例，求解多目标最优化问题：<br>$$\min f_{1}(x_{1},x_{2})=x_{1}^{4}-10x_{1}^{2}+x_{1}x_{2}+x_{2}^{4}-x_{1}^{2}x_{2}^{2}$$</p>
+<p>$$\min f_{2}(x_{1},x_{2})=x_{2}^{4}-x_{1}^{2}x_{2}^{2}+x_{1}^{4}+x_{1}x_{2}$$</p>
+<p>$$s.t. = \left\lbrace<br>\begin{array}{ll}<br>-5\leq x_{1}\leq 5\newline<br>-5\leq x_{2}\leq 5\newline<br>\end{array} \right. $$</p>
+<p>适应度函数在fun.m中定义：</p>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">function</span> f = fun(x)</span><br><span class="line"><span class="attribute">f</span>(<span class="number">1</span>) = x(<span class="number">1</span>)^<span class="number">4</span> - <span class="number">10</span>*x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">1</span>)*x(<span class="number">2</span>) + x(<span class="number">2</span>)^<span class="number">4</span> - (x(<span class="number">1</span>)^<span class="number">2</span>)*(x(<span class="number">2</span>)^<span class="number">2</span>);</span><br><span class="line"><span class="attribute">f</span>(<span class="number">2</span>) = x(<span class="number">2</span>)^<span class="number">4</span> - (x(<span class="number">1</span>)^<span class="number">2</span>)*(x(<span class="number">2</span>)^<span class="number">2</span>) + x(<span class="number">1</span>)^<span class="number">4</span> + x(<span class="number">1</span>)*x(<span class="number">2</span>);</span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>主函数main.m：</p>
+<figure class="highlight ini"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">fitnessfcn</span> = @fun<span class="comment">;</span></span><br><span class="line"><span class="attr">nvars</span>=<span class="number">2</span><span class="comment">;</span></span><br><span class="line"><span class="attr">lb</span>=[-<span class="number">5</span><span class="comment">;-5];</span></span><br><span class="line">ub=[<span class="number">5</span><span class="comment">;5];</span></span><br><span class="line">options = gaoptimset(<span class="string">'ParetoFraction'</span>,<span class="number">0.3</span>,<span class="string">'PopulationSize'</span>,<span class="number">100</span>,<span class="string">'Generations'</span>,<span class="number">200</span>,<span class="string">'StallGenLimit'</span>,<span class="number">200</span>,<span class="string">'TolFun'</span>,<span class="number">1</span>e-<span class="number">100</span>,<span class="string">'PlotFcns'</span>,@gaplotpareto)<span class="comment">;</span></span><br><span class="line">[x,fval] = gamultiobj(fitnessfcn,nvars,[],[],[],[],lb,ub,options)</span><br></pre></td></tr></tbody></table></figure>
+<p>这里设置的是最优前端个体系数ParetoFraction为0.3，种群大小PopulationSize为100，最大遗传代数Generations为200，停止代数StallGenLimit为200，适应度函数偏差TolFun为1e-100，这里绘制的是第一前端个体的分布情况。（没有理解，之后再好好看遗传算法吧= =）</p>
+<p>需要额外添加global optimization toolbox，不然gaoptimset会报错。<br>结果如下：<br><img src="/2020/09/06/math-model-1/GA-Paretofront.jpg" alt="ga"></p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">   <span class="number">-0.7068</span>    <span class="number">0.7069</span></span><br><span class="line">    <span class="number">2.6718</span>   <span class="number">-1.9767</span></span><br><span class="line">    <span class="number">2.6718</span>   <span class="number">-1.9767</span></span><br><span class="line">    <span class="number">1.1010</span>   <span class="number">-1.1090</span></span><br><span class="line">   <span class="number">-0.7068</span>    <span class="number">0.7069</span></span><br><span class="line">    <span class="number">1.0033</span>   <span class="number">-0.8825</span></span><br><span class="line">    <span class="number">2.3382</span>   <span class="number">-1.6462</span></span><br><span class="line">    <span class="number">2.2078</span>   <span class="number">-1.6127</span></span><br><span class="line">    <span class="number">1.5425</span>   <span class="number">-1.3584</span></span><br><span class="line">    <span class="number">0.8928</span>   <span class="number">-0.8851</span></span><br><span class="line">    <span class="number">1.2533</span>   <span class="number">-1.2192</span></span><br><span class="line">    <span class="number">1.6961</span>   <span class="number">-1.1779</span></span><br><span class="line">    <span class="number">1.9208</span>   <span class="number">-1.5240</span></span><br><span class="line">    <span class="number">2.4265</span>   <span class="number">-1.8077</span></span><br><span class="line">    <span class="number">1.3321</span>   <span class="number">-1.1060</span></span><br><span class="line">    <span class="number">1.8264</span>   <span class="number">-1.4294</span></span><br><span class="line">    <span class="number">1.6293</span>   <span class="number">-1.2674</span></span><br><span class="line">    <span class="number">2.0690</span>   <span class="number">-1.4104</span></span><br><span class="line">    <span class="number">2.3934</span>   <span class="number">-1.8064</span></span><br><span class="line">    <span class="number">0.8211</span>   <span class="number">-0.6350</span></span><br><span class="line">    <span class="number">2.3069</span>   <span class="number">-1.6462</span></span><br><span class="line">    <span class="number">1.6542</span>   <span class="number">-1.3731</span></span><br><span class="line">    <span class="number">1.5056</span>   <span class="number">-1.4106</span></span><br><span class="line">    <span class="number">2.4705</span>   <span class="number">-1.8969</span></span><br><span class="line">    <span class="number">1.9671</span>   <span class="number">-1.2967</span></span><br><span class="line">    <span class="number">1.8732</span>   <span class="number">-1.4172</span></span><br><span class="line">    <span class="number">1.4146</span>   <span class="number">-1.2315</span></span><br><span class="line">    <span class="number">2.0216</span>   <span class="number">-1.5813</span></span><br><span class="line">    <span class="number">2.6195</span>   <span class="number">-1.9283</span></span><br><span class="line">    <span class="number">2.1531</span>   <span class="number">-1.5368</span></span><br><span class="line"></span><br><span class="line">fval =</span><br><span class="line"></span><br><span class="line">   <span class="number">-5.2460</span>   <span class="number">-0.2500</span></span><br><span class="line">  <span class="number">-38.3334</span>   <span class="number">33.0543</span></span><br><span class="line">  <span class="number">-38.3334</span>   <span class="number">33.0543</span></span><br><span class="line">  <span class="number">-11.8524</span>    <span class="number">0.2702</span></span><br><span class="line">   <span class="number">-5.2460</span>   <span class="number">-0.2500</span></span><br><span class="line">  <span class="number">-10.1148</span>   <span class="number">-0.0496</span></span><br><span class="line">  <span class="number">-36.1025</span>   <span class="number">18.5677</span></span><br><span class="line">  <span class="number">-34.4574</span>   <span class="number">14.2848</span></span><br><span class="line">  <span class="number">-21.2132</span>    <span class="number">2.5805</span></span><br><span class="line">   <span class="number">-8.1357</span>   <span class="number">-0.1656</span></span><br><span class="line">  <span class="number">-14.8940</span>    <span class="number">0.8139</span></span><br><span class="line">  <span class="number">-24.5568</span>    <span class="number">4.2121</span></span><br><span class="line">  <span class="number">-29.3845</span>    <span class="number">7.5102</span></span><br><span class="line">  <span class="number">-37.1598</span>   <span class="number">21.7182</span></span><br><span class="line">  <span class="number">-16.7445</span>    <span class="number">1.0014</span></span><br><span class="line">  <span class="number">-27.4827</span>    <span class="number">5.8762</span></span><br><span class="line">  <span class="number">-23.2484</span>    <span class="number">3.2983</span></span><br><span class="line">  <span class="number">-31.9596</span>   <span class="number">10.8491</span></span><br><span class="line">  <span class="number">-36.8378</span>   <span class="number">20.4479</span></span><br><span class="line">   <span class="number">-6.9179</span>   <span class="number">-0.1761</span></span><br><span class="line">  <span class="number">-35.7722</span>   <span class="number">17.4465</span></span><br><span class="line">  <span class="number">-23.7514</span>    <span class="number">3.6117</span></span><br><span class="line">  <span class="number">-20.2049</span>    <span class="number">2.4637</span></span><br><span class="line">  <span class="number">-37.4830</span>   <span class="number">23.5512</span></span><br><span class="line">  <span class="number">-29.9510</span>    <span class="number">8.7424</span></span><br><span class="line">  <span class="number">-28.4455</span>    <span class="number">6.6446</span></span><br><span class="line">  <span class="number">-18.4840</span>    <span class="number">1.5276</span></span><br><span class="line">  <span class="number">-31.3289</span>    <span class="number">9.5381</span></span><br><span class="line">  <span class="number">-38.2733</span>   <span class="number">30.3431</span></span><br><span class="line">  <span class="number">-33.5465</span>   <span class="number">12.8101</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h3 id="5-3-基于目标获得法的MATLAB函数"><a href="#5-3-基于目标获得法的MATLAB函数" class="headerlink" title="5.3 基于目标获得法的MATLAB函数"></a>5.3 基于目标获得法的MATLAB函数</h3><p>多目标优化问题中基于目标获得法的方法是需要先单独求得每个目标函数最优值，然后再进行计算的，MATLAB中还有$fgoalattain$函数，形式如下：<br>$$[x,fval] = fgoalattain(fun,x_{0},goal,weight,A,b,Aeq,beq,lb,ub,nonlcon,options)$$</p>
+<p>$goal$为目标函数分别达到的最优值，$weight$为目标函数之间的权重，一般即为最优值的绝对值，$fun$即为目标函数。<br>先分别求出目标函数的最优值：<br>fun1.m:</p>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">function</span> f = fun<span class="number">1</span>(x)</span><br><span class="line"><span class="attribute">f</span> = x(<span class="number">1</span>)^<span class="number">4</span> - <span class="number">10</span>*x(<span class="number">1</span>)^<span class="number">2</span>+x(<span class="number">1</span>)*x(<span class="number">2</span>) + x(<span class="number">2</span>)^<span class="number">4</span> - (x(<span class="number">1</span>)^<span class="number">2</span>)*(x(<span class="number">2</span>)^<span class="number">2</span>);</span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>fun2.m:</p>
+<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">function</span> f = fun<span class="number">2</span>(x)</span><br><span class="line"><span class="attribute">f</span> = x(<span class="number">2</span>)^<span class="number">4</span> - (x(<span class="number">1</span>)^<span class="number">2</span>)*(x(<span class="number">2</span>)^<span class="number">2</span>) + x(<span class="number">1</span>)^<span class="number">4</span> + x(<span class="number">1</span>)*x(<span class="number">2</span>);</span><br><span class="line"><span class="attribute">end</span></span><br></pre></td></tr></tbody></table></figure>
+<p>主函数main.m:</p>
+<figure class="highlight prolog"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lb=[<span class="number">-5</span>;<span class="number">-5</span>];</span><br><span class="line">ub=[<span class="number">5</span>;<span class="number">5</span>];</span><br><span class="line">x0=rand(<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">[x1,fval1]=fmincon(<span class="string">'fun1'</span>,x0,[],[],[],[],lb,ub,[]);</span><br><span class="line">[x2,fval2]=fmincon(<span class="string">'fun2'</span>,x0,[],[],[],[],lb,ub,[]);</span><br><span class="line"><span class="comment">% 以上先求出分别的最优值</span></span><br><span class="line">goal=[fval1,fval2];</span><br><span class="line">weight=[abs(fval1),abs(fval2)];</span><br><span class="line">[x,fval]=fgoalattain(<span class="string">'fun'</span>,goal,weight,x0,[],[],[],[],lb,ub)</span><br></pre></td></tr></tbody></table></figure>
+<p>结果如下：</p>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">x =</span><br><span class="line"></span><br><span class="line">   <span class="number">-0.7071</span>    <span class="number">0.7071</span></span><br><span class="line"></span><br><span class="line">fval =</span><br><span class="line"></span><br><span class="line">   <span class="number">-5.2500</span>   <span class="number">-0.2500</span></span><br></pre></td></tr></tbody></table></figure>
+<p>使用$fgoalattain$获得一组最优解，与之前的基于遗传算法的方法不同，最优解很大程度取决于初始化值$x_{0}$（因为我发现初始化为0后它就不动了= 。 =）</p>
+<p>（更新ing）</p>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2020-09-06&nbsp;&nbsp;12:15:57</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2020/09/06/math-model-1/">http://a123wyn.studio/2020/09/06/math-model-1/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Notes/"># Notes</a>
+                    
+                        <a href="/tags/Mathematical-Modeling/"># Mathematical Modeling</a>
+                    
+                        <a href="/tags/MATLAB/"># MATLAB</a>
+                    
+                        <a href="/tags/Optimization/"># Optimization</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2020/11/01/stat-1/">【Stat 110-Probability】Theme 1</a>
+            
+            
+                <a class="next" rel="next" href="/2020/07/20/ubuntu-mysql/">【Ubuntu】MySQL的用户root密码设置问题</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

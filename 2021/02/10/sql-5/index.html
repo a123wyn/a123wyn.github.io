@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数) | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-10&nbsp;&nbsp;10:59:47</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/10/sql-5/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>world表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">continent</th>
+<th align="center">area</th>
+<th align="center">population</th>
+<th align="center">gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Afghanistan</td>
+<td align="center">Asia</td>
+<td align="center">652230</td>
+<td align="center">25500100</td>
+<td align="center">20343000000</td>
+</tr>
+<tr>
+<td align="center">Albania</td>
+<td align="center">Europe</td>
+<td align="center">28748</td>
+<td align="center">2831741</td>
+<td align="center">12960000000</td>
+</tr>
+<tr>
+<td align="center">Algeria</td>
+<td align="center">Africa</td>
+<td align="center">2381741</td>
+<td align="center">37100000</td>
+<td align="center">188681000000</td>
+</tr>
+<tr>
+<td align="center">Andorra</td>
+<td align="center">Europe</td>
+<td align="center">468</td>
+<td align="center">78115</td>
+<td align="center">3712000000</td>
+</tr>
+<tr>
+<td align="center">Angola</td>
+<td align="center">Africa</td>
+<td align="center">1246700</td>
+<td align="center">20609294</td>
+<td align="center">100990000000</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p><strong>name:</strong> 国家名称<br><strong>continent:</strong> 洲<br><strong>area:</strong> 面积<br><strong>population:</strong> 人口<br><strong>gdp:</strong> 国内生产总值</p>
+<h2 id="SUM-and-COUNT-zh"><a href="#SUM-and-COUNT-zh" class="headerlink" title="SUM and COUNT/zh"></a>SUM and COUNT/zh</h2><figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.展示世界的總人口。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">sum</span>(population)</span><br><span class="line"><span class="keyword">FROM</span> world</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2.列出所有的洲份, 每個只有一次。</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> continent <span class="keyword">from</span> world</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>找出非洲(Africa)的GDP總和。</span><br><span class="line"><span class="function"><span class="keyword">select</span> <span class="title">sum</span>(<span class="params">gdp</span>) <span class="keyword">from</span> world</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> continent</span> = <span class="string">'Africa'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4.有多少個國家具有至少百萬(1000000)的面積。</span><br><span class="line">select count(name) <span class="keyword">from</span> world</span><br><span class="line">where<span class="built_in"> area </span>&gt;= 1000000</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>(<span class="string">'France'</span>,<span class="string">'Germany'</span>,<span class="string">'Spain'</span>)（“法國”，“德國”，“西班牙”）的總人口是多少？</span><br><span class="line"><span class="keyword">select</span> sum(population) <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> <span class="keyword">in</span> (<span class="string">'France'</span>,<span class="string">'Germany'</span>,<span class="string">'Spain'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6.對於每一個洲份，顯示洲份和國家的數量。</span><br><span class="line">select continent,count(name) <span class="keyword">from</span> world</span><br><span class="line">group by continent</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">7.對於每一個洲份，顯示洲份和至少有1000萬人(10,000,000)口國家的數目。</span><br><span class="line">select continent,count(name) <span class="keyword">from</span> world</span><br><span class="line">where population &gt;= 10000000</span><br><span class="line">group by continent</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">8.列出有至少100百萬(1億)(100,000,000)人口的洲份。</span><br><span class="line">select continent <span class="keyword">from</span> world</span><br><span class="line">group by continent</span><br><span class="line">having sum(population) &gt;= 100000000</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="The-nobel-table-can-be-used-to-practice-more-SUM-and-COUNT-functions-zh"><a href="#The-nobel-table-can-be-used-to-practice-more-SUM-and-COUNT-functions-zh" class="headerlink" title="The nobel table can be used to practice more SUM and COUNT functions./zh"></a>The nobel table can be used to practice more SUM and COUNT functions./zh</h2><figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1.找出總共有多少個獎頒發了。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="built_in">COUNT</span>(winner) <span class="keyword">FROM</span> nobel</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>.列出每一個獎項(<span class="keyword">subject), </span>只列一次</span><br><span class="line">select <span class="keyword">distinct </span><span class="keyword">subject </span>from nobel</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>找出物理獎的總頒發次數。</span><br><span class="line"><span class="function"><span class="keyword">select</span> <span class="title">count</span>(<span class="params">yr</span>) <span class="keyword">from</span> nobel</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> subject</span> = <span class="string">'Physics'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4.對每一個獎項(Subject),列出頒發數目。</span><br><span class="line">select subject,count(yr) <span class="keyword">from</span> nobel</span><br><span class="line">group by subject</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">5.對每一個獎項(Subject),列出首次頒發的年份。</span><br><span class="line">select subject,min(yr) <span class="keyword">from</span> nobel</span><br><span class="line">group by subject</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">6.對每一個獎項(Subject),列出2000年頒發的數目。</span><br><span class="line">select subject,count(winner) <span class="keyword">from</span> nobel</span><br><span class="line">where yr = 2000</span><br><span class="line">group by subject</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7.對每一個獎項(Subject),列出有多少個不同的得獎者。</span><br><span class="line">select subject,count(distinct winner) <span class="keyword">from</span> nobel</span><br><span class="line">group by subject</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">8.對每一個獎項(Subject),列出有多少年曾頒發過。</span><br><span class="line">select subject,count(distinct yr) <span class="keyword">from</span> nobel</span><br><span class="line">group by subject</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">9.列出哪年曾同年有3個物理獎Physics得獎者。</span><br><span class="line">select yr <span class="keyword">from</span> nobel</span><br><span class="line">where subject = <span class="string">'Physics'</span></span><br><span class="line">group by yr</span><br><span class="line">having count(winner) = 3</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.列出誰得獎多於一次。</span><br><span class="line">select winner <span class="keyword">from</span> nobel</span><br><span class="line">group by winner</span><br><span class="line">having count(yr) &gt; 1</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">11.列出誰獲得多於一個獎項(Subject)</span><br><span class="line">select winner <span class="keyword">from</span> nobel</span><br><span class="line">group by winner</span><br><span class="line">having count(distinct subject) &gt; 1</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">12.哪年哪獎項，是同一獎項(subject)頒發給3個人。只列出2000年及之後的資料。</span><br><span class="line">select yr,subject <span class="keyword">from</span> nobel</span><br><span class="line">where yr &gt;= 2000</span><br><span class="line">group by yr,subject</span><br><span class="line">having count(winner) = 3</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/09/jC3YROmWFeHpo8I.png" alt="_5X1B_63_NIY~__@O_P_7VX.png"><br>1.Select the statement that shows the sum of population of all countries in ‘Europe’<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> SUM(population) <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> region = <span class="string">'Europe'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>2.Select the statement that shows the number of countries with population smaller than 150000<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> COUNT(<span class="type">name</span>) <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> population &lt; <span class="number">150000</span></span><br></pre></td></tr></tbody></table></figure>
+<p>3.Select the list of core SQL aggregate functions<br><strong>Answer：</strong></p>
+<figure class="highlight less"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">AVG</span>(), <span class="selector-tag">COUNT</span>(), <span class="selector-tag">MAX</span>(), <span class="selector-tag">MIN</span>(), <span class="selector-tag">SUM</span>()</span><br></pre></td></tr></tbody></table></figure>
+<p>4.Select the result that would be obtained from the following code:</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT region, SUM(area)</span><br><span class="line">  <span class="keyword">FROM</span> bbc </span><br><span class="line"> WHERE SUM(area) &gt; 15000000 </span><br><span class="line"><span class="built_in"> GROUP </span>BY region</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong></p>
+<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">No <span class="built_in">result</span> due <span class="built_in">to</span> invalid use <span class="keyword">of</span> <span class="keyword">the</span> WHERE <span class="function"><span class="keyword">function</span></span></span><br></pre></td></tr></tbody></table></figure>
+<p>5.Select the statement that shows the average population of ‘Poland’, ‘Germany’ and ‘Denmark’<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> AVG(population) <span class="keyword">FROM</span> bbc <span class="keyword">WHERE</span> <span class="type">name</span> <span class="keyword">IN</span> (<span class="string">'Poland'</span>, <span class="string">'Germany'</span>, <span class="string">'Denmark'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>6.Select the statement that shows the medium population density of each region<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT region, SUM(population)/SUM(area) AS density <span class="keyword">FROM</span> bbc<span class="built_in"> GROUP </span>BY region</span><br></pre></td></tr></tbody></table></figure>
+<p>7.Select the statement that shows the name and population density of the country with the largest population<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT name, population<span class="built_in">/area </span>AS density <span class="keyword">FROM</span> bbc WHERE population = (SELECT MAX(population) <span class="keyword">FROM</span> bbc)</span><br></pre></td></tr></tbody></table></figure>
+<p>8.Pick the result that would be obtained from the following code:</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT region, SUM(area) </span><br><span class="line">  <span class="keyword">FROM</span> bbc </span><br><span class="line"><span class="built_in"> GROUP </span>BY region </span><br><span class="line"> HAVING SUM(area)&lt;= 20000000</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/10/DwLx6N9P8MBJIkF.png" alt="Q6YSU_E4_7__BQELH5IK@1W.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>聚合函数将多个数据进行计算，得出的结果只有一个数据，内部可以使用distinct去掉重复值</li>
+<li>使用group by后，前面的select只能是分组条件或是使用聚合函数</li>
+<li>where和having，group by前的where是分组之前的筛选，having是分组后要进行的操作</li>
+<li>可以进行多次分组，例如每个x下的每个y，可以用group by x,y</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-10&nbsp;&nbsp;10:59:47</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/10/sql-5/">http://a123wyn.studio/2021/02/10/sql-5/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/12/sql-6/">【SQLZOO】Tutorials-6.JOIN(合并表格)</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/08/sql-4/">【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

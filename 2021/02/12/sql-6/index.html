@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-6.JOIN(合并表格) | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-6.JOIN(合并表格)</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-12&nbsp;&nbsp;14:19:23</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/12/sql-6/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-6.JOIN(合并表格)">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="The-JOIN-operation-zh"><a href="#The-JOIN-operation-zh" class="headerlink" title="The JOIN operation/zh"></a>The JOIN operation/zh</h2><p><img src="https://i.loli.net/2021/02/12/ryHncqdvNgSt842.png" alt="_ZU7~_P_9_GNVJP_ZUQ_6A1.png"><br><img src="https://i.loli.net/2021/02/12/BgNUiZIsKeyFH9G.png" alt="H~TV_916__7_Q_0S__T46_8.png"></p>
+<figure class="highlight sqf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1</span>.列出 賽事編號matchid 和球員名 <span class="built_in">player</span> ,該球員代表德國隊Germany入球的。要找出德國隊球員，要檢查: teamid = <span class="string">'GER'</span></span><br><span class="line"><span class="built_in">SELECT</span> matchid,<span class="built_in">player</span> <span class="keyword">FROM</span> goal </span><br><span class="line">  WHERE teamid = <span class="string">'GER'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>由以上查詢，你可見Lars Bender's 於賽事 <span class="number">1012</span>入球。.現在我們想知道此賽事的對賽隊伍是哪一隊。</span><br><span class="line">留意在 goal 表格中的欄位 matchid ，是對應表格game的欄位<span class="built_in">id</span>。我們可以在表格 game中找出賽事<span class="number">1012</span>的資料。</span><br><span class="line">只顯示賽事<span class="number">1012</span>的 <span class="built_in">id</span>, stadium, team1, team2</span><br><span class="line">select <span class="built_in">id</span>,stadium,team1,team2 <span class="keyword">from</span> game</span><br><span class="line"><span class="keyword">where</span> <span class="built_in">id</span> = <span class="number">1012</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3</span>.顯示每一個德國入球的球員名，隊伍名，場館和日期。</span><br><span class="line"><span class="keyword">SELECT</span> player,teamid,stadium,mdate</span><br><span class="line">  <span class="keyword">FROM</span> goal <span class="keyword">JOIN</span> game <span class="keyword">ON</span> (goal.matchid=game.id) <span class="keyword">where</span> teamid = <span class="string">'GER'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>列出球員名字叫Mario (player <span class="keyword">LIKE</span> <span class="string">'Mario%'</span>)有入球的 隊伍<span class="number">1</span> team1, 隊伍<span class="number">2</span> team2 和 球員名 player</span><br><span class="line"><span class="keyword">select</span> team1,team2,player <span class="keyword">from</span> game <span class="keyword">join</span> goal <span class="keyword">on</span> (game.id=goal.matchid)</span><br><span class="line"><span class="keyword">where</span> player <span class="keyword">like</span> <span class="string">'Mario%'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight q"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>列出每場球賽中首<span class="number">10</span>分鐘<span class="built_in">gtime</span>&lt;=<span class="number">10</span>有入球的球員 player, 隊伍teamid, 教練coach, 入球時間<span class="built_in">gtime</span></span><br><span class="line"><span class="keyword">select</span> player,teamid,coach,<span class="built_in">gtime</span> <span class="keyword">from</span> goal join eteam on (goal.teamid=eteam.id)</span><br><span class="line"><span class="built_in">where</span> <span class="built_in">gtime</span>&lt;=<span class="number">10</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>列出<span class="string">'Fernando Santos'</span>作為隊伍<span class="number">1</span> team1 的教練的賽事日期，和隊伍名。</span><br><span class="line"><span class="keyword">select</span> mdate,<span class="function">teamname <span class="keyword">from</span> game <span class="keyword">join</span> eteam <span class="title">on</span> (<span class="params">game.team1=eteam.id</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> coach</span> = <span class="string">'Fernando Santos'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7.</span>列出場館 <span class="string">'National Stadium, Warsaw'</span>的入球球員。</span><br><span class="line"><span class="function"><span class="keyword">select</span> player <span class="keyword">from</span> game <span class="keyword">join</span> goal <span class="title">on</span> (<span class="params">game.id=goal.matchid</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> stadium</span> = <span class="string">'National Stadium, Warsaw'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>More Difficult</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">8.只列出全部賽事，射入德國龍門的球員名字。</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">distinct</span> player <span class="keyword">from</span> game <span class="keyword">join</span> goal <span class="keyword">on</span> matchid = <span class="keyword">id</span> </span><br><span class="line"><span class="keyword">where</span> (team1=<span class="string">'GER'</span> <span class="keyword">or</span> team2=<span class="string">'GER'</span>) <span class="keyword">and</span> teamid!=<span class="string">'GER'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9.列出隊伍名稱 teamname 和該隊入球總數</span><br><span class="line">select teamname, count(player)</span><br><span class="line"><span class="keyword">from</span> eteam JOIN goal ON <span class="attribute">id</span>=teamid</span><br><span class="line">group by teamname</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">10.列出場館名和在該場館的入球數字。</span><br><span class="line">select stadium, count(player)</span><br><span class="line"><span class="keyword">from</span> game JOIN goal ON <span class="attribute">id</span>=matchid</span><br><span class="line">group by stadium</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">11.每一場波蘭<span class="string">'POL'</span>有參與的賽事中，列出賽事編號 matchid, 日期date 和入球數字。</span><br><span class="line">select matchid,mdate,count(player)</span><br><span class="line"><span class="keyword">from</span> game join goal on id = matchid</span><br><span class="line">where team1 = <span class="string">'POL'</span> <span class="keyword">or</span> team2 = <span class="string">'POL'</span></span><br><span class="line">group by matchid,mdate</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">12.每一場德國<span class="string">'GER'</span>有參與的賽事中，列出賽事編號 matchid, 日期date 和德國的入球數字。</span><br><span class="line">select matchid,mdate,count(player)</span><br><span class="line"><span class="keyword">from</span> game join goal on id = matchid</span><br><span class="line">where (team1 = <span class="string">'GER'</span> <span class="keyword">or</span> team2 = <span class="string">'GER'</span>) <span class="keyword">and</span> teamid = <span class="string">'GER'</span></span><br><span class="line">group by matchid,mdate</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">13.List every match <span class="keyword">with</span> the goals scored <span class="keyword">by</span> <span class="keyword">each</span> team <span class="keyword">as</span> shown. This will <span class="keyword">use</span> <span class="string">"CASE WHEN"</span> which has <span class="keyword">not</span> been explained <span class="keyword">in</span> <span class="keyword">any</span> previous exercises.</span><br><span class="line"><span class="keyword">Notice</span> <span class="keyword">in</span> the <span class="keyword">query</span> given every goal <span class="keyword">is</span> listed. <span class="keyword">If</span> it was a team1 goal <span class="keyword">then</span> a <span class="number">1</span> appears <span class="keyword">in</span> score1, otherwise there <span class="keyword">is</span> a <span class="number">0.</span> You could <span class="keyword">SUM</span> this <span class="keyword">column</span> <span class="keyword">to</span> <span class="keyword">get</span> a <span class="keyword">count</span> <span class="keyword">of</span> the goals scored <span class="keyword">by</span> team1. <span class="keyword">Sort</span> your <span class="keyword">result</span> <span class="keyword">by</span> mdate, matchid, team1 <span class="keyword">and</span> team2.</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> mdate,team1,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> teamid=team1 <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) score1,team2,</span><br><span class="line"><span class="keyword">sum</span>(<span class="keyword">case</span> <span class="keyword">when</span> teamid=team2 <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>) score2</span><br><span class="line"><span class="keyword">from</span> game <span class="keyword">left</span> <span class="keyword">join</span> goal <span class="keyword">on</span> <span class="keyword">id</span> = matchid</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> mdate,team1,team2</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> mdate,matchid,team1,team2</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span>与之前条件排序的用法原理相似，会得到一个结果列表(每行都有一个结果，整体是<span class="number">0</span>和<span class="number">1</span>组成)，分组后对其进行聚合操作(<span class="keyword">SUM</span>)</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Music-Tutorial-zh"><a href="#Music-Tutorial-zh" class="headerlink" title="Music Tutorial/zh"></a>Music Tutorial/zh</h2><p>album(asin, title, artist, price, release, label, rank)<br>大碟(asin, 碟名, 歌手, 售價, 推出, 標籤, 排名)</p>
+<p>track(album, dsk, posn, song)<br>曲目(大碟, 碟號, 軌號, 歌名)</p>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.找出收錄歌曲song <span class="string">'Alison'</span>　碟名<span class="meta">title</span>和歌手artist</span><br><span class="line"><span class="meta">SELECT</span> <span class="meta">title</span>,artist</span><br><span class="line">  <span class="meta">FROM</span> album JOIN track</span><br><span class="line">         <span class="meta">ON</span> (album.asin=track.album)</span><br><span class="line"> <span class="meta">WHERE</span> song = <span class="string">'Alison'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>哪一歌手artist 錄了歌曲 song <span class="string">'Exodus'</span>?</span><br><span class="line"><span class="function"><span class="keyword">select</span> artist <span class="keyword">from</span> album <span class="keyword">join</span> track <span class="title">on</span> (<span class="params">asin=album</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> song</span> = <span class="string">'Exodus'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>為大碟album <span class="string">'Blur'</span>， 顯示每一首歌的歌名 song 。</span><br><span class="line"><span class="function"><span class="keyword">select</span> song <span class="keyword">from</span> album <span class="keyword">join</span> track <span class="title">on</span> (<span class="params">asin=album</span>)</span></span><br><span class="line"><span class="function"><span class="keyword">where</span> title</span> = <span class="string">'Blur'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">4.為每一大碟album顯示歌名title和每大碟的歌曲track數量。</span><br><span class="line">SELECT title,count(song) <span class="keyword">FROM</span> album JOIN track ON (<span class="attribute">asin</span>=album)</span><br><span class="line"><span class="built_in"> GROUP </span>BY title</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">5.為每一大碟album列出碟名title 歌名中有<span class="string">'Heart'</span>一詞的歌曲數量。 (沒有這些歌的大碟不用列出).</span><br><span class="line">select title,count(song) <span class="keyword">from</span> album join track on (<span class="attribute">asin</span>=album)</span><br><span class="line">where song like <span class="string">'%Heart%'</span></span><br><span class="line">group by title</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6.主題歌曲是歌名 song 和大碟名字 title相同。找出主題歌曲。</span><br><span class="line"><span class="keyword">select</span> song <span class="keyword">from</span> album <span class="keyword">join</span> track <span class="keyword">on</span> (<span class="built_in">asin</span>=album)</span><br><span class="line"><span class="keyword">where</span> song = <span class="built_in">title</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">7.同名大碟是指大碟和歌手名字相同。 (例如大碟<span class="string">'Blur'</span> 是由樂隊 <span class="string">'Blur'</span>主唱)。 找出同名大碟。</span><br><span class="line"><span class="meta">select</span> <span class="meta">title</span> <span class="meta">from</span> album</span><br><span class="line"><span class="meta">where</span> artist = <span class="meta">title</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">8.找出歌曲收錄在２隻以上的大碟中。列出收錄次數。</span><br><span class="line">select song,count(distinct album) <span class="keyword">from</span> track</span><br><span class="line">group by song</span><br><span class="line">having count(distinct album) &gt; 2</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">9.好價大碟是指大碟中每一首歌曲的價格是少於5角。 找出好價大碟，列出大碟名字，售價和歌曲數量。</span><br><span class="line">select title,price,count(song) <span class="keyword">from</span> track join album a on (a.<span class="attribute">asin</span>=album)</span><br><span class="line">where 0.5 &gt; (select price/count(song) <span class="keyword">from</span> track join album b on (b.<span class="attribute">asin</span>=album) where a.asin = b.asin<span class="built_in"> group </span>by price)</span><br><span class="line">group by title,price</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">10.歌手Wagner的大碟 Ring cycle 有173首歌曲, 歌手Bing Crosby有一大碟 收錄了 101首歌曲。</span><br><span class="line">按歌曲量(多至少)列出每一大碟的碟名和歌曲數量。</span><br><span class="line">select title,count(song) <span class="keyword">from</span> album join track on (<span class="attribute">asin</span>=album)</span><br><span class="line">group by title</span><br><span class="line">order by count(song) desc</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/12/BgNUiZIsKeyFH9G.png" alt="H~TV_916__7_Q_0S__T46_8.png"><br>1.You want to find the stadium where player ‘Dimitris Salpingidis’ scored. Select the JOIN condition to use:<br><strong>Answer：</strong></p>
+<figure class="highlight lasso"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">game <span class="keyword">JOIN</span> goal <span class="keyword">ON</span> (id=matchid)</span><br></pre></td></tr></tbody></table></figure>
+<p>2.You JOIN the tables goal and eteam in an SQL statement. Indicate the list of column names that may be used in the SELECT line:<br><strong>Answer：</strong></p>
+<figure class="highlight sqf"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">matchid, teamid, <span class="built_in">player</span>, gtime, id, <span class="built_in">teamname</span>, coach</span><br></pre></td></tr></tbody></table></figure>
+<p>3.Select the code which shows players, their team and the amount of goals they scored against Greece(GRE).<br><strong>Answer：</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT player, teamid, COUNT(*)</span><br><span class="line">  <span class="keyword">FROM</span> game JOIN goal ON matchid = id</span><br><span class="line"> WHERE (team1 = <span class="string">"GRE"</span> <span class="keyword">OR</span> team2 = <span class="string">"GRE"</span>)</span><br><span class="line">   <span class="keyword">AND</span> teamid != <span class="string">'GRE'</span></span><br><span class="line"><span class="built_in"> GROUP </span>BY player, teamid</span><br></pre></td></tr></tbody></table></figure>
+<p>4.Select the result that would be obtained from this code:</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> teamid, mdate</span><br><span class="line">  <span class="keyword">FROM</span> goal <span class="keyword">JOIN</span> game <span class="keyword">on</span> (matchid=<span class="keyword">id</span>)</span><br><span class="line"> <span class="keyword">WHERE</span> mdate = <span class="string">'9 June 2012'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/12/xijJhQrXepgSfKG.png" alt="U4HU_T58Y3Y7AHZG_S4KBB7.png"><br>5.Select the code which would show the player and their team for those who have scored against Poland(POL) in National Stadium, Warsaw.<br><strong>Answer：</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> player, teamid </span><br><span class="line">  <span class="keyword">FROM</span> game <span class="keyword">JOIN</span> goal <span class="keyword">ON</span> matchid = <span class="keyword">id</span> </span><br><span class="line"> <span class="keyword">WHERE</span> stadium = <span class="string">'National Stadium, Warsaw'</span> </span><br><span class="line"><span class="keyword">AND</span> (team1 = <span class="string">'POL'</span> <span class="keyword">OR</span> team2 = <span class="string">'POL'</span>)</span><br><span class="line">  <span class="keyword">AND</span> teamid != <span class="string">'POL'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>6.Select the code which shows the player, their team and the time they scored, for players who have played in Stadion Miejski (Wroclaw) but not against Italy(ITA).<br><strong>Answer：</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> player, teamid, gtime</span><br><span class="line">  <span class="keyword">FROM</span> game <span class="keyword">JOIN</span> goal <span class="keyword">ON</span> matchid = <span class="keyword">id</span></span><br><span class="line"> <span class="keyword">WHERE</span> stadium = <span class="string">'Stadion Miejski (Wroclaw)'</span></span><br><span class="line">   <span class="keyword">AND</span> (( teamid = team2 <span class="keyword">AND</span> team1 != <span class="string">'ITA'</span>) <span class="keyword">OR</span> ( teamid = team1 <span class="keyword">AND</span> team2 != <span class="string">'ITA'</span>))</span><br></pre></td></tr></tbody></table></figure>
+<p>7.Select the result that would be obtained from this code:</p>
+<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> teamname, COUNT<span class="comment">(*)</span></span><br><span class="line"><span class="comment">  FROM eteam JOIN goal ON teamid = id</span></span><br><span class="line"><span class="comment"> GROUP BY teamname</span></span><br><span class="line"><span class="comment">HAVING COUNT(*)</span> &lt; <span class="number">3</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/12/uV9rReNfmhxwsi4.png" alt="F~@~__CP_KB@@VHPZ4T_3_P.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>图源自<a target="_blank" rel="noopener" href="https://www.runoob.com/sql/sql-join.html">菜鸟教程</a><br><img src="https://i.loli.net/2021/02/12/OEb6fnrHqUAPpXI.png" alt="sql-join.png"></li>
+<li>The JOIN operation/zh中的T13之所以用left join的原因是即使goal表中没有记录，也就是这场比赛双方都没有得分，数据仍然需要列出来，所以game left join goal</li>
+<li>注意区分PK和FK</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-12&nbsp;&nbsp;14:19:23</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/12/sql-6/">http://a123wyn.studio/2021/02/12/sql-6/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/13/sql-7/">【SQLZOO】Tutorials-7.More JOIN</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/10/sql-5/">【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-3.SELECT from Nobel | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-3.SELECT from Nobel</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-05&nbsp;&nbsp;12:08:45</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/05/sql-3/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-3.SELECT from Nobel">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>nobel表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">yr</th>
+<th align="center">subject</th>
+<th align="center">winner</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1960</td>
+<td align="center">Chemistry</td>
+<td align="center">Willard F. Libby</td>
+</tr>
+<tr>
+<td align="center">1960</td>
+<td align="center">Literature</td>
+<td align="center">Saint-John Perse</td>
+</tr>
+<tr>
+<td align="center">1960</td>
+<td align="center">Medicine</td>
+<td align="center">Sir Frank Macfarlane Burnet</td>
+</tr>
+<tr>
+<td align="center">1960</td>
+<td align="center">Medicine</td>
+<td align="center">Peter Madawar</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p><strong>yr:</strong> 年份<br><strong>subject:</strong> 奖项<br><strong>winner:</strong> 获奖者</p>
+<h2 id="SELECT-from-Nobel-Tutorial-zh"><a href="#SELECT-from-Nobel-Tutorial-zh" class="headerlink" title="SELECT from Nobel Tutorial/zh"></a>SELECT from Nobel Tutorial/zh</h2><figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>更改查詢以顯示<span class="number">1950</span>年諾貝爾獎的獎項資料。</span><br><span class="line">SELECT yr, subject, winner</span><br><span class="line">  FROM nobel</span><br><span class="line"> WHERE yr = <span class="number">1950</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2</span>.顯示誰贏得了<span class="number">1962</span>年文學獎(Literature)。</span><br><span class="line"><span class="keyword">SELECT</span> winner</span><br><span class="line">  <span class="keyword">FROM</span> nobel</span><br><span class="line"> <span class="keyword">WHERE</span> yr = <span class="number">1962</span></span><br><span class="line">   <span class="keyword">AND</span> subject = <span class="string">'Literature'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>顯示“愛因斯坦”(<span class="string">'Albert Einstein'</span>) 的獲獎年份和獎項。</span><br><span class="line"><span class="keyword">select</span> yr,subject</span><br><span class="line"><span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> winner = <span class="string">'Albert Einstein'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>顯示<span class="number">2000</span>年及以後的和平獎(‘Peace’)得獎者。</span><br><span class="line">select winner</span><br><span class="line"><span class="keyword">from</span> nobel</span><br><span class="line">where yr &gt;= <span class="number">2000</span> <span class="keyword">and</span> subject = <span class="string">'Peace'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>顯示<span class="number">1980</span>年至<span class="number">1989</span>年(包含首尾)的文學獎(Literature)獲獎者所有細節（年，主題，獲獎者）。</span><br><span class="line">select yr,subject,winner</span><br><span class="line"><span class="keyword">from</span> nobel</span><br><span class="line">where yr between <span class="number">1980</span> <span class="keyword">and</span> <span class="number">1989</span> <span class="keyword">and</span> subject = <span class="string">'Literature'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>顯示總統獲勝者的所有細節：</span><br><span class="line">西奧多•羅斯福 Theodore Roosevelt</span><br><span class="line">伍德羅•威爾遜 Woodrow Wilson</span><br><span class="line">吉米•卡特 Jimmy Carter</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nobel</span><br><span class="line"><span class="function"><span class="keyword">where</span> winner <span class="title">in</span> (<span class="params"><span class="string">'Theodore Roosevelt'</span>,<span class="string">'Woodrow Wilson'</span>,<span class="string">'Jimmy Carter'</span></span>)</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7.</span>顯示名字為John 的得獎者。 (注意:外國人名字(First <span class="type">name</span>)在前，姓氏(Last <span class="type">name</span>)在後)</span><br><span class="line"><span class="keyword">select</span> winner</span><br><span class="line"><span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> winner <span class="keyword">like</span> <span class="string">'John %'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8.</span>顯示<span class="number">1980</span>年物理學(physics)獲獎者，及<span class="number">1984</span>年化學獎(chemistry)獲得者。</span><br><span class="line">select * <span class="keyword">from</span> nobel</span><br><span class="line">where (yr = <span class="number">1980</span> <span class="keyword">and</span> subject = <span class="string">'physics'</span>) <span class="keyword">or</span> (yr = <span class="number">1984</span> <span class="keyword">and</span> subject = <span class="string">'chemistry'</span>) </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.</span>除查看<span class="number">1980</span>年獲獎者，但不包括化學獎(Chemistry)和醫學獎(Medicine)。</span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> yr = <span class="number">1980</span> <span class="function">and subject not <span class="title">in</span> (<span class="params"><span class="string">'Chemistry'</span>,<span class="string">'Medicine'</span></span>)</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.</span>顯示早期的醫學獎(Medicine)得獎者（<span class="number">1910</span>之前，不包括<span class="number">1910</span>），及近年文學獎(Literature)得獎者（<span class="number">2004</span>年以後，包括<span class="number">2004</span>年）。</span><br><span class="line">select * <span class="keyword">from</span> nobel</span><br><span class="line">where (yr &lt; <span class="number">1910</span> <span class="keyword">and</span> subject = <span class="string">'Medicine'</span>) <span class="keyword">or</span> (yr &gt;= <span class="number">2004</span> <span class="keyword">and</span> subject = <span class="string">'Literature'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>More difficult</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11.</span>Find <span class="keyword">all</span> details <span class="keyword">of</span> the prize won <span class="keyword">by</span> PETER GRÜNBERG(直接复制就好了<span class="number">233</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> winner = <span class="string">'PETER GRÜNBERG'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight ada"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12</span>.查找尤金•奧尼爾EUGENE O<span class="symbol">'NEILL</span>得獎的所有細節 Find <span class="keyword">all</span> details <span class="keyword">of</span> the prize won by EUGENE O<span class="symbol">'NEILL</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> * from nobel</span><br><span class="line">where winner = <span class="symbol">'EUGENE</span> O'<span class="symbol">'NEILL</span>'</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13.</span>列出爵士的獲獎者、年份、獎頁(爵士的名字以Sir開始)。先顯示最新獲獎者，然後同年再按名稱順序排列。</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> winner,yr,subject</span><br><span class="line"><span class="keyword">from</span> nobel</span><br><span class="line"><span class="keyword">where</span> winner <span class="keyword">like</span> <span class="string">'Sir%'</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> yr <span class="keyword">desc</span>,winner</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">14.</span>The expression subject <span class="keyword">IN</span> (<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>) can be used <span class="keyword">as</span> a <span class="keyword">value</span> - it will be <span class="number">0</span> <span class="keyword">or</span> <span class="number">1.</span></span><br><span class="line"><span class="keyword">Show</span> the <span class="number">1984</span> winners <span class="keyword">and</span> subject ordered <span class="keyword">by</span> subject <span class="keyword">and</span> winner <span class="type">name</span>; but list Chemistry <span class="keyword">and</span> Physics last.(用Mysql引擎，用<span class="keyword">sql</span> <span class="keyword">server</span>貌似不行，这个操作相当于自己加一个的条件排序)</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> winner,subject</span><br><span class="line"><span class="keyword">FROM</span> nobel</span><br><span class="line"><span class="keyword">WHERE</span> yr=<span class="number">1984</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> (<span class="keyword">case</span> <span class="keyword">when</span> subject <span class="keyword">in</span> (<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>) <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>),subject,winner</span><br><span class="line"></span><br><span class="line">(<span class="keyword">case</span> <span class="keyword">when</span> subject <span class="keyword">in</span> (<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>) <span class="keyword">then</span> <span class="number">1</span> <span class="keyword">else</span> <span class="number">0</span> <span class="keyword">end</span>)这玩意儿就像是给每行数据一个排序索引，subject在(<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>)这里面的要放到后面，所以给他们的值是<span class="number">1</span>，其余是<span class="number">0</span>，再升序排列就可以了（默认就是升序），去瞄了一眼别人的答案，是这样的：</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> winner,subject</span><br><span class="line"><span class="keyword">FROM</span> nobel</span><br><span class="line"><span class="keyword">WHERE</span> yr=<span class="number">1984</span></span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> subject <span class="keyword">in</span> (<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>),subject,winner</span><br><span class="line"></span><br><span class="line">恍然大悟，原来可以直接用（是我傻了）</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/08/FSG9Iitbqcjo7EQ.png" alt="P__4X0F_F_J_I23L5_VJ7_N.png"><br>1.選擇代碼以顯示以C開頭，並以n結束獲獎者的名字。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> winner <span class="keyword">FROM</span> nobel</span><br><span class="line"> <span class="keyword">WHERE</span> winner <span class="keyword">LIKE</span> <span class="string">'C%'</span> <span class="keyword">AND</span> winner <span class="keyword">LIKE</span> <span class="string">'%n'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>2.選擇代碼以顯示1950年到1960年間有多少個化學獎。<br><strong>Answer：</strong></p>
+<figure class="highlight mipsasm"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT <span class="built_in">COUNT</span>(<span class="keyword">subject) </span>FROM nobel</span><br><span class="line"> WHERE <span class="keyword">subject </span>= <span class="string">'Chemistry'</span></span><br><span class="line">   <span class="keyword">AND </span>yr <span class="keyword">BETWEEN </span><span class="number">1950</span> <span class="keyword">and </span><span class="number">1960</span></span><br></pre></td></tr></tbody></table></figure>
+<p>3.選擇代碼以顯示有多少年沒有頒發醫學獎。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> COUNT(<span class="keyword">DISTINCT</span> yr) <span class="keyword">FROM</span> nobel</span><br><span class="line"> <span class="keyword">WHERE</span> yr <span class="keyword">NOT</span> <span class="keyword">IN</span> (<span class="keyword">SELECT</span> <span class="keyword">DISTINCT</span> yr <span class="keyword">FROM</span> nobel <span class="keyword">WHERE</span> subject = <span class="string">'Medicine'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>4.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> subject, winner <span class="keyword">FROM</span> nobel <span class="keyword">WHERE</span> winner <span class="keyword">LIKE</span> <span class="string">'Sir%'</span> <span class="keyword">AND</span> yr <span class="keyword">LIKE</span> <span class="string">'196%'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/08/3UIqMSmgw7d2Env.png" alt="WWLI1W`LD__LZD_`_8U_8@Q.png"><br>5.選擇代碼以顯示哪一年沒有頒發物理獎，亦沒有頒發化學獎<br><strong>Answer：</strong></p>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">SELECT</span> yr <span class="meta">FROM</span> nobel</span><br><span class="line"> <span class="meta">WHERE</span> yr <span class="meta">NOT</span> <span class="meta">IN(</span><span class="meta">SELECT</span> yr </span><br><span class="line">                   <span class="meta">FROM</span> nobel</span><br><span class="line">                 <span class="meta">WHERE</span> subject <span class="meta">IN</span> (<span class="string">'Chemistry'</span>,<span class="string">'Physics'</span>))</span><br></pre></td></tr></tbody></table></figure>
+<p>6.選擇代碼以顯示哪一年有頒發醫學獎，但沒有頒發和平或文學獎。<br><strong>Answer：</strong></p>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">SELECT</span> <span class="meta">DISTINCT</span> yr</span><br><span class="line">  <span class="meta">FROM</span> nobel</span><br><span class="line"> <span class="meta">WHERE</span> subject=<span class="string">'Medicine'</span> </span><br><span class="line">   <span class="meta">AND</span> yr <span class="meta">NOT</span> <span class="meta">IN(</span><span class="meta">SELECT</span> yr <span class="meta">FROM</span> nobel </span><br><span class="line">                  <span class="meta">WHERE</span> subject=<span class="string">'Literature'</span>)</span><br><span class="line">   <span class="meta">AND</span> yr <span class="meta">NOT</span> <span class="meta">IN</span> (<span class="meta">SELECT</span> yr <span class="meta">FROM</span> nobel</span><br><span class="line">                   <span class="meta">WHERE</span> subject=<span class="string">'Peace'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>7.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SELECT subject, COUNT(subject) </span><br><span class="line">  <span class="keyword">FROM</span> nobel </span><br><span class="line"> WHERE yr =<span class="string">'1960'</span> </span><br><span class="line"><span class="built_in"> GROUP </span>BY subject</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/08/BdmSxERJLN1ZoIe.png" alt="ZSH3JW8LK1Z85ZW_Y_MCPH6.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>关于T14中order by后有条件排序的情况，网上资料有点少，发几个我自己看到的网址吧<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/pcx105/p/14102912.html">https://www.cnblogs.com/pcx105/p/14102912.html</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ceeekor/p/3675224.html">https://www.cnblogs.com/ceeekor/p/3675224.html</a><br>order by 后面直接加1,2这类数字是指定第几列，如order by 1是根据第一列升序排序</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-05&nbsp;&nbsp;12:08:45</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/05/sql-3/">http://a123wyn.studio/2021/02/05/sql-3/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/08/sql-4/">【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/05/sql-2/">【SQLZOO】Tutorials-2.SELECT from World</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

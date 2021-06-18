@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-7.More JOIN | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-7.More JOIN</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-13&nbsp;&nbsp;14:17:42</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/13/sql-7/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-7.More JOIN">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h2 id="More-JOIN-operations-zh"><a href="#More-JOIN-operations-zh" class="headerlink" title="More JOIN operations/zh"></a>More JOIN operations/zh</h2><p><img src="https://i.loli.net/2021/02/13/YEdrHTDycuWI8ZO.png" alt="more join.png"></p>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.列出1962年首影的電影，[顯示 id, <span class="meta">title</span>]</span><br><span class="line"><span class="meta">SELECT</span> id,<span class="meta">title</span></span><br><span class="line"> <span class="meta">FROM</span> movie</span><br><span class="line"> <span class="meta">WHERE</span> yr=1962</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2.電影大國民<span class="string">'Citizen Kane'</span>的首影年份。</span><br><span class="line"><span class="meta">select</span> yr <span class="meta">from</span> movie</span><br><span class="line"><span class="meta">where</span> <span class="meta">title</span> = <span class="string">'Citizen Kane'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">3.列出全部Star Trek星空奇遇記系列的電影，包括id, <span class="meta">title</span>和yr(此系統電影都以Star Trek為電影名稱的開首)。按年份順序排列。</span><br><span class="line"><span class="meta">select</span> id,<span class="meta">title</span>,yr <span class="meta">from</span> movie</span><br><span class="line"><span class="meta">where</span> <span class="meta">title</span> <span class="meta">like</span> <span class="string">'Star Trek%'</span></span><br><span class="line"><span class="meta">order</span> <span class="meta">by</span> yr</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>id是<span class="number">11768</span>, <span class="number">11955</span>, <span class="number">21191</span>的電影是什麼名稱?</span><br><span class="line">select title <span class="keyword">from</span> movie</span><br><span class="line">where id <span class="keyword">in</span> (<span class="number">11768</span>,<span class="number">11955</span>,<span class="number">21191</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>女演員<span class="string">'Glenn Close'</span>的編號 id是什麼?</span><br><span class="line"><span class="keyword">select</span> id <span class="keyword">from</span> actor</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Glenn Close'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sas"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">6.電影北非諜影<span class="string">'Casablanca'</span>的編號id是什麼?</span><br><span class="line"><span class="meta">select</span> id <span class="meta">from</span> movie</span><br><span class="line"><span class="meta">where</span> <span class="meta">title</span> = <span class="string">'Casablanca'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">7.</span>列出電影北非諜影<span class="string">'Casablanca'</span>的演員名單。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line">                       <span class="keyword">join</span> movie <span class="keyword">on</span> (movie.id=movieid)</span><br><span class="line"><span class="keyword">where</span> title = <span class="string">'Casablanca'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8.</span>顯示電影異型<span class="string">'Alien'</span>的演員清單。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line">                       <span class="keyword">join</span> movie <span class="keyword">on</span> (movie.id=movieid)</span><br><span class="line"><span class="keyword">where</span> title = <span class="string">'Alien'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.</span>列出演員夏里遜福<span class="string">'Harrison Ford'</span>曾演出的電影。</span><br><span class="line"><span class="keyword">select</span> title <span class="keyword">from</span> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line">                       <span class="keyword">join</span> movie <span class="keyword">on</span> (movie.id=movieid)</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Harrison Ford'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.</span>列出演員夏里遜福<span class="string">'Harrison Ford'</span>曾演出的電影，但他不是第<span class="number">1</span>主角。</span><br><span class="line"><span class="keyword">select</span> title <span class="keyword">from</span> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line">                       <span class="keyword">join</span> movie <span class="keyword">on</span> (movie.id=movieid)</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Harrison Ford'</span> <span class="keyword">and</span> ord != <span class="number">1</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11.</span>列出<span class="number">1962</span>年首影的電影及它的第<span class="number">1</span>主角。</span><br><span class="line">select title,<span class="built_in">name</span> <span class="keyword">from</span> actor join casting <span class="keyword">on</span> (actor.<span class="built_in">id</span>=actorid)</span><br><span class="line">                       join movie <span class="keyword">on</span> (movie.<span class="built_in">id</span>=movieid)</span><br><span class="line"><span class="keyword">where</span> yr = <span class="number">1962</span> <span class="keyword">and</span> ord = <span class="number">1</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>More Difficult</strong></p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">12.尊·特拉華達<span class="string">'John Travolta'</span>最忙是哪一年? 顯示年份和該年的電影數目。</span><br><span class="line">SELECT yr,COUNT(title) <span class="keyword">FROM</span></span><br><span class="line">  movie JOIN casting ON movie.<span class="attribute">id</span>=movieid</span><br><span class="line">         JOIN actor   ON <span class="attribute">actorid</span>=actor.id</span><br><span class="line">where <span class="attribute">name</span>=<span class="string">'John Travolta'</span></span><br><span class="line">GROUP BY yr</span><br><span class="line">HAVING COUNT(title)=(SELECT MAX(c) <span class="keyword">FROM</span></span><br><span class="line">(SELECT yr,COUNT(title) AS c <span class="keyword">FROM</span></span><br><span class="line">   movie JOIN casting ON movie.<span class="attribute">id</span>=movieid</span><br><span class="line">         JOIN actor   ON <span class="attribute">actorid</span>=actor.id</span><br><span class="line"> where <span class="attribute">name</span>=<span class="string">'John Travolta'</span></span><br><span class="line"><span class="built_in"> GROUP </span>BY yr) AS t</span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">13.</span>列出演員茱莉·安德絲'Julie Andrews'曾參與的電影名稱及其第<span class="number">1</span>主角。</span><br><span class="line">select title,<span class="built_in">name</span> <span class="keyword">from</span> </span><br><span class="line"> actor join casting <span class="keyword">on</span> (actor.<span class="built_in">id</span>=actorid)</span><br><span class="line">       join movie <span class="keyword">on</span> (movie.<span class="built_in">id</span>=movieid)</span><br><span class="line"><span class="keyword">where</span> ord = <span class="number">1</span> <span class="keyword">and</span> movieid <span class="keyword">in</span> </span><br><span class="line">(select movieid <span class="keyword">from</span> </span><br><span class="line"> actor join casting <span class="keyword">on</span> (actor.<span class="built_in">id</span>=actorid)</span><br><span class="line">       join movie <span class="keyword">on</span> (movie.<span class="built_in">id</span>=movieid)</span><br><span class="line"> <span class="keyword">where</span> <span class="built_in">name</span> = 'Julie Andrews')</span><br><span class="line"></span><br><span class="line">应该用movieid而不用title，因为title可能会重复</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">14.列出按字母順序，列出哪一演員曾作30次第1主角。</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">ord</span> = <span class="number">1</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> actorid,<span class="keyword">name</span></span><br><span class="line"><span class="keyword">having</span> <span class="keyword">count</span>(movieid) &gt;= <span class="number">30</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="keyword">name</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">15.列出1978年首影的電影名稱及角色數目，按此數目由多至少排列。</span><br><span class="line"><span class="keyword">select</span> <span class="built_in">title</span>,<span class="built_in">count</span>(actorid) <span class="keyword">from</span> casting <span class="keyword">join</span> movie <span class="keyword">on</span> (movie.id=movieid)</span><br><span class="line"><span class="keyword">where</span> yr = <span class="number">1978</span></span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> movieid,<span class="built_in">title</span></span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> <span class="built_in">count</span>(actorid) <span class="keyword">desc</span></span><br><span class="line"></span><br><span class="line">英文版最后的排序条件还会加上<span class="built_in">title</span>，中文版一直通不过...</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">16.</span>列出曾與演員亞特·葛芬柯<span class="string">'Art Garfunkel'</span>合作過的演員姓名。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span></span><br><span class="line"> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> != <span class="string">'Art Garfunkel'</span> <span class="keyword">and</span> movieid <span class="keyword">in</span></span><br><span class="line">(<span class="keyword">select</span> movieid <span class="keyword">from</span></span><br><span class="line"> actor <span class="keyword">join</span> casting <span class="keyword">on</span> (actor.id=actorid)</span><br><span class="line"> <span class="keyword">where</span> <span class="type">name</span> = <span class="string">'Art Garfunkel'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p>1.Select the statement which lists the unfortunate directors of the movies which have caused financial loses (gross &lt; budget)<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span></span><br><span class="line">  <span class="keyword">FROM</span> actor <span class="keyword">INNER</span> <span class="keyword">JOIN</span> movie <span class="keyword">ON</span> actor.id = director</span><br><span class="line"> <span class="keyword">WHERE</span> gross &lt; budget</span><br></pre></td></tr></tbody></table></figure>
+<p>2.Select the correct example of JOINing three tables<br><strong>Answer：</strong></p>
+<figure class="highlight n1ql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> *</span><br><span class="line">  <span class="keyword">FROM</span> actor <span class="keyword">JOIN</span> casting <span class="keyword">ON</span> actor.id = actorid</span><br><span class="line">  <span class="keyword">JOIN</span> movie <span class="keyword">ON</span> movie.id = movieid</span><br></pre></td></tr></tbody></table></figure>
+<p>3.Select the statement that shows the list of actors called’John’by order of number of movies in which they acted<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, COUNT(movieid)</span><br><span class="line">  <span class="keyword">FROM</span> casting <span class="keyword">JOIN</span> actor <span class="keyword">ON</span> actorid=actor.id</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="type">name</span> <span class="keyword">LIKE</span> <span class="string">'John %'</span></span><br><span class="line"> <span class="keyword">GROUP</span> <span class="keyword">BY</span> <span class="type">name</span> <span class="keyword">ORDER</span> <span class="keyword">BY</span> <span class="number">2</span> <span class="keyword">DESC</span></span><br></pre></td></tr></tbody></table></figure>
+<p>4.Select the result that would be obtained from this code:</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> title </span><br><span class="line">  <span class="keyword">FROM</span> movie <span class="keyword">JOIN</span> casting <span class="keyword">ON</span> (movieid=movie.id)</span><br><span class="line">             <span class="keyword">JOIN</span> actor   <span class="keyword">ON</span> (actorid=actor.id)</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="keyword">name</span>=<span class="string">'Paul Hogan'</span> <span class="keyword">AND</span> <span class="keyword">ord</span> = <span class="number">1</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/13/Gsr1UlZE3VK4DjP.png" alt="444.png"><br>5.Select the statement that lists all the actors that starred in movies directed by Ridley Scott who has id 351<br><strong>Answer：</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span></span><br><span class="line">  <span class="keyword">FROM</span> movie <span class="keyword">JOIN</span> casting <span class="keyword">ON</span> movie.id = movieid</span><br><span class="line">  <span class="keyword">JOIN</span> actor <span class="keyword">ON</span> actor.id = actorid</span><br><span class="line"><span class="keyword">WHERE</span> <span class="keyword">ord</span> = <span class="number">1</span> <span class="keyword">AND</span> director = <span class="number">351</span></span><br></pre></td></tr></tbody></table></figure>
+<p>6.There are two sensible ways to connect movie and actor. They are:<br><strong>Answer：</strong></p>
+<figure class="highlight livecodeserver"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">link <span class="keyword">the</span> director column <span class="keyword">in</span> movies <span class="keyword">with</span> <span class="keyword">the</span> primary key <span class="keyword">in</span> actor</span><br><span class="line">connect <span class="keyword">the</span> primary <span class="built_in">keys</span> <span class="keyword">of</span> movie <span class="keyword">and</span> actor via <span class="keyword">the</span> casting table</span><br></pre></td></tr></tbody></table></figure>
+<p>7.Select the result that would be obtained from the following code:</p>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT title, yr </span><br><span class="line">  <span class="keyword">FROM</span> movie, casting, actor </span><br><span class="line"> WHERE <span class="attribute">name</span>=<span class="string">'Robert De Niro'</span> <span class="keyword">AND</span> <span class="attribute">movieid</span>=movie.id <span class="keyword">AND</span> <span class="attribute">actorid</span>=actor.id <span class="keyword">AND</span> ord = 3</span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/13/5DJKF7XcxEd2fbR.png" alt="777.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li>图源自<a target="_blank" rel="noopener" href="https://www.runoob.com/sql/sql-join.html">菜鸟教程</a><br><img src="https://i.loli.net/2021/02/12/OEb6fnrHqUAPpXI.png" alt="sql-join.png"></li>
+<li>注意多张表连接格式</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-13&nbsp;&nbsp;14:17:42</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/13/sql-7/">http://a123wyn.studio/2021/02/13/sql-7/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/14/sql-8/">【SQLZOO】Tutorials-8.Using NULL</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/12/sql-6/">【SQLZOO】Tutorials-6.JOIN(合并表格)</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="Nananan">
+
+
+    <meta name="subtitle" content="Nananan">
+
+
+    <meta name="description" content="Pursue Excellence, Strive for Perfection.">
+
+
+    <meta name="keywords" content="Nananan,python,Data-science,Big-data">
+
+
+<title>【SQLZOO】Tutorials-2.SELECT from World | Nananan&#39;s warehouse</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 5.0.2"><link rel="alternate" href="/atom.xml" title="Nananan's warehouse" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<body>
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <!-- <aside id="#aside">
+                <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">YNan&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default"></input>
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">YNan&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/">Home</a>
+                
+                    <a class="menu-item" href="/archives">Archives</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            </aside> -->
+        <div class="main">
+            <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">【SQLZOO】Tutorials-2.SELECT from World</h1>
+            
+                <div class="post-meta">
+                    
+                        <span class="iconfont icon-user"></span>
+                        <a itemprop="author" rel="author" href="/about">Nananan</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-date"></span>
+                        <a href="#">2021-02-05&nbsp;&nbsp;10:48:14</a>
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    <!-- <span id="/2021/02/05/sql-2/" class="leancloud-visitors view" data-flag-title="【SQLZOO】Tutorials-2.SELECT from World">
+                        <em class="post-meta-item-text">Pageviews:</em>
+                        <i class="leancloud-visitors-count">loading</i>
+                    </span> -->
+                    
+                        <!-- <span class="site-pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a class="busuanzi-value" id="busuanzi_value_site_pv"></a>
+                        </span> -->
+                        <span id="busuanzi_container_page_pv">
+                            <span class="iconfont icon-eye"></span>
+                            <a id="busuanzi_value_page_pv"></a>
+                        </span>
+                    
+                    <br />
+                    
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
+                    <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Records/"># Records</a>
+                            
+                                <a href="/tags/SQL/"># SQL</a>
+                            
+                                <a href="/tags/SQLZOO/"># SQLZOO</a>
+                            
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <p>自己做的主要是中文版，但是目前发现中英文的题目并不完全相同…有部分是摘自英文版</p>
+<p>world表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">name</th>
+<th align="center">continent</th>
+<th align="center">area</th>
+<th align="center">population</th>
+<th align="center">gdp</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Afghanistan</td>
+<td align="center">Asia</td>
+<td align="center">652230</td>
+<td align="center">25500100</td>
+<td align="center">20343000000</td>
+</tr>
+<tr>
+<td align="center">Albania</td>
+<td align="center">Europe</td>
+<td align="center">28748</td>
+<td align="center">2831741</td>
+<td align="center">12960000000</td>
+</tr>
+<tr>
+<td align="center">Algeria</td>
+<td align="center">Africa</td>
+<td align="center">2381741</td>
+<td align="center">37100000</td>
+<td align="center">188681000000</td>
+</tr>
+<tr>
+<td align="center">Andorra</td>
+<td align="center">Europe</td>
+<td align="center">468</td>
+<td align="center">78115</td>
+<td align="center">3712000000</td>
+</tr>
+<tr>
+<td align="center">Angola</td>
+<td align="center">Africa</td>
+<td align="center">1246700</td>
+<td align="center">20609294</td>
+<td align="center">100990000000</td>
+</tr>
+<tr>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+<td align="center">…</td>
+</tr>
+</tbody></table>
+<p><strong>name:</strong> 国家名称<br><strong>continent:</strong> 洲<br><strong>area:</strong> 面积<br><strong>population:</strong> 人口<br><strong>gdp:</strong> 国内生产总值</p>
+<h2 id="SELECT-from-WORLD-Tutorial-zh"><a href="#SELECT-from-WORLD-Tutorial-zh" class="headerlink" title="SELECT from WORLD Tutorial/zh"></a>SELECT from WORLD Tutorial/zh</h2><figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>觀察運行一個簡單的<span class="keyword">SQL</span>命令的結果。</span><br><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, continent, population <span class="keyword">FROM</span> world</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">2.</span>顯示具有至少<span class="number">2</span>億人口的國家名稱。 <span class="number">2</span>億是<span class="number">200000000</span>，有八個零。</span><br><span class="line">SELECT name FROM world</span><br><span class="line">WHERE population&gt;<span class="number">200000000</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">3.</span>找出有至少<span class="number">200</span>百萬(<span class="number">2</span>億)人口的國家名稱，及人均國內生產總值。</span><br><span class="line">select name,gdp/population</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line">where population&gt;<span class="number">200000000</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">4.</span>顯示<span class="string">'South America'</span>南美洲大陸的國家名字和以百萬為單位人口數。 將人口population 除以一百萬(<span class="number">1000000</span>)得可得到以百萬為單位人口數。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,population/<span class="number">1000000</span></span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> continent = <span class="string">'South America'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5.</span>顯示法國，德國，意大利(France, Germany, Italy)的國家名稱和人口。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,population</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> <span class="keyword">in</span>(<span class="string">'France'</span>,<span class="string">'Germany'</span>,<span class="string">'Italy'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">6.</span>顯示包含單詞“United”為名稱的國家。</span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span> <span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> <span class="keyword">LIKE</span> <span class="string">'%United%'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight routeros"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">7.成為大國的兩種方式：如果它有3百萬平方公里以上的面積，或擁有250百萬(2.5億)以上人口。</span><br><span class="line">展示大國的名稱，人口和面積。</span><br><span class="line">select name,population,area</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line">where<span class="built_in"> area </span>&gt; 3000000 <span class="keyword">or</span> population &gt; 250000000</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8.</span>美國、印度和中國(USA, India, China)是人口又大，同時面積又大的國家。排除這些國家。</span><br><span class="line">顯示以人口或面積為大國的國家，但不能同時兩者。顯示國家名稱，人口和面積。</span><br><span class="line">select name,population,area</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line">where (area &gt; <span class="number">3000000</span> <span class="keyword">and</span> population &lt;= <span class="number">250000000</span>) <span class="keyword">or</span> (area &lt;= <span class="number">3000000</span> <span class="keyword">and</span> population &gt; <span class="number">250000000</span>) </span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">9.</span>除以為<span class="number">1000000</span>（<span class="number">6</span>個零）是以百萬計。除以<span class="number">1000000000</span>（<span class="number">9</span>個零）是以十億計。使用 ROUND 函數來顯示的數值到小數點後兩位。</span><br><span class="line">對於南美顯示以百萬計人口，以十億計<span class="number">2</span>位小數GDP。</span><br><span class="line">select name,round(population/<span class="number">1000000</span>,<span class="number">2</span>),round(gdp/<span class="number">1000000000</span>,<span class="number">2</span>)</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line">where continent = <span class="string">'South America'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight angelscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">10.</span>顯示國家有至少一個萬億元國內生產總值（萬億，也就是<span class="number">12</span>個零）的人均國內生產總值。四捨五入這個值到最接近<span class="number">1000</span>。</span><br><span class="line">顯示萬億元國家的人均國內生產總值，四捨五入到最近的$<span class="number">1000</span>。</span><br><span class="line">select name,round(gdp/population,<span class="number">-3</span>)</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line">where gdp &gt;= <span class="number">1000000000000</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>More difficult</strong></p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">11.The CASE statement shown is used to substitute North America for Caribbean in the third column.</span><br><span class="line"><span class="keyword">Show</span> the <span class="keyword">name</span> - but substitute Australasia <span class="keyword">for</span> Oceania - <span class="keyword">for</span> countries <span class="keyword">beginning</span> <span class="keyword">with</span> N.(我明明选了zh捏...)</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">name</span>, </span><br><span class="line">       <span class="keyword">CASE</span> <span class="keyword">WHEN</span> continent=<span class="string">'Oceania'</span> <span class="keyword">THEN</span> <span class="string">'Australasia'</span></span><br><span class="line">            <span class="keyword">ELSE</span> continent <span class="keyword">END</span></span><br><span class="line">  <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="keyword">name</span> <span class="keyword">LIKE</span> <span class="string">'N%'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12.</span><span class="keyword">Show</span> the <span class="type">name</span> <span class="keyword">and</span> the continent - but substitute Eurasia <span class="keyword">for</span> Europe <span class="keyword">and</span> Asia; substitute America - <span class="keyword">for</span> <span class="keyword">each</span> country <span class="keyword">in</span> North America <span class="keyword">or</span> South America <span class="keyword">or</span> Caribbean. <span class="keyword">Show</span> countries beginning <span class="keyword">with</span> A <span class="keyword">or</span> B</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="type">name</span>,</span><br><span class="line">    <span class="keyword">case</span> <span class="keyword">when</span> continent <span class="keyword">in</span> (<span class="string">'Europe'</span>,<span class="string">'Asia'</span>) </span><br><span class="line">         <span class="keyword">then</span> <span class="string">'Eurasia'</span></span><br><span class="line">         <span class="keyword">when</span> continent <span class="keyword">in</span> (<span class="string">'North America'</span>,<span class="string">'South America'</span>,<span class="string">'Caribbean'</span>)</span><br><span class="line">         <span class="keyword">then</span> <span class="string">'America'</span></span><br><span class="line">         <span class="keyword">else</span> continent</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="type">name</span> <span class="keyword">LIKE</span> <span class="string">'A%'</span> <span class="keyword">or</span> <span class="type">name</span> <span class="keyword">LIKE</span> <span class="string">'B%'</span></span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">13.Put the continents right...</span><br><span class="line">   Oceania becomes Australasia</span><br><span class="line">   Countries in Eurasia and Turkey go to Europe/Asia</span><br><span class="line">   Caribbean islands starting <span class="keyword">with</span> <span class="string">'B'</span> <span class="keyword">go</span> <span class="keyword">to</span> North America, other Caribbean islands <span class="keyword">go</span> <span class="keyword">to</span> South America</span><br><span class="line">   <span class="keyword">Show</span> the <span class="keyword">name</span>, the original continent <span class="keyword">and</span> the <span class="keyword">new</span> continent <span class="keyword">of</span> <span class="keyword">all</span> countries.(这个题的运行口貌似有点问题一直显示错误，在<span class="number">12</span>题处运行就没有问题，但是不能有空格)</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span>,continent,</span><br><span class="line"><span class="keyword">case</span> <span class="keyword">when</span> continent = <span class="string">'Oceania'</span></span><br><span class="line"><span class="keyword">then</span> <span class="string">'Australasia'</span></span><br><span class="line"><span class="keyword">when</span> continent <span class="keyword">in</span> (<span class="string">'Eurasia'</span>,<span class="string">'Turkey'</span>)</span><br><span class="line"><span class="keyword">then</span> <span class="string">'Europe/Asia'</span></span><br><span class="line"><span class="keyword">when</span> continent = <span class="string">'Caribbean'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'B%'</span></span><br><span class="line"><span class="keyword">then</span> <span class="string">'North America'</span></span><br><span class="line"><span class="keyword">when</span> continent = <span class="string">'Caribbean'</span></span><br><span class="line"><span class="keyword">then</span> <span class="string">'South America'</span></span><br><span class="line"><span class="keyword">else</span> continent</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">from</span> world</span><br></pre></td></tr></tbody></table></figure>
+<h2 id="SELECT-from-WORLD-Tutorial"><a href="#SELECT-from-WORLD-Tutorial" class="headerlink" title="SELECT from WORLD Tutorial"></a>SELECT from WORLD Tutorial</h2><figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">11.</span>Greece has capital Athens.</span><br><span class="line">   <span class="keyword">Each</span> <span class="keyword">of</span> the strings <span class="string">'Greece'</span>, <span class="keyword">and</span> <span class="string">'Athens'</span> has <span class="number">6</span> characters.</span><br><span class="line">   <span class="keyword">Show</span> the <span class="type">name</span> <span class="keyword">and</span> capital <span class="keyword">where</span> the <span class="type">name</span> <span class="keyword">and</span> the capital have the same number <span class="keyword">of</span> characters.</span><br><span class="line"></span><br><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>,capital</span><br><span class="line">  <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> length(<span class="type">name</span>) = length(capital)</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">12.</span>The capital <span class="keyword">of</span> Sweden <span class="keyword">is</span> Stockholm. Both <span class="built_in">words</span> <span class="keyword">start with</span> <span class="keyword">the</span> letter 'S'.</span><br><span class="line">   Show <span class="keyword">the</span> <span class="built_in">name</span> <span class="keyword">and</span> <span class="keyword">the</span> capital <span class="keyword">where</span> <span class="keyword">the</span> <span class="keyword">first</span> letters <span class="keyword">of</span> each match. Don't include countries <span class="keyword">where</span> <span class="keyword">the</span> <span class="built_in">name</span> <span class="keyword">and</span> <span class="keyword">the</span> capital are <span class="keyword">the</span> same <span class="built_in">word</span>.</span><br><span class="line"></span><br><span class="line">select <span class="built_in">name</span>,capital</span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> left(<span class="built_in">name</span>,<span class="number">1</span>)=left(capital,<span class="number">1</span>) <span class="keyword">and</span> <span class="built_in">name</span> !=capital</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">13.Equatorial Guinea and Dominican Republic have all of the vowels (a e i o u) in the name. They don't count because they have more than one word in the name.</span><br><span class="line">   Find the country that has all the vowels and no spaces in its name.</span><br><span class="line"></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">name</span></span><br><span class="line"><span class="keyword">from</span> world</span><br><span class="line"><span class="keyword">where</span> <span class="keyword">name</span> <span class="keyword">not</span> <span class="keyword">like</span> <span class="string">'% %'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'%a%'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'%e%'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'%i%'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'%o%'</span> <span class="keyword">and</span> <span class="keyword">name</span> <span class="keyword">like</span> <span class="string">'%u%'</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p><img src="https://i.loli.net/2021/02/05/dzgRmLIvVYZFPHB.png" alt="GTZGTWH_I5U___AYPNEOC66.png"><br>1.選擇代碼找出以U開頭的國家名稱。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span></span><br><span class="line">  <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="type">name</span> <span class="keyword">LIKE</span> <span class="string">'U%'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>2.選擇代碼以顯示英國United Kingdom的人口。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> population</span><br><span class="line">  <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="type">name</span> = <span class="string">'United Kingdom'</span></span><br></pre></td></tr></tbody></table></figure>
+<p>3.這個SQL代碼有什麼錯處。預計結果應該是含’France’的單列。</p>
+<figure class="highlight oxygene"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> continent </span><br><span class="line">  <span class="keyword">FROM</span> world </span><br><span class="line"> <span class="keyword">WHERE</span> <span class="string">'name'</span> = <span class="string">'France'</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong></p>
+<figure class="highlight applescript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">'<span class="built_in">name</span>' 應該是 <span class="built_in">name</span></span><br></pre></td></tr></tbody></table></figure>
+<p>4.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, population / <span class="number">10</span> </span><br><span class="line"> <span class="keyword">FROM</span> world </span><br><span class="line"><span class="keyword">WHERE</span> population &lt; <span class="number">10000</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/05/18epjWvnHOgwRic.png" alt="4.png"><br>5.選擇代碼以顯示在歐洲和亞洲的國家的名稱和人口。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span>, population</span><br><span class="line">  <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> continent <span class="keyword">IN</span> (<span class="string">'Europe'</span>, <span class="string">'Asia'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>6.選擇代碼，結果只有兩行。<br><strong>Answer：</strong></p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> <span class="type">name</span> <span class="keyword">IN</span> (<span class="string">'Cuba'</span>, <span class="string">'Togo'</span>)</span><br></pre></td></tr></tbody></table></figure>
+<p>7.選擇你會從這個代碼獲得的結果。</p>
+<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="type">name</span> <span class="keyword">FROM</span> world</span><br><span class="line"> <span class="keyword">WHERE</span> continent = <span class="string">'South America'</span></span><br><span class="line">   <span class="keyword">AND</span> population &gt; <span class="number">40000000</span></span><br></pre></td></tr></tbody></table></figure>
+<p><strong>Answer：</strong><br><img src="https://i.loli.net/2021/02/05/tHoJuT2ZeWnGhyk.png" alt="7.png"></p>
+<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><ul>
+<li><strong>round(num,p)</strong> 函数：<br>num保留p位小数，例如round(7253.86, 0)    -&gt;  7254，返回数值</li>
+<li><strong>length(s)</strong> 函数：<br>返回字符串s的长度</li>
+<li><strong>left(s,p)</strong> 函数：<br>从字符串s开头截取p个长度的子串，left(‘Hello’,4) -&gt; ‘Hell’</li>
+<li><strong>case</strong> 函数：<br>返回值就在语句then和else后，case可以在不同条件下返回不同的值</li>
+</ul>
+<script>
+        document.querySelectorAll('.github-emoji')
+          .forEach(el => {
+            if (!el.dataset.src) { return; }
+            const img = document.createElement('img');
+            img.style = 'display:none !important;';
+            img.src = el.dataset.src;
+            img.addEventListener('error', () => {
+              img.remove();
+              el.style.color = 'inherit';
+              el.style.backgroundImage = 'none';
+              el.style.background = 'none';
+            });
+            img.addEventListener('load', () => {
+              img.remove();
+            });
+            document.body.appendChild(img);
+          });
+      </script>
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>Nananan</span>
+                    </p>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Post Date:</span>
+                        <span>2021-02-05&nbsp;&nbsp;10:48:14</span>
+                
+                
+                    <p class="copyright-item"></p>
+                        <span>Update Date:</span>
+                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright © 2020 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-sa/4.0/">CC 4.0 BY-SA</a> LICENSE</span>
+                    </p>
+                
+                
+                    <p class="copyright-item">
+                        <span>Permalink:</span>
+                        <span><a href="http://a123wyn.studio/2021/02/05/sql-2/">http://a123wyn.studio/2021/02/05/sql-2/</a></span>
+                    </p>
+                
+                <!-- 
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>Standing on Shoulders of Giants.</span>
+                     </p>
+                 -->
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tags:</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Records/"># Records</a>
+                    
+                        <a href="/tags/SQL/"># SQL</a>
+                    
+                        <a href="/tags/SQLZOO/"># SQLZOO</a>
+                    
+                    
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">Back</a>
+                <span>· </span>
+                <a href="/">Home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2021/02/05/sql-3/">【SQLZOO】Tutorials-3.SELECT from Nobel</a>
+            
+            
+                <a class="next" rel="next" href="/2021/02/03/sql-1/">【SQLZOO】Tutorials-1.SELECT name</a>
+            
+        </section>
+        
+        <!-- gitalk -->
+        
+            <div id="gitalk-container"></div>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.css">
+<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.5.2/dist/gitalk.min.js"></script>
+<div id="gitalk-container"></div>
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        clientID: '81e01ebb5ba8cd03bfd3',
+        clientSecret: '399d62b6c3e5f29b29178cf5c3ad1407f566d4d2',
+        repo: 'a123wyn.github.io',
+        owner: 'a123wyn',
+        admin: 'a123wyn',
+        id: md5(),
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: '10',
+        pagerDirection: 'last',
+        createIssueManually: 'true',
+        distractionFreeMode: 'true'
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+        
+    </article>
+</div>
+
+        </div>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© Nananan | </span>
+            <!-- | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a> |  -->
+        
+            <span id="busuanzi_container_site_uv"><span class="iconfont icon-user"></span><span id="busuanzi_value_site_uv"></span></span>
+        
+        <!-- 
+            <span id="busuanzi_container_site_pv"><span class="iconfont icon-eye"></span><span id="busuanzi_value_site_pv"></span></span>
+         -->
+    </div>
+</footer>
+
+    </div>
+</body>
+</html>
