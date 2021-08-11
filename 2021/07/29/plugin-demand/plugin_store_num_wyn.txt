@@ -1,0 +1,116 @@
+CREATE OR REPLACE TABLE
+  `admin-account-293313.DWD.plugin_store_num_wyn`
+PARTITION BY
+  prc_date
+CLUSTER BY
+  app_name AS(
+  WITH
+    cumu_latest_time AS(
+    SELECT
+      b.prc_date,
+      b.store_id,
+      b.app_name,
+      MAX(a.latest_install_time) latest_install_time,
+      MAX(a.latest_uninstall_time) latest_uninstall_time
+    FROM
+      `admin-account-293313.DWD.plugin_base_bc_wyn` a,
+      `admin-account-293313.DWD.plugin_base_bc_wyn` b
+    WHERE
+      a.prc_date <= b.prc_date
+      AND a.store_id = b.store_id
+      AND a.app_name = b.app_name
+      AND a.store_id != '全部店铺'
+      AND b.store_id != '全部店铺'
+    GROUP BY
+      1,
+      2,
+      3 )
+  SELECT
+    prc_date,
+    app_name,
+    cumu_install_store_num,
+    uninstall_store_num,
+    install_store_num,
+    install_store_num_rate,
+    use_store_num,
+    use_store_num/nullif(cumu_install_store_num,
+      0) use_store_num_rate,
+    active_store_num,
+    active_store_num/nullif(cumu_install_store_num,
+      0) active_store_num_rate,
+    o_active_store_num
+  FROM (
+    SELECT
+      b.prc_date,
+      b.app_name,
+      all_num,
+      #prc_date维度的
+      COUNT(DISTINCT
+        CASE
+          WHEN is_authorized = 1 THEN store_id
+      END
+        ) AS `install_store_num`,
+      COUNT(DISTINCT
+        CASE
+          WHEN is_authorized = 1 THEN store_id
+      END
+        )/nullif(all_num,
+        0) AS `install_store_num_rate`,
+      COUNT(DISTINCT
+        CASE
+          WHEN is_cancelled = 1 THEN store_id
+      END
+        ) AS `uninstall_store_num`,
+      COUNT(DISTINCT
+        CASE
+          WHEN is_used = 1 THEN store_id
+      END
+        ) AS `use_store_num`,
+      COUNT(DISTINCT
+        CASE
+          WHEN is_active = 1 THEN store_id
+      END
+        ) AS `active_store_num`,
+      COUNT(DISTINCT
+        CASE
+          WHEN originally_is_active = 1 THEN store_id
+      END
+        ) AS `o_active_store_num`,
+      #累计授权店铺数
+      (
+      SELECT
+        COUNT(DISTINCT store_id)
+      FROM
+        cumu_latest_time
+      WHERE
+        prc_date<=b.prc_date
+        AND app_name=b.app_name
+        AND (latest_install_time >= latest_uninstall_time
+          OR (latest_install_time IS NOT NULL
+            AND latest_uninstall_time IS NULL))) AS `cumu_install_store_num`
+    FROM
+      `admin-account-293313.DWD.plugin_base_bc_wyn` b
+    LEFT JOIN (
+      SELECT
+        prc_date,
+        COUNT(DISTINCT store_id) all_num
+      FROM
+        `admin-account-293313.pm_apps.lyh_store_open`
+      GROUP BY
+        1 )a
+    ON
+      b.prc_date = a.prc_date
+    GROUP BY
+      1,
+      2,
+      3)
+  WHERE
+    prc_date >=
+    CASE
+      WHEN app_name = '满减活动' THEN DATE('2021-06-05')
+      WHEN app_name = '限时促销' THEN DATE('2021-06-09')
+      WHEN app_name = '弹窗通知' THEN DATE('2021-06-10')
+    ELSE
+    DATE('2021-04-01')
+  END
+    )

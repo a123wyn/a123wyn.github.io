@@ -1,0 +1,1069 @@
+  # 把安装于卸载写成临时表放在这儿
+  # 记得更新商品评论与反馈与评价
+  # install事件
+DECLARE
+  begin_time date;
+DECLARE
+  end_time date;
+SET
+  begin_time = '2021-04-01';
+SET
+  end_time = CURRENT_DATE();
+CREATE OR REPLACE TABLE
+  `admin-account-293313.DWD.plugin_base_bc_wyn` AS(
+  WITH
+    plugin_install_wyn AS (
+    SELECT
+      id,
+      time,
+      store_id,
+      client_id,
+      ifnull(b.mapping_name,a.app_name) app_name
+    FROM (
+      SELECT
+        id,
+        time,
+        store_id,
+        client_id,
+        MAX(
+        IF
+          (p.key='app_name',
+            CONCAT(ifnull(p.string_value,
+                ''),ifnull(CAST(p.int_value AS string),
+                ''),ifnull(CAST(p.float_value AS string),
+                ''),ifnull(CAST(p.bool_value AS string),
+                '')),
+            NULL) ) AS app_name
+      FROM
+        `shoplaza.shoplaza_analysis.events_all`
+      LEFT JOIN
+        UNNEST(properties) p
+      WHERE
+        event = 'install_app'
+        AND DATE(time,'Asia/Shanghai') >= begin_time
+        AND store_id IN (
+        SELECT
+          store_id
+        FROM
+          `admin-account-293313.KAM.stores_information_xiaoyang`
+        WHERE
+          internal = 0)
+      GROUP BY
+        1,
+        2,
+        3,
+        4 )a 
+        left join `admin-account-293313.DWD.plugin_app_mapping_wyn` b on a.app_name = b.app_name
+    GROUP BY
+      1,
+      2,
+      3,
+      4,
+      5
+      # 非install事件，使用=授权
+    UNION distinct (
+      SELECT
+        id,
+        time,
+        store_id,
+        client_id,
+        app_name
+      FROM (
+        SELECT
+          id,
+          time,
+          store_id,
+          client_id,
+          CASE
+            WHEN event = 'admin_plugin_rebate_create' THEN '满减活动'
+            WHEN event = 'admin_plugin_flashsale_create' THEN '限时促销'
+            WHEN event = 'admin_plugin_coupon_create' THEN '优惠码'
+            WHEN event = 'admin_plugin_popups_create' THEN '弹窗通知'
+            WHEN event = 'admin_plugin_sales_pop_detail' THEN '浮窗通知'
+            WHEN event = 'admin_plugin_feedback_pv' THEN '反馈与评价'
+            WHEN event IN('admin_plugin_discount_reduced_create', 'admin_plugin_discount_present_create') THEN '满送优惠'
+            WHEN event IN('admin_plugin_bundle_pricing_create',
+            'admin_plugin_bundle_combination_create') THEN '捆绑销售'
+            when event = 'admin_plugin_recommend_create' then '自定义推荐'
+        END
+          app_name,
+          MAX(
+          IF
+            (p.key ='discount_id'
+              OR p.key = 'activity_id',
+              CONCAT(ifnull(p.string_value,
+                  ''),ifnull(CAST(p.int_value AS string),
+                  ''),ifnull(CAST(p.float_value AS string),
+                  ''),ifnull(CAST(p.bool_value AS string),
+                  '')),
+              NULL)) discount_id
+        FROM
+          `shoplaza.shoplaza_analysis.events_all`
+         LEFT JOIN
+          UNNEST(properties) p
+        WHERE
+          event IN ('admin_plugin_rebate_create',
+            'admin_plugin_flashsale_create',
+            'admin_plugin_coupon_create',
+            'admin_plugin_popups_create',
+            'admin_plugin_sales_pop_detail',
+            'admin_plugin_feedback_pv',
+            'admin_plugin_discount_reduced_create',
+            'admin_plugin_discount_present_create',
+            'admin_plugin_bundle_pricing_create',
+            'admin_plugin_bundle_combination_create',
+            'admin_plugin_recommend_create')
+          AND DATE(time,'Asia/Shanghai') >= begin_time
+          AND store_id IN (
+          SELECT
+            store_id
+          FROM
+            `admin-account-293313.KAM.stores_information_xiaoyang`
+          WHERE
+            internal = 0)
+        GROUP BY
+          1,
+          2,
+          3,
+          4,
+          5)
+        #discount为空的数据不算授权
+      -- WHERE
+        -- discount_id IS NOT NULL
+        -- AND discount_id != ''
+        -- AND discount_id != ' '
+        -- OR app_name IN ('浮窗通知',
+        --   '反馈与评价')
+      GROUP BY
+        1,
+        2,
+        3,
+        4,
+        5)),
+    #卸载记录
+    plugin_uninstall_wyn AS (
+    SELECT
+      id,
+      time,
+      store_id,
+      client_id,
+      ifnull(b.mapping_name,a.app_name) app_name
+    FROM (
+      SELECT
+        id,
+        time,
+        store_id,
+        client_id,
+        MAX(
+        IF
+          (p.key='app_name',
+            CONCAT(ifnull(p.string_value,
+                ''),ifnull(CAST(p.int_value AS string),
+                ''),ifnull(CAST(p.float_value AS string),
+                ''),ifnull(CAST(p.bool_value AS string),
+                '')),
+            NULL) ) AS app_name
+      FROM
+        `shoplaza.shoplaza_analysis.events_all`
+      LEFT JOIN
+        UNNEST(properties) p
+      WHERE
+        event = 'uninstall_app'
+        AND DATE(time,'Asia/Shanghai') >= begin_time
+        AND store_id IN (
+        SELECT
+          store_id
+        FROM
+          `admin-account-293313.KAM.stores_information_xiaoyang`
+        WHERE
+          internal = 0)
+      GROUP BY
+        1,
+        2,
+        3,
+        4)a
+    left join `admin-account-293313.DWD.plugin_app_mapping_wyn` b on a.app_name = b.app_name
+    GROUP BY
+      1,
+      2,
+      3,
+      4,
+      5
+    union distinct (
+      SELECT
+      id,
+      time,
+      store_id,
+      client_id,
+      ifnull(b.mapping_name,a.app_name) app_name
+    FROM (
+      SELECT
+        id,
+        time,
+        store_id,
+        client_id,
+        MAX(
+        IF
+          (p.key='name',
+            CONCAT(ifnull(p.string_value,
+                ''),ifnull(CAST(p.int_value AS string),
+                ''),ifnull(CAST(p.float_value AS string),
+                ''),ifnull(CAST(p.bool_value AS string),
+                '')),
+            NULL) ) AS app_name,
+        max(if(p.key='from_type',cast(CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      ''))as int64),
+                  NULL))from_type
+      FROM
+        `shoplaza.shoplaza_analysis.events_all`
+      LEFT JOIN
+        UNNEST(properties) p
+      WHERE
+        event = 'admin_plugin_feedback_accept'
+        AND DATE(time,'Asia/Shanghai') >= begin_time
+        AND store_id IN (
+        SELECT
+          store_id
+        FROM
+          `admin-account-293313.KAM.stores_information_xiaoyang`
+        WHERE
+          internal = 0)
+      GROUP BY
+        1,
+        2,
+        3,
+        4)a
+    left join `admin-account-293313.DWD.plugin_app_mapping_wyn` b on a.app_name = b.app_name
+    where from_type = 2
+    GROUP BY
+      1,
+      2,
+      3,
+      4,
+      5
+    )),
+    #使用记录
+    plugin_used_wyn AS(
+    SELECT
+      id,
+      time,
+      store_id,
+      client_id,
+      CASE
+        WHEN event = 'admin_plugin_translate_save' THEN '店铺多语言设置'
+        WHEN event IN('admin_plugin_atc_detail',
+        'plugin_atc_view',
+        'plugin_atc_qty_click',
+        'plugin_atc_variant_click',
+        'plugin_atc_button_click',
+        'plugin_atc_checkout',
+        'plugin_atc_checkout_purchase') THEN 'Add to Cart 设置'
+        WHEN event IN ('admin_plugin_top_products_add_one', 'admin_plugin_top_products_delete_one', 'admin_plugin_top_products_update', 'admin_plugin_top_products_link_copy', 'plugin_top_products_link_view', 'plugin_top_products_product_view', 'plugin_top_products_purchase', 'plugin_top_products_indirect_purchase') THEN '商品置顶'
+        WHEN event IN ('admin_plugin_feedback_pv',
+        'admin_plugin_feedback_reject',
+        'admin_plugin_feedback_accept') THEN '反馈与评价'
+        WHEN event IN('admin_plugin_sales_pop_detail', 'sales_pop_exposure', 'sales_pop_click', 'sales_pop_checkout', 'sales_pop_purchase') THEN '浮窗通知'
+        WHEN event IN ('crow_combinations_add_one',
+        'crow_combinations_detail',
+        'crow_combinations_product',
+        'crow_combinations_delete_one',
+        'crow_combinations_click_create_btn',
+        'crow_combinations_click_add_product',
+        'crow_combinations_pv',
+        'crow_combinations_buy_now',
+        'crow_combinations_atc',
+        'crow_combinations_purchase') THEN '款式组合'
+        WHEN event IN ('admin_plugin_recommend_create', 'admin_plugin_recommend_editor', 'admin_plugin_recommend_error', 'admin_plugin_recommend_step', 'plugin_recommend_rule_pv', 'plugin_recommend_rule_product_click', 'plugin_recommend_rule_products_view', 'plugin_recommend_quick_shop', 'plugin_recommend_product_atc', 'plugin_recommend_product_purchase') THEN '自定义推荐'
+    END
+      app_name
+    FROM
+      `shoplaza.shoplaza_analysis.events_all`
+    WHERE
+      event IN ( 'admin_plugin_translate_save',
+        'admin_plugin_atc_detail',
+        'plugin_atc_view',
+        'plugin_atc_qty_click',
+        'plugin_atc_variant_click',
+        'plugin_atc_button_click',
+        'plugin_atc_checkout',
+        'plugin_atc_checkout_purchase',
+        'admin_plugin_top_products_add_one',
+        'admin_plugin_top_products_delete_one',
+        'admin_plugin_top_products_update',
+        'admin_plugin_top_products_link_copy',
+        'plugin_top_products_link_view',
+        'plugin_top_products_product_view',
+        'plugin_top_products_purchase',
+        'plugin_top_products_indirect_purchase',
+        'admin_plugin_feedback_pv',
+        'admin_plugin_feedback_reject',
+        'admin_plugin_feedback_accept',
+        'admin_plugin_sales_pop_detail',
+        'sales_pop_exposure',
+        'sales_pop_click',
+        'sales_pop_checkout',
+        'sales_pop_purchase',
+        'crow_combinations_add_one',
+        'crow_combinations_detail',
+        'crow_combinations_product',
+        'crow_combinations_delete_one',
+        'crow_combinations_click_create_btn',
+        'crow_combinations_click_add_product',
+        'crow_combinations_pv',
+        'crow_combinations_buy_now',
+        'crow_combinations_atc',
+        'crow_combinations_purchase',
+        'admin_plugin_recommend_create',
+        'admin_plugin_recommend_editor',
+        'admin_plugin_recommend_error',
+        'admin_plugin_recommend_step',
+        'plugin_recommend_rule_pv',
+        'plugin_recommend_rule_product_click',
+        'plugin_recommend_rule_products_view',
+        'plugin_recommend_quick_shop',
+        'plugin_recommend_product_atc',
+        'plugin_recommend_product_purchase')
+      AND DATE(time,'Asia/Shanghai') >= begin_time
+      # and client_id not in ('',' ') #client_id咋会有空白？
+      AND store_id IN (
+      SELECT
+        store_id
+      FROM
+        `admin-account-293313.KAM.stores_information_xiaoyang`
+      WHERE
+        internal = 0)
+    GROUP BY
+      1,
+      2,
+      3,
+      4,
+      5
+      -- HAVING
+      --   COUNT(*)>0
+      #有discount_id
+    UNION DISTINCT (
+      SELECT
+        id,
+        time,
+        store_id,
+        client_id,
+        app_name
+      FROM (
+        SELECT
+          id,
+          time,
+          store_id,
+          client_id,
+          CASE
+            WHEN event IN ('admin_plugin_discount_reduced_editor', 'admin_plugin_discount_present_editor') THEN '满送优惠'
+            WHEN event IN ('admin_plugin_bundle_pricing_editor',
+            'admin_plugin_bundle_combination_editor') THEN '捆绑销售'
+            WHEN event IN ('admin_plugin_rebate_create', 'admin_plugin_rebate_editor', 'admin_plugin_rebate_stop', 'plugin_rebate_pv', 'plugin_rebate_banner_pv', 'plugin_rebate_atc', 'plugin_rebate_pv_purchase', 'plugin_rebate_banner_pv_purchase', 'plugin_rebate_atc_purchase') THEN '满减活动'
+            WHEN event IN ('admin_plugin_flashsale_create',
+            'admin_plugin_flashsale_editor',
+            'admin_plugin_flashsale_stop',
+            'plugin_flashsale_pv',
+            'plugin_flashsale_atc',
+            'plugin_flashsale_pv_purchase',
+            'plugin_flashsale_atc_purchase',
+            'plugin_flashsale_purchase') THEN '限时促销'
+            WHEN event IN ('admin_plugin_coupon_create', 'admin_plugin_coupon_editor', 'admin_plugin_coupon_stop', 'plugin_coupon_pv', 'plugin_coupon_get_code', 'plugin_coupon_pv_purchase', 'plugin_coupon_get_code_purchase') THEN '优惠码'
+            WHEN event IN('admin_plugin_popups_create',
+            'admin_plugin_popups_editor',
+            'open_popups',
+            'complete_popups') THEN '弹窗通知'
+        END
+          app_name,
+          MAX(
+          IF
+            (p.key ='discount_id'
+              OR p.key = 'activity_id',
+              CONCAT(ifnull(p.string_value,
+                  ''),ifnull(CAST(p.int_value AS string),
+                  ''),ifnull(CAST(p.float_value AS string),
+                  ''),ifnull(CAST(p.bool_value AS string),
+                  '')),
+              NULL)) discount_id
+        FROM
+          `shoplaza.shoplaza_analysis.events_all`
+        LEFT JOIN
+          UNNEST(properties) p
+        WHERE
+          event IN ('admin_plugin_discount_reduced_editor',
+            'admin_plugin_discount_present_editor',
+            'admin_plugin_bundle_pricing_editor',
+            'admin_plugin_bundle_combination_editor',
+            'admin_plugin_rebate_create',
+            'admin_plugin_rebate_editor',
+            'admin_plugin_rebate_stop',
+            'plugin_rebate_pv',
+            'plugin_rebate_banner_pv',
+            'plugin_rebate_atc',
+            'plugin_rebate_pv_purchase',
+            'plugin_rebate_banner_pv_purchase',
+            'plugin_rebate_atc_purchase',
+            'admin_plugin_flashsale_create',
+            'admin_plugin_flashsale_editor',
+            'admin_plugin_flashsale_stop',
+            'plugin_flashsale_pv',
+            'plugin_flashsale_atc',
+            'plugin_flashsale_pv_purchase',
+            'plugin_flashsale_atc_purchase',
+            'plugin_flashsale_purchase',
+            'admin_plugin_coupon_create',
+            'admin_plugin_coupon_editor',
+            'admin_plugin_coupon_stop',
+            'plugin_coupon_pv',
+            'plugin_coupon_get_code',
+            'plugin_coupon_pv_purchase',
+            'plugin_coupon_get_code_purchase',
+            'admin_plugin_popups_create',
+            'admin_plugin_popups_editor',
+            'open_popups',
+            'complete_popups')
+          AND DATE(time,'Asia/Shanghai') >= begin_time
+          # and client_id not in ('',' ') #client_id咋会有空白？
+          AND store_id IN (
+          SELECT
+            store_id
+          FROM
+            `admin-account-293313.KAM.stores_information_xiaoyang`
+          WHERE
+            internal = 0)
+        GROUP BY
+          1,
+          2,
+          3,
+          4,
+          5)
+        -- WHERE
+        --   discount_id IS NOT NULL
+        --   AND discount_id != ''
+        --   AND discount_id != ' '
+      GROUP BY
+        1,
+        2,
+        3,
+        4,
+        5
+        -- HAVING
+        --   COUNT(*)>0
+        )),
+    # 各插件客户支付情况
+    plugin_pay AS(
+    SELECT
+      purchase.prc_date,
+      purchase.store_id,
+      purchase.app_name,
+      purchase.order_id,
+      ifnull(purchase.client_id,
+        t_gmv.client_id) client_id,
+      ifnull(purchase.country,
+        t_gmv.country) country,
+      ifnull(purchase.os,
+        t_gmv.os) os,
+      ifnull(purchase.browser,
+        t_gmv.browser) browser,
+      ifnull(purchase.fx_channel,
+        t_gmv.fx_channel) fx_channel,
+      -- purchase.order_total_price,
+      -- purchase.product_num
+      t_gmv.order_total_price
+    FROM (
+      SELECT
+        DATE(time,'Asia/Shanghai') prc_date,
+        store_id,
+        app_name,
+        client_id,
+        order_id,
+        country,
+        os,
+        browser,
+        fx_channel,
+        CAST(order_total_price AS float64) order_total_price,
+        COUNT(DISTINCT product_ids_1) product_num
+      FROM (
+        SELECT
+          id,
+          time,
+          store_id,
+          app_name,
+          client_id,
+          order_discount,
+          order_total_price,
+          order_id,
+          discount_total_price,
+          product_ids,
+          country,
+          os,
+          browser,
+          CASE
+            WHEN url LIKE '%gclid=%' OR referrer_host LIKE '%gclid=%' THEN 'google_ads'
+            WHEN referrer_host LIKE '%google.%'
+          OR latest_referrer_host LIKE '%google.%' THEN 'google'
+            WHEN referrer_host LIKE '%facebook.%' OR latest_referrer_host LIKE '%facebook.%' OR browser IN('Facebook', 'Facebook Messenger', 'FacebookBot') THEN 'facebook'
+            WHEN referrer_host LIKE '%instagram.%'
+          OR latest_referrer_host LIKE '%instagram.%'
+          OR browser = 'Instagram' THEN 'instagram'
+            WHEN referrer_host LIKE '%pinterest.%' OR latest_referrer_host LIKE '%pinterest.%' OR browser = 'Pinterest' THEN 'pinterest'
+            WHEN referrer_host LIKE '%snapchat.%'
+          OR latest_referrer_host LIKE '%snapchat.%'
+          OR browser = 'Snapchat' THEN 'snapchat'
+            WHEN user_agent LIKE '%ByteLocale%' OR referrer_host LIKE '%tiktok%.' OR latest_referrer_host LIKE '%tiktok.%' THEN 'tiktok' -- 2021-07-14新增user_agent判断条件
+            WHEN referrer_host LIKE '%youtube.%'
+          OR latest_referrer_host LIKE '%youtube.%' THEN 'youtube'  -- 2021-07-05新增
+            WHEN referrer_host LIKE '%yandex.%' OR latest_referrer_host LIKE '%yandex.%' THEN 'yandex'  -- 2021-07-05新增
+            WHEN referrer_host LIKE '%yahoo.%'
+          OR latest_referrer_host LIKE '%yahoo.%' THEN 'yahoo'  -- 2021-07-05新增
+            WHEN referrer_host LIKE '%linkedin.%' OR latest_referrer_host LIKE '%linkedin.%' THEN 'linkedin'  -- 2021-07-05新增
+          ELSE
+          'others'
+        END
+          fx_channel--渠道分类
+        FROM (
+          SELECT
+            *,
+            ROW_NUMBER() OVER(PARTITION BY order_id, client_id, store_id, app_name ORDER BY time DESC) rank_1 #重复数据是解析了product_ids后的数据
+          FROM (
+            SELECT
+              id,
+              time,
+              store_id,
+              CASE
+                WHEN event IN ('plugin_activity_pv_purchase', 'plugin_coupon_get_code_purchase') THEN '优惠码'
+                WHEN event IN ('plugin_rebate_pv_purchase',
+                'plugin_rebate_banner_pv_purchase',
+                'plugin_rebate_atc_purchase') THEN '满减活动'
+                WHEN event IN ('plugin_flashsale_pv_purchase', 'plugin_flashsale_atc_purchase', 'plugin_flashsale_purchase') THEN '限时促销'
+                WHEN event = 'sales_pop_purchase' THEN '浮窗通知'
+                WHEN event = 'crow_combinations_purchase' THEN '款式组合'
+                WHEN event = 'plugin_atc_checkout_purchase' THEN 'Add to Cart 设置'
+                WHEN event IN ('plugin_top_products_purchase', 'plugin_top_products_indirect_purchase') THEN '商品置顶'
+            END
+              app_name,
+              client_id,
+              country,
+              os,
+              browser,
+              MAX(
+              IF
+                (p.key ='order_discount',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) order_discount,
+              MAX(
+              IF
+                (p.key ='order_total_price'
+                  OR p.key ='total_price'
+                  OR p.key = 'total',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) order_total_price,
+              MAX(
+              IF
+                (p.key ='order_id',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) order_id,
+              MAX(
+              IF
+                (p.key ='discount_total_price',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) discount_total_price,
+              MAX(
+              IF
+                (p.key ='product_ids',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) product_ids,
+              MAX(
+              IF
+                (p.key ='$url',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) url,
+              MAX(
+              IF
+                (p.key ='$referrer_host',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) referrer_host,
+              MAX(
+              IF
+                (p.key ='$latest_referrer_host',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) latest_referrer_host,
+              MAX(
+              IF
+                (p.key ='user_agent',
+                  CONCAT(ifnull(p.string_value,
+                      ''),ifnull(CAST(p.int_value AS string),
+                      ''),ifnull(CAST(p.float_value AS string),
+                      ''),ifnull(CAST(p.bool_value AS string),
+                      '')),
+                  NULL)) user_agent
+            FROM
+              `shoplaza.shoplaza_analysis.events_all`
+            LEFT JOIN
+              UNNEST(properties) p
+            WHERE
+              event IN ('plugin_activity_pv_purchase',
+                'plugin_coupon_get_code_purchase',
+                'plugin_rebate_pv_purchase',
+                'plugin_rebate_banner_pv_purchase',
+                'plugin_rebate_atc_purchase',
+                'plugin_flashsale_pv_purchase',
+                'plugin_flashsale_atc_purchase',
+                'plugin_flashsale_purchase',
+                'sales_pop_purchase',
+                'crow_combinations_purchase',
+                'plugin_atc_checkout_purchase',
+                'plugin_top_products_purchase',
+                'plugin_top_products_indirect_purchase')
+              AND DATE(time,'Asia/Shanghai') BETWEEN begin_time
+              AND end_time
+              AND store_id IN (
+              SELECT
+                store_id
+              FROM
+                `admin-account-293313.KAM.stores_information_xiaoyang`
+              WHERE
+                internal = 0)
+            GROUP BY
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8))
+        WHERE
+          rank_1 = 1)
+      LEFT JOIN
+        UNNEST(JSON_extract_array(order_discount)) od
+      LEFT JOIN
+        UNNEST(JSON_extract_array(product_ids)) product_ids_1
+      WHERE
+        order_id IS NOT NULL
+        AND json_extract_scalar(od,
+          '$.discount_id') IS NOT NULL
+        AND json_extract_scalar(od,
+          '$.discount_id')!= ''
+        AND json_extract_scalar(od,
+          '$.discount_id')!=' ' #去掉discount为空的情况
+        -- AND od IS NOT NULL
+      GROUP BY
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10)purchase
+      #外连接realtime获取gmv，以及补全限时促销的client_id
+    LEFT JOIN (
+      SELECT
+        DATE(time,'Asia/Shanghai') prc_date,
+        order_id,
+        client_id,
+        country,
+        os,
+        browser,
+        fx_channel,
+        store_id,
+        SUM(order_total_price) order_total_price
+      FROM (
+        SELECT
+          *,
+          ROW_NUMBER() OVER(PARTITION BY order_id, client_id, store_id ORDER BY time DESC) rank_1
+        FROM (
+          SELECT
+            id,
+            time,
+            order_id,
+            client_id,
+            country,
+            _os os,
+            _browser browser,
+            CASE
+              WHEN _url LIKE '%gclid=%' OR _referrer_host LIKE '%gclid=%' THEN 'google_ads'
+              WHEN _referrer_host LIKE '%google.%'
+            OR _latest_referrer_host LIKE '%google.%' THEN 'google'
+              WHEN _referrer_host LIKE '%facebook.%' OR _latest_referrer_host LIKE '%facebook.%' OR _browser IN('Facebook', 'Facebook Messenger', 'FacebookBot') THEN 'facebook'
+              WHEN _referrer_host LIKE '%instagram.%'
+            OR _latest_referrer_host LIKE '%instagram.%'
+            OR _browser = 'Instagram' THEN 'instagram'
+              WHEN _referrer_host LIKE '%pinterest.%' OR _latest_referrer_host LIKE '%pinterest.%' OR _browser = 'Pinterest' THEN 'pinterest'
+              WHEN _referrer_host LIKE '%snapchat.%'
+            OR _latest_referrer_host LIKE '%snapchat.%'
+            OR _browser = 'Snapchat' THEN 'snapchat'
+              WHEN user_agent LIKE '%ByteLocale%' OR _referrer_host LIKE '%tiktok%.' OR _latest_referrer_host LIKE '%tiktok.%' THEN 'tiktok' -- 2021-07-14新增user_agent判断条件
+              WHEN _referrer_host LIKE '%youtube.%'
+            OR _latest_referrer_host LIKE '%youtube.%' THEN 'youtube'  -- 2021-07-05新增
+              WHEN _referrer_host LIKE '%yandex.%' OR _latest_referrer_host LIKE '%yandex.%' THEN 'yandex'  -- 2021-07-05新增
+              WHEN _referrer_host LIKE '%yahoo.%'
+            OR _latest_referrer_host LIKE '%yahoo.%' THEN 'yahoo'  -- 2021-07-05新增
+              WHEN _referrer_host LIKE '%linkedin.%' OR _latest_referrer_host LIKE '%linkedin.%' THEN 'linkedin'  -- 2021-07-05新增
+            ELSE
+            'others'
+          END
+            fx_channel,
+            --渠道分类
+            store_id,
+            SUM(usd_total) order_total_price
+          FROM
+            `central-equinox-282901.shoplaza_analysis.realtime_events`
+          WHERE
+            event = 'place_order'
+            AND platform = 'shop'
+            AND payment_method != 'cod'
+            AND DATE(time,'Asia/Shanghai') BETWEEN begin_time
+            AND end_time
+          GROUP BY
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9))
+      WHERE
+        rank_1=1
+      GROUP BY
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8)t_gmv
+    ON
+      -- purchase.prc_date = t_gmv.prc_date
+      purchase.order_id = t_gmv.order_id
+      -- AND purchase.client_id = t_gmv.client_id
+      -- AND purchase.store_id = t_gmv.store_id
+      )
+    # 当日有授权记录的店铺-插件
+  SELECT
+    ifnull(iu.prc_date,
+      use.prc_date) prc_date,
+    ifnull(iu.store_id,
+      use.store_id) store_id,
+    ifnull(iu.app_name,
+      use.app_name) app_name,
+    iu.latest_install_time,
+    iu.latest_uninstall_time,
+    active.gmv three_month_gmv,
+    -- type_num.activity_type,
+    type_num.cumu_activity_num,
+    type_num.cumu_activity_active_num,
+    type_num.activity_num,
+    type_num.activity_active_num,
+    CASE
+      WHEN iu.latest_install_time IS NULL OR iu.latest_uninstall_time>=iu.latest_install_time THEN 0
+    ELSE
+    1
+  END
+    is_authorized,
+    #是否为授权记录
+    CASE
+      WHEN iu.latest_uninstall_time IS NULL OR iu.latest_install_time>=iu.latest_uninstall_time THEN 0
+    ELSE
+    1
+  END
+    is_cancelled,
+    #是否为取消记录
+    CASE
+      WHEN use.store_id IS NULL OR use.app_name IS NULL THEN 0
+    ELSE
+    1
+  END
+    is_used,
+    #是否使用
+    CASE
+      WHEN active.store_id IS NULL OR active.app_name IS NULL OR active.gmv <= 1 THEN 0
+    ELSE
+    1
+  END
+    is_active,
+    #是否活跃
+    CASE
+      WHEN o_active.store_id IS NULL OR o_active.gmv <= 1 THEN 0
+    ELSE
+    1
+  END
+    originally_is_active
+    #是否原来活跃
+  FROM (
+    SELECT
+      ifnull(i.prc_date,
+        u.prc_date) prc_date,
+      ifnull(i.store_id,
+        u.store_id) store_id,
+      ifnull(i.app_name,
+        u.app_name) app_name,
+      i.latest_install_time,
+      u.latest_uninstall_time
+    FROM (
+      SELECT
+        DATE(time,'Asia/Shanghai') prc_date,
+        store_id,
+        app_name,
+        MAX(time) latest_install_time
+      FROM
+        plugin_install_wyn
+      GROUP BY
+        1,
+        2,
+        3)i
+    FULL JOIN (
+      SELECT
+        DATE(time,'Asia/Shanghai') prc_date,
+        store_id,
+        app_name,
+        MAX(time) latest_uninstall_time
+      FROM
+        plugin_uninstall_wyn
+      GROUP BY
+        1,
+        2,
+        3 )u
+    ON
+      i.prc_date = u.prc_date
+      AND i.store_id = u.store_id
+      AND i.app_name = u.app_name)iu
+    #并进使用店铺
+  FULL JOIN (
+    SELECT
+      DATE(time,'Asia/Shanghai') prc_date,
+      store_id,
+      app_name
+    FROM
+      plugin_used_wyn
+    GROUP BY
+      1,
+      2,
+      3 )use
+  ON
+    iu.prc_date = use.prc_date
+    AND iu.store_id = use.store_id
+    AND iu.app_name = use.app_name
+    #并进活跃店铺，店铺插件3个月内累计gmv
+  LEFT JOIN (
+    SELECT
+      prc_date,
+      datetime_sub(prc_date,
+        INTERVAL 30 day) one_month_before,
+      store_id,
+      app_name,
+      (
+      SELECT
+        SUM(order_total_price)
+      FROM
+        plugin_pay
+      WHERE
+        store_id = a.store_id
+        AND app_name = a.app_name
+        AND prc_date BETWEEN datetime_sub(a.prc_date,
+          INTERVAL 30 day)
+        AND a.prc_date) gmv
+    FROM
+      plugin_pay a
+    GROUP BY
+      1,
+      2,
+      3,
+      4)active
+  ON
+    use.prc_date = active.prc_date
+    AND use.store_id = active.store_id
+    AND use.app_name = active.app_name
+    # 当日使用插件的店铺是否原来就是活跃
+  LEFT JOIN (
+    SELECT
+      prc_date,
+      datetime_sub(prc_date,
+        INTERVAL 30 day) one_month_before,
+      store_id,
+      (
+      SELECT
+        SUM(gmv)
+      FROM (
+        SELECT
+          DATE(time,'Asia/Shanghai') prc_date,
+          store_id,
+          SUM(usd_total) gmv
+        FROM
+          `central-equinox-282901.shoplaza_analysis.realtime_events`
+        WHERE
+          DATE(time,'Asia/Shanghai') >= begin_time
+          AND platform = 'shop'
+          AND payment_method!='cod'
+          AND event = 'place_order'
+        GROUP BY
+          1,
+          2)
+      WHERE
+        store_id = a.store_id
+        AND prc_date BETWEEN datetime_sub(a.prc_date,
+          INTERVAL 30 day)
+        AND a.prc_date) gmv
+    FROM (
+      SELECT
+        DATE(time,'Asia/Shanghai') prc_date,
+        store_id,
+        SUM(usd_total) gmv
+      FROM
+        `central-equinox-282901.shoplaza_analysis.realtime_events`
+      WHERE
+        DATE(time,'Asia/Shanghai') >= begin_time
+        AND platform = 'shop'
+        AND payment_method!='cod'
+        AND event = 'place_order'
+      GROUP BY
+        1,
+        2)a
+    GROUP BY
+      1,
+      2,
+      3 )o_active
+  ON
+    o_active.prc_date = use.prc_date
+    AND o_active.store_id = use.store_id
+    #当日优惠类型下的B端有任意事件活动数，app-store维度
+  LEFT JOIN (
+    SELECT
+      b.prc_date,
+      b.store_id,
+      b.app_name,
+      -- activity_type,
+      (
+      SELECT
+        COUNT(DISTINCT activity_id)
+      FROM
+        `admin-account-293313.DWD.plugin_activity_b_wyn`
+      WHERE
+        (DATE(starts_at,'Asia/Shanghai')<=b.prc_date
+          OR prc_date<=b.prc_date)
+        AND store_id = b.store_id
+        AND app_name = b.app_name
+        -- AND activity_type = b.activity_type
+        )cumu_activity_num,
+      (
+      SELECT
+        COUNT(DISTINCT activity_id)
+      FROM
+        `admin-account-293313.DWD.plugin_activity_b_wyn`
+      WHERE
+        DATE(starts_at,'Asia/Shanghai')<=b.prc_date
+        AND (DATE(ends_at,'Asia/Shanghai')>=b.prc_date
+          #长期的ends_at为-1
+          OR DATE(ends_at) = '1969-12-31')
+        AND store_id = b.store_id
+        AND app_name = b.app_name
+        -- AND activity_type = b.activity_type
+        )cumu_activity_active_num,
+      COUNT(DISTINCT activity_id) activity_num,
+      COUNT(DISTINCT
+        CASE
+          WHEN set_duration = real_duration THEN activity_id
+      END
+        ) activity_active_num
+    FROM
+      `admin-account-293313.DWD.plugin_activity_b_wyn` b
+    GROUP BY
+      1,
+      2,
+      3)type_num
+  ON
+    use.prc_date = type_num.prc_date
+    AND use.store_id = type_num.store_id
+    AND use.app_name = type_num.app_name
+    #当日优惠类型下的B端有任意事件活动数，app维度
+  UNION ALL (
+    SELECT
+      prc_date,
+      '全部店铺' store_id,
+      app_name,
+      NULL latest_install_time,
+      NULL latest_uninstall_time,
+      NULL three_month_gmv,
+      (
+      SELECT
+        COUNT(DISTINCT activity_id)
+      FROM
+        `admin-account-293313.DWD.plugin_activity_b_wyn`
+      WHERE
+        (DATE(starts_at,'Asia/Shanghai')<=b.prc_date
+          OR prc_date<=b.prc_date)
+        -- AND store_id = b.store_id
+        AND app_name = b.app_name
+        -- AND activity_type = b.activity_type
+        )cumu_activity_num,
+      (
+      SELECT
+        COUNT(DISTINCT activity_id)
+      FROM
+        `admin-account-293313.DWD.plugin_activity_b_wyn`
+      WHERE
+        DATE(starts_at,'Asia/Shanghai')<=b.prc_date
+        AND (DATE(ends_at,'Asia/Shanghai')>=b.prc_date
+          #长期的ends_at为-1
+          OR DATE(ends_at) = '1969-12-31')
+        -- AND store_id = b.store_id
+        AND app_name = b.app_name
+        -- AND activity_type = b.activity_type
+        )cumu_activity_active_num,
+      COUNT(DISTINCT activity_id) activity_num,
+      COUNT(DISTINCT
+        CASE
+          WHEN set_duration = real_duration THEN activity_id
+      END
+        ) activity_active_num,
+      NULL is_authorized,
+      NULL is_cancelled,
+      NULL is_used,
+      NULL is_active,
+      NULL originally_is_active
+    FROM
+      `admin-account-293313.DWD.plugin_activity_b_wyn` b
+    GROUP BY
+      1,
+      2,
+      3) )
