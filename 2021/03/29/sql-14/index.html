@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【HiveQL】Some Notes(updating) | Nananan&#39;s warehouse</title>
+<title>【HiveQL】Some Notes(停滞不前...) | Nananan&#39;s warehouse</title>
 
 
 
@@ -244,7 +244,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【HiveQL】Some Notes(updating)</h1>
+            <h1 class="post-title">【HiveQL】Some Notes(停滞不前...)</h1>
             
                 <div class="post-meta">
                     
@@ -257,7 +257,7 @@
                         <a href="#">2021-03-29&nbsp;&nbsp;15:44:25</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2021/03/29/sql-14/" class="leancloud-visitors view" data-flag-title="【HiveQL】Some Notes(updating)">
+                    <!-- <span id="/2021/03/29/sql-14/" class="leancloud-visitors view" data-flag-title="【HiveQL】Some Notes(停滞不前...)">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -296,22 +296,18 @@
         <div class="post-content">
             <p>主要是工作中写Hive QL积累的一些经验= 。 =</p>
 <h3 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h3><h4 id="利用Frame子句进行滚动计和"><a href="#利用Frame子句进行滚动计和" class="headerlink" title="利用Frame子句进行滚动计和"></a>利用Frame子句进行滚动计和</h4><p>如果说需要针对每个商品统计滚动统计过去一周的总销量，可以在frame子句中指定分区范围：</p>
-<figure class="highlight pgsql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">partition</span> <span class="keyword">by</span> [<span class="keyword">partition</span> clause]</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> [<span class="keyword">order</span> clause]</span><br><span class="line"><span class="keyword">rows</span> <span class="keyword">between</span> [frame_start] <span class="keyword">and</span> [frame_end]</span><br></pre></td></tr></tbody></table></figure>
-
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">partition by [partition clause]</span><br><span class="line">order by [order clause]</span><br><span class="line">rows between [frame_start] and [frame_end]</span><br></pre></td></tr></tbody></table></figure>
 <h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h3><h4 id="字符串拼接函数"><a href="#字符串拼接函数" class="headerlink" title="字符串拼接函数"></a>字符串拼接函数</h4><p>MySQL里的聚合字符串拼接函数是group_concat，但是hive里面好像不能用，得用另一种方法来代替这个函数：</p>
-<figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group<span class="constructor">_concat([<span class="params">distinct</span>] 连接字段 [<span class="params">order</span> <span class="params">by</span> 排序字段 <span class="params">asc</span><span class="operator">/</span><span class="params">desc</span> ] [<span class="params">separator</span> 分隔符])</span></span><br><span class="line">=</span><br><span class="line">concat<span class="constructor">_ws(',', <span class="params">collect_set</span>(<span class="params">cast</span>(连接字段 <span class="params">as</span> <span class="params">string</span>)</span>))</span><br></pre></td></tr></tbody></table></figure>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group_concat([distinct] 连接字段 [order by 排序字段 asc/desc ] [separator 分隔符])</span><br><span class="line">=</span><br><span class="line">concat_ws(',', collect_set(cast(连接字段 as string)))</span><br></pre></td></tr></tbody></table></figure>
 <ol>
 <li>因为concat_ws必须是字符串类型，所以需要用cast转换一下。</li>
-<li>collect相关函数是将分组后的某列转成数组返回，collect_set作用是把group by后的非分组字段<strong>去重</strong>‘收集’起来，而collect_list是<strong>不去重</strong>的。</li>
+<li>collect相关函数是将分组后的某列转成数组返回，collect_set作用是把group by后的非分组字段<strong>去重</strong>‘收集’起来，而collect_list是<strong>不去重</strong>的。<h4 id="求分位数函数"><a href="#求分位数函数" class="headerlink" title="求分位数函数"></a>求分位数函数</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">percentile_approx(col,p)</span><br><span class="line">col为待求列，p为分位数，p=2表示求二分位数</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="多维分析子句"><a href="#多维分析子句" class="headerlink" title="多维分析子句"></a>多维分析子句</h4><h5 id="grouping-sets"><a href="#grouping-sets" class="headerlink" title="grouping sets"></a>grouping sets</h5>个人认为是group by的优化版本，grouping sets里面只能是group by的字段，适合多维统计，实际上就是在原来group by的结构中的增加了”全部”字段<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">group by 一般是到最细粒度，grouping sets允许group by字段的任意组合，如果group by字段未出现，则统一为'null'值</span><br><span class="line">grouping sets(...)</span><br></pre></td></tr></tbody></table></figure>
+<h5 id="with-cube"><a href="#with-cube" class="headerlink" title="with cube"></a>with cube</h5><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c <span class="keyword">with</span> <span class="keyword">cube</span></span><br><span class="line">=</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> a,b,c <span class="keyword">grouping</span> <span class="keyword">sets</span> ((a,b,c),(a,b),(b,c),(a,c),(c),())</span><br></pre></td></tr></tbody></table></figure>
+<h5 id="with-rollup"><a href="#with-rollup" class="headerlink" title="with rollup"></a>with rollup</h5><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c <span class="keyword">with</span> <span class="keyword">rollup</span></span><br><span class="line">=</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> a,b,c <span class="keyword">grouping</span> <span class="keyword">sets</span>((a,b,c),(a,b),(a),())</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h3><h4 id="next-day"><a href="#next-day" class="headerlink" title="next_day"></a>next_day</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">next_day(date,weekday)</span><br><span class="line">weekday可以是'MONDAY','TUESDAY'...</span><br><span class="line">比如周内数据汇总到周一那天，则可以用：</span><br><span class="line">group by next_day(date_sub(dt,7),'MON')</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="日期加减法"><a href="#日期加减法" class="headerlink" title="日期加减法"></a>日期加减法</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在hive中是用date_sub/date_add(dt,8)表示</span><br></pre></td></tr></tbody></table></figure></li>
 </ol>
-<h4 id="求分位数函数"><a href="#求分位数函数" class="headerlink" title="求分位数函数"></a>求分位数函数</h4><figure class="highlight reasonml"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">percentile<span class="constructor">_approx(<span class="params">col</span>,<span class="params">p</span>)</span></span><br><span class="line">col为待求列，p为分位数，p=<span class="number">2</span>表示求二分位数</span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="多维分析子句"><a href="#多维分析子句" class="headerlink" title="多维分析子句"></a>多维分析子句</h4><h5 id="grouping-sets"><a href="#grouping-sets" class="headerlink" title="grouping sets"></a>grouping sets</h5><p>个人认为是group by的优化版本，grouping sets里面只能是group by的字段，适合多维统计，实际上就是在原来group by的结构中的增加了”全部”字段</p>
-<figure class="highlight crmsh"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">group</span> <span class="title">by</span> 一般是到最细粒度，grouping sets允许<span class="keyword">group</span> <span class="title">by</span>字段的任意组合，如果<span class="keyword">group</span> <span class="title">by</span>字段未出现，则统一为'null'值</span><br><span class="line">grouping sets(...)</span><br></pre></td></tr></tbody></table></figure>
-<h5 id="with-cube"><a href="#with-cube" class="headerlink" title="with cube"></a>with cube</h5><figure class="highlight excel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c with cube</span><br><span class="line">=</span><br><span class="line">group by a,b,c grouping sets ((a,b,c),(a,b),(b,c),(a,c),(c),())</span><br></pre></td></tr></tbody></table></figure>
-<h5 id="with-rollup"><a href="#with-rollup" class="headerlink" title="with rollup"></a>with rollup</h5><figure class="highlight excel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">group by a,b,c with rollup</span><br><span class="line">=</span><br><span class="line">group by a,b,c grouping sets((a,b,c),(a,b),(a),())</span><br></pre></td></tr></tbody></table></figure>
-<h3 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h3><h4 id="next-day"><a href="#next-day" class="headerlink" title="next_day"></a>next_day</h4><p>next_day(date,weekday)<br>weekday可以是’MONDAY’,’TUESDAY’…<br>比如周内数据汇总到周一那天，则可以用：<br>group by next_day(date_sub(dt,7),’MON’)</p>
-<h4 id="日期加减法"><a href="#日期加减法" class="headerlink" title="日期加减法"></a>日期加减法</h4><p>在hive中是用date_sub/date_add(dt,8)表示</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -349,7 +345,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-06-13&nbsp;&nbsp;18:53:47</span>
+                        <span>2021-08-04&nbsp;&nbsp;22:03:00</span>
                 
                 
                     <p class="copyright-item">

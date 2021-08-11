@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【BEGTUT-MySQL】Window functions-Summary | Nananan&#39;s warehouse</title>
+<title>【BQ SQL】Some Notes(updating) | Nananan&#39;s warehouse</title>
 
 
 
@@ -244,7 +244,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【BEGTUT-MySQL】Window functions-Summary</h1>
+            <h1 class="post-title">【BQ SQL】Some Notes(updating)</h1>
             
                 <div class="post-meta">
                     
@@ -254,10 +254,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2021-03-03&nbsp;&nbsp;16:01:36</a>
+                        <a href="#">2021-08-04&nbsp;&nbsp;16:26:14</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2021/03/03/sql-13/" class="leancloud-visitors view" data-flag-title="【BEGTUT-MySQL】Window functions-Summary">
+                    <!-- <span id="/2021/08/04/sql-15/" class="leancloud-visitors view" data-flag-title="【BQ SQL】Some Notes(updating)">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -282,13 +282,11 @@
                     
                         <span class="iconfont icon-tags"></span>
                             
-                                <a href="/tags/Notes/"># Notes</a>
+                                <a href="/tags/Records/"># Records</a>
                             
                                 <a href="/tags/SQL/"># SQL</a>
                             
-                                <a href="/tags/BEGTUT/"># BEGTUT</a>
-                            
-                                <a href="/tags/MySQL/"># MySQL</a>
+                                <a href="/tags/BigQuery/"># BigQuery</a>
                             
                     
                 </div>
@@ -296,77 +294,14 @@
         </header>
 
         <div class="post-content">
-            <p>这几天终于在成都安顿下来了，总算有时间开始整理一下了…<br>主要通过<a target="_blank" rel="noopener" href="https://www.begtut.com/">BEGTUT</a>网站进行学（zhao）习（chao）的</p>
-<h2 id="窗口函数的通用形式"><a href="#窗口函数的通用形式" class="headerlink" title="窗口函数的通用形式"></a>窗口函数的通用形式</h2><figure class="highlight csharp"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">window_function_name(expression)</span><br><span class="line">    over (</span><br><span class="line">        [<span class="meta">partition_definition</span>]</span><br><span class="line">        [<span class="meta">order_definition</span>]</span><br><span class="line">        [<span class="meta">frame_definition</span>]</span><br><span class="line">    )</span><br></pre></td></tr></tbody></table></figure>
-<p>首先是窗口函数名称以及表达式(应用列)，over里面分别是分区定义，顺序定义和帧定义</p>
-<ul>
-<li><p>partition_clause</p>
-<figure class="highlight mel"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">partition</span> by &lt;<span class="keyword">expression</span>&gt;[{,&lt;<span class="keyword">expression</span>&gt;...}]</span><br></pre></td></tr></tbody></table></figure>
-<p>负责将结果集分成块，函数在分区内执行，每次跨越分区时都会初始化</p>
-</li>
-<li><p>order_by_clause</p>
-<figure class="highlight axapta"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> &lt;expression&gt; [<span class="keyword">asc</span>|<span class="keyword">desc</span>], [{,&lt;expression&gt;...}]</span><br></pre></td></tr></tbody></table></figure>
-<p>指定在块中的排序方式</p>
-</li>
-<li><p>frame_clause</p>
-<figure class="highlight dts"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="class">frame_unit </span>{<span class="params">&lt;frame_start&gt;</span>|<span class="params">&lt;frame_between&gt;</span>}</span><br></pre></td></tr></tbody></table></figure>
-<p>帧单位指定当前行和帧行之间的关系类型。它可以是rows或range。当前行和帧行的偏移量是行号，如果帧单位是rows行值，则行值是帧单位range。<br><em>frame_start</em>和<em>frame_between</em>定义帧边界<br><em>frame_start</em>的值可以是：<br><strong>unbounded preceding：</strong>frame从分区的第一行开始。<br><strong>n preceding：</strong>第一个当前行之前的物理N行，N可以是文字数字或计算结果的表达式。<br><strong>current row：</strong>当前计算的行<br><em>frame_between</em>用法：</p>
-<figure class="highlight apache"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">between</span> frame_boundary_<span class="number">1</span> and frame_boundary_<span class="number">2</span></span><br></pre></td></tr></tbody></table></figure>
-<p>frame_boundary_1和frame_boundary_2可以是：<br><strong>frame_start：</strong>如前所述。<br><strong>unbounded following：</strong>框架结束于分区的最后一行。<br><strong>n following：</strong>当前行之后的物理N行。</p>
-</li>
-</ul>
-<h2 id="Summary"><a href="#Summary" class="headerlink" title="Summary"></a>Summary</h2><table>
-<thead>
-<tr>
-<th align="center">名称</th>
-<th align="center">描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-cume_dist-function.html">CUME_DIST</a></td>
-<td align="center">计算一组值中值的累积分布。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-percent_rank-function/">PERCENT_RANK</a></td>
-<td align="center">计算分区或结果集中行的百分位数</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-dense_rank-function/">DENSE_RANK</a></td>
-<td align="center">根据ORDER BY子句为其分区中的每一行分配一个排名。 它为具有相同值的行分配相同的排名。 如果两行或更多行具有相同的等级，则排序值序列中将没有间隙。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-rank-function/">RANK</a></td>
-<td align="center">与DENSE_RANK（）函数类似，只是当两行或更多行具有相同的排名时，排序值序列中存在间隙。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-row_number-function/">ROW_NUMBER</a></td>
-<td align="center">为其分区中的每一行分配一个连续整数</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-first_value-function/">FIRST_VALUE</a></td>
-<td align="center">返回指定表达式相对于窗口框架中第一行的值。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-lag-function/">LAG</a></td>
-<td align="center">返回分区中当前行之前的第N行的值。 如果不存在前一行，则返回NULL。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-lead-function/">LEAD</a></td>
-<td align="center">返回分区中当前行之后的第N行的值。 如果不存在后续行，则返回NULL。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-last_value-function/">LAST_VALUE</a></td>
-<td align="center">返回指定表达式相对于窗口框架中最后一行的值。</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-nth_value-function/">NTH_VALUE</a></td>
-<td align="center">返回窗口框架第N行的参数值</td>
-</tr>
-<tr>
-<td align="center"><a target="_blank" rel="noopener" href="https://www.begtut.com/mysql/mysql-ntile-function/">NTILE</a></td>
-<td align="center">将每个窗口分区的行分配到指定数量的已排名组中。</td>
-</tr>
-</tbody></table>
+            <p>Hive QL的那篇暂时不更2333，因为现在工作的公司不用Hive，主要使用云数据库BigQuery～</p>
+<h4 id="unnest-数组转行"><a href="#unnest-数组转行" class="headerlink" title="unnest 数组转行"></a>unnest 数组转行</h4><p>目前的数据结构主要使用数组+结构体键值对(key,value)的形式，即数组元素是键值对，一贯先使用</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left join unnest(properties) p </span><br></pre></td></tr></tbody></table></figure>
+<p>然后使用</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX(IF(p.key = 'xxx',CONCAT(ifnull(p.string_value,''),ifnull(CAST(p.int_value AS string),''),ifnull(CAST(p.float_value AS string),''),ifnull(CAST(p.bool_value AS string),'')),NULL))</span><br></pre></td></tr></tbody></table></figure>
+<p>返回null表示没有这个键/字段，返回’’表示这个键/字段为null<br>同理，如果是需要取某个满足特定条件的字段值，可以使用if或者case when，但不能直接group by这个结果，因为其他字段会变成null，应该使用max(if(…))来实现这个功能</p>
+<h4 id="cast-强制类型转换"><a href="#cast-强制类型转换" class="headerlink" title="cast 强制类型转换"></a>cast 强制类型转换</h4><p>null转成任意类型后的值仍为null</p>
+<h4 id="concat-字符串拼接函数"><a href="#concat-字符串拼接函数" class="headerlink" title="concat 字符串拼接函数"></a>concat 字符串拼接函数</h4><p>concat里任意一个值为null，结果均为null，可以利用这个函数来绑定维度，用于去重统计或是group by功能</p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -399,12 +334,12 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2021-03-03&nbsp;&nbsp;16:01:36</span>
+                        <span>2021-08-04&nbsp;&nbsp;16:26:14</span>
                 
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-06-13&nbsp;&nbsp;18:32:51</span>
+                        <span>2021-08-07&nbsp;&nbsp;20:53:26</span>
                 
                 
                     <p class="copyright-item">
@@ -415,7 +350,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2021/03/03/sql-13/">http://a123wyn.studio/2021/03/03/sql-13/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/08/04/sql-15/">http://a123wyn.studio/2021/08/04/sql-15/</a></span>
                     </p>
                 
                 <!-- 
@@ -433,13 +368,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Notes/"># Notes</a>
+                        <a href="/tags/Records/"># Records</a>
                     
                         <a href="/tags/SQL/"># SQL</a>
                     
-                        <a href="/tags/BEGTUT/"># BEGTUT</a>
-                    
-                        <a href="/tags/MySQL/"># MySQL</a>
+                        <a href="/tags/BigQuery/"># BigQuery</a>
                     
                     
                 </span>
@@ -452,10 +385,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/03/29/sql-14/">【HiveQL】Some Notes(停滞不前...)</a>
+                <a class="prev" rel="prev" href="/2021/08/11/theme-demand/">【Shoplazza-theme_demand】</a>
             
             
-                <a class="next" rel="next" href="/2021/02/18/sql-12/">【SQLZOO】Tutorials-9+.COVID 19</a>
+                <a class="next" rel="next" href="/2021/07/29/plugin-demand/">【Shoplazza-plugin_demand】</a>
             
         </section>
         
