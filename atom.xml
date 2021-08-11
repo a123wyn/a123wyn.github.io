@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-08-11T14:29:34.024Z</updated>
+  <updated>2021-08-07T12:53:26.034Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -15,38 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>【Shoplazza-theme_demand】</title>
-    <link href="http://a123wyn.studio/2021/08/11/theme-demand/"/>
-    <id>http://a123wyn.studio/2021/08/11/theme-demand/</id>
-    <published>2021-08-11T13:58:03.000Z</published>
-    <updated>2021-08-11T14:29:34.024Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2021/08/11/theme-demand/theme_base_time_b_wyn.txt&quot; alt=&quot;theme_base_time_b_wyn&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    <category term="Work" scheme="http://a123wyn.studio/categories/Work/"/>
-    
-    
-    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
-    
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
-    <category term="Work" scheme="http://a123wyn.studio/tags/Work/"/>
-    
-    <category term="Shoplazza" scheme="http://a123wyn.studio/tags/Shoplazza/"/>
-    
-  </entry>
   
   <entry>
     <title>【BQ SQL】Some Notes(updating)</title>
@@ -75,61 +43,6 @@
     <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
     
     <category term="BigQuery" scheme="http://a123wyn.studio/tags/BigQuery/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Shoplazza-plugin_demand】</title>
-    <link href="http://a123wyn.studio/2021/07/29/plugin-demand/"/>
-    <id>http://a123wyn.studio/2021/07/29/plugin-demand/</id>
-    <published>2021-07-29T07:22:54.000Z</published>
-    <updated>2021-08-11T14:29:19.536Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;/2021/07/29/plugin-demand/plugin_activity_b_wyn.txt&quot; alt=&quot;plugin_activity_b_wyn&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    <category term="Work" scheme="http://a123wyn.studio/categories/Work/"/>
-    
-    
-    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
-    
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
-    <category term="Work" scheme="http://a123wyn.studio/tags/Work/"/>
-    
-    <category term="Shoplazza" scheme="http://a123wyn.studio/tags/Shoplazza/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>shoplazza-superset-backup</title>
-    <link href="http://a123wyn.studio/2021/07/21/shoplazza-superset-backup/"/>
-    <id>http://a123wyn.studio/2021/07/21/shoplazza-superset-backup/</id>
-    <published>2021-07-21T02:13:53.000Z</published>
-    <updated>2021-08-04T14:03:00.173Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;sales-GMV敏感数据&quot;&gt;&lt;a href=&quot;#sales-GMV敏感数据&quot; class=&quot;headerlink&quot; title=&quot;sales-GMV敏感数据&quot;&gt;&lt;/a&gt;sales-GMV敏感数据&lt;/h3&gt;&lt;figure class=&quot;highlight</summary>
-        
-      
-    
-    
-    
-    
-    <category term="work" scheme="http://a123wyn.studio/tags/work/"/>
     
   </entry>
   
@@ -628,6 +541,99 @@
     <category term="Project" scheme="http://a123wyn.studio/tags/Project/"/>
     
     <category term="Mini Program" scheme="http://a123wyn.studio/tags/Mini-Program/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 10</title>
+    <link href="http://a123wyn.studio/2020/12/07/stat-10/"/>
+    <id>http://a123wyn.studio/2020/12/07/stat-10/</id>
+    <published>2020-12-07T15:53:29.000Z</published>
+    <updated>2021-06-13T10:32:51.854Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 9</title>
+    <link href="http://a123wyn.studio/2020/12/05/stat-9/"/>
+    <id>http://a123wyn.studio/2020/12/05/stat-9/</id>
+    <published>2020-12-05T12:05:56.000Z</published>
+    <updated>2021-06-13T10:32:51.918Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 8</title>
+    <link href="http://a123wyn.studio/2020/12/02/stat-8/"/>
+    <id>http://a123wyn.studio/2020/12/02/stat-8/</id>
+    <published>2020-12-02T06:09:12.000Z</published>
+    <updated>2021-06-13T10:32:51.917Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
     
   </entry>
   
