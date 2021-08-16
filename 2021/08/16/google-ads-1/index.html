@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【Git】Git相关使用杂记（updating...） | Nananan&#39;s warehouse</title>
+<title>【Google Ads】展示广告系列 | Nananan&#39;s warehouse</title>
 
 
 
@@ -244,7 +244,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【Git】Git相关使用杂记（updating...）</h1>
+            <h1 class="post-title">【Google Ads】展示广告系列</h1>
             
                 <div class="post-meta">
                     
@@ -254,10 +254,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2020-07-06&nbsp;&nbsp;10:45:28</a>
+                        <a href="#">2021-08-16&nbsp;&nbsp;14:58:56</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2020/07/06/git-1/" class="leancloud-visitors view" data-flag-title="【Git】Git相关使用杂记（updating...）">
+                    <!-- <span id="/2021/08/16/google-ads-1/" class="leancloud-visitors view" data-flag-title="【Google Ads】展示广告系列">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -275,16 +275,18 @@
                     
                         <span class="iconfont icon-category"></span>
                             
-                                <a href="/categories/CS/">CS</a>
+                                <a href="/categories/Business/">Business</a>
                             
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-tags"></span>
                             
-                                <a href="/tags/Notes/"># Notes</a>
+                                <a href="/tags/Marketing/"># Marketing</a>
                             
-                                <a href="/tags/Git/"># Git</a>
+                                <a href="/tags/Advertising/"># Advertising</a>
+                            
+                                <a href="/tags/Notes/"># Notes</a>
                             
                     
                 </div>
@@ -292,19 +294,23 @@
         </header>
 
         <div class="post-content">
-            <p>前不久刚开始用git跟小伙伴们做一些小项目，不定时更新一下想法和笔记（随便记，很杂）</p>
-<h4 id="1-gitignore和-gitattributes两个文件"><a href="#1-gitignore和-gitattributes两个文件" class="headerlink" title="1. .gitignore和.gitattributes两个文件"></a>1. .gitignore和.gitattributes两个文件</h4><p>ignore用来写需要git忽略的文件名，attributes我是用来改上传到仓库显示的主语言<br> </p><figure class="highlight actionscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在ignore中添加这个文件，这个文件在本地可看到，远程看不到</span></span><br><span class="line"><span class="class"><span class="keyword">package</span>-<span class="title">lock</span>.<span class="title">json</span></span></span><br></pre></td></tr></tbody></table></figure><p></p>
- <figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> 在attributes中添加这些信息，将html文件全部记为jupyter notebook，将显示出来的“错误”的主语言改成你想要的就行了</span><br><span class="line">*.html linguist-language=jupyter notebook</span><br></pre></td></tr></tbody></table></figure>
-
-<p> 但是普通创建这些文件可能不行，用git bash来创建：<br> </p><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">touch</span> <span class="selector-class">.gitignore</span></span><br></pre></td></tr></tbody></table></figure><p></p>
-<p> .gitignore里写需要忽略的文件即可，可以使用通配符*，之前在push过后想再忽略某些文件，直接改.gitignore不生效，需要执行：<br> </p><figure class="highlight ada"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -r <span class="comment">--cached .</span></span><br></pre></td></tr></tbody></table></figure><p></p>
-<p> 清除本地的缓存，再重新add.然后commit</p>
-<h4 id="2-同步仓库操作"><a href="#2-同步仓库操作" class="headerlink" title="2. 同步仓库操作"></a>2. 同步仓库操作</h4><p>不太敢用在另一个分支上开发，pull到master再合并过来这种方法（翻车过怕自己又忘了），所以索性直接在本地master和远程master操作：<br> </p><figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> 准备上传的时候先把更改内容存入堆栈</span><br><span class="line">git stash</span><br><span class="line"><span class="regexp">//</span> 开始pull，不过有时候pull需要指定远程分支名</span><br><span class="line">git pull (origin master)</span><br><span class="line"><span class="regexp">//</span> 自动合并后应用存储，不敢用pop，会把堆栈中的内容删掉</span><br><span class="line">git stash apply</span><br><span class="line"><span class="regexp">//</span> 再push</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"info"</span></span><br><span class="line">git push (origin master)</span><br></pre></td></tr></tbody></table></figure><p></p>
-<h4 id="3-Git个人Token双重认证"><a href="#3-Git个人Token双重认证" class="headerlink" title="3. Git个人Token双重认证"></a>3. Git个人Token双重认证</h4><p>2021年8月份左右Git开始实行双重认证，受影响的范围有命令行访问以及API等等，首先需要创建一个token，然后下载GMC core</p>
-<figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">brew</span> <span class="string">tap microsoft/git</span></span><br><span class="line"><span class="attr">brew</span> <span class="string">install --cask git-credential-manager-core</span></span><br></pre></td></tr></tbody></table></figure>
-
-<p>如果跳出来登陆界面，密码填写token即可</p>
-<script>
+            <h4 id="每种-Google-Ads-广告系列类型都可以帮助您达成您的特有业务目标。我们来看几个例子："><a href="#每种-Google-Ads-广告系列类型都可以帮助您达成您的特有业务目标。我们来看几个例子：" class="headerlink" title="每种 Google Ads 广告系列类型都可以帮助您达成您的特有业务目标。我们来看几个例子："></a>每种 Google Ads 广告系列类型都可以帮助您达成您的特有业务目标。我们来看几个例子：</h4><ul>
+<li><strong>展示广告系列</strong>：在用户在线浏览感兴趣的内容时提升品牌认知度。</li>
+<li><strong>购物广告系列</strong>：宣传您的产品，分享您的产品目录详情以及为您的网店或实体店增加流量或客流量。</li>
+<li><strong>搜索广告系列</strong>：在用户搜索类似产品或服务时吸引他们在您的网站上采取行动。</li>
+<li><strong>视频广告系列</strong>：大规模覆盖您的目标受众群体，将您企业的故事生动道来。</li>
+</ul>
+<h4 id="了解投放到-Google-展示广告网络的两种广告系列类型"><a href="#了解投放到-Google-展示广告网络的两种广告系列类型" class="headerlink" title="了解投放到 Google 展示广告网络的两种广告系列类型"></a>了解投放到 Google 展示广告网络的两种广告系列类型</h4><h5 id="智能型展示广告系列"><a href="#智能型展示广告系列" class="headerlink" title="智能型展示广告系列"></a>智能型展示广告系列</h5><ol>
+<li>只需提供预算、出价和广告素材资源这三种内容，即可在几分钟内完成广告系列的制作。随后，系统会借助多种 Google 机器学习技术持续优化广告系列，为您招揽尽可能多的客户。</li>
+<li>您会收到所有 Google Ads 标准报告，此外还能获得一些根据数据分析生成的新型补充性报告，以便您开展着眼全局的战略性管理，而非事无巨细的日常管理。</li>
+<li>智能型展示广告系列的投放范围涵盖 Google 展示广告网络上的三百万网站和应用，包括 AdMob 以及 Google 自有自营的各款产品和服务（如 YouTube）。</li>
+</ol>
+<h5 id="标准展示广告系列"><a href="#标准展示广告系列" class="headerlink" title="标准展示广告系列"></a>标准展示广告系列</h5><ol>
+<li>充分掌控展示广告系列的方方面面。</li>
+<li>手动选择定位条件、出价和广告格式。</li>
+</ol>
+<p>智能型展示广告系列实现了完全自动化，标准展示广告系列则让您拥有更大的控制力。</p>
+<h4 id="采用-Google-展示广告来网罗用户"><a href="#采用-Google-展示广告来网罗用户" class="headerlink" title="采用 Google 展示广告来网罗用户"></a>采用 Google 展示广告来网罗用户</h4><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -336,7 +342,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2020-07-06&nbsp;&nbsp;10:45:28</span>
+                        <span>2021-08-16&nbsp;&nbsp;14:58:56</span>
                 
                 
                     <p class="copyright-item"></p>
@@ -352,7 +358,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2020/07/06/git-1/">http://a123wyn.studio/2020/07/06/git-1/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/08/16/google-ads-1/">http://a123wyn.studio/2021/08/16/google-ads-1/</a></span>
                     </p>
                 
                 <!-- 
@@ -370,9 +376,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Notes/"># Notes</a>
+                        <a href="/tags/Marketing/"># Marketing</a>
                     
-                        <a href="/tags/Git/"># Git</a>
+                        <a href="/tags/Advertising/"># Advertising</a>
+                    
+                        <a href="/tags/Notes/"># Notes</a>
                     
                     
                 </span>
@@ -385,10 +393,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/07/20/ubuntu-mysql/">【Ubuntu】MySQL的用户root密码设置问题</a>
             
-            
-                <a class="next" rel="next" href="/2020/07/05/js-1/">【JS】getJSON读取JSON文件产生的数据混乱问题</a>
+                <a class="next" rel="next" href="/2021/08/09/tableau-1/">【Tableau】Tableau技巧汇总</a>
             
         </section>
         
