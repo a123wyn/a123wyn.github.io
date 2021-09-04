@@ -301,7 +301,12 @@
 <figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX(IF(p.key = 'xxx',CONCAT(ifnull(p.string_value,''),ifnull(CAST(p.int_value AS string),''),ifnull(CAST(p.float_value AS string),''),ifnull(CAST(p.bool_value AS string),'')),NULL))</span><br></pre></td></tr></tbody></table></figure>
 <p>返回null表示没有这个键/字段，返回’’表示这个键/字段为null<br>同理，如果是需要取某个满足特定条件的字段值，可以使用if或者case when，但不能直接group by这个结果，因为其他字段会变成null，应该使用max(if(…))来实现这个功能</p>
 <h4 id="cast-强制类型转换"><a href="#cast-强制类型转换" class="headerlink" title="cast 强制类型转换"></a>cast 强制类型转换</h4><p>null转成任意类型后的值仍为null</p>
-<h4 id="concat-字符串拼接函数"><a href="#concat-字符串拼接函数" class="headerlink" title="concat 字符串拼接函数"></a>concat 字符串拼接函数</h4><p>concat里任意一个值为null，结果均为null，可以利用这个函数来绑定维度，用于去重统计或是group by功能</p>
+<h4 id="concat-字符串拼接函数"><a href="#concat-字符串拼接函数" class="headerlink" title="concat 字符串拼接函数"></a>concat 字符串拼接函数</h4><p>concat里任意一个值为null，结果均为null，可以利用这个函数来<strong>绑定维度</strong>，用于去重统计或是group by功能</p>
+<h4 id="补全无日期记录的数据"><a href="#补全无日期记录的数据" class="headerlink" title="补全无日期记录的数据"></a>补全无日期记录的数据</h4><p>目前业务的需求是需要查看每天的情况，如果当日数据库没有任何记录，普通状况下当天的日期值是缺失的，导致图像会不连续，现在需要补全全部日期，使那些原本无当日记录的数据与上次有记录的数据对齐= 。 =</p>
+<p>目前的做法是需要创建一个有连续日期的表格，使得待补充的数据表与之进行关联，比如统计累计进行中活动的话可以通过</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">all_day &gt;= 活动开始时间 and all_day &lt;= 活动结束时间</span><br></pre></td></tr></tbody></table></figure>
+
+<p>来将所有活动的日期补全，使在活动周期内的<strong>每天都有该记录</strong></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -339,7 +344,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-08-07&nbsp;&nbsp;20:53:26</span>
+                        <span>2021-08-24&nbsp;&nbsp;20:27:08</span>
                 
                 
                     <p class="copyright-item">
@@ -388,7 +393,7 @@
                 <a class="prev" rel="prev" href="/2021/08/09/tableau-1/">【Tableau】Tableau技巧汇总</a>
             
             
-                <a class="next" rel="next" href="/2021/05/06/paper/">【毕业设计】学术垃圾的毕业之路杂记</a>
+                <a class="next" rel="next" href="/2021/03/29/sql-14/">【HiveQL】Some Notes(停滞不前...)</a>
             
         </section>
         
