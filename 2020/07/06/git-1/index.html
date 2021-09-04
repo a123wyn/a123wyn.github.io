@@ -282,9 +282,9 @@
                     
                         <span class="iconfont icon-tags"></span>
                             
-                                <a href="/tags/Git/"># Git</a>
-                            
                                 <a href="/tags/Notes/"># Notes</a>
+                            
+                                <a href="/tags/Git/"># Git</a>
                             
                     
                 </div>
@@ -293,17 +293,46 @@
 
         <div class="post-content">
             <p>前不久刚开始用git跟小伙伴们做一些小项目，不定时更新一下想法和笔记（随便记，很杂）</p>
-<h4 id="1-gitignore和-gitattributes两个文件"><a href="#1-gitignore和-gitattributes两个文件" class="headerlink" title="1. .gitignore和.gitattributes两个文件"></a>1. .gitignore和.gitattributes两个文件</h4><p>ignore用来写需要git忽略的文件名，attributes我是用来改上传到仓库显示的主语言<br> </p><figure class="highlight actionscript"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在ignore中添加这个文件，这个文件在本地可看到，远程看不到</span></span><br><span class="line"><span class="class"><span class="keyword">package</span>-<span class="title">lock</span>.<span class="title">json</span></span></span><br></pre></td></tr></tbody></table></figure><p></p>
- <figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> 在attributes中添加这些信息，将html文件全部记为jupyter notebook，将显示出来的“错误”的主语言改成你想要的就行了</span><br><span class="line">*.html linguist-language=jupyter notebook</span><br></pre></td></tr></tbody></table></figure>
+<h4 id="1-gitignore和-gitattributes两个文件"><a href="#1-gitignore和-gitattributes两个文件" class="headerlink" title="1. .gitignore和.gitattributes两个文件"></a>1. .gitignore和.gitattributes两个文件</h4><p>ignore用来写需要git忽略的文件名，attributes我是用来改上传到仓库显示的主语言<br> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 在ignore中添加这个文件，这个文件在本地可看到，远程看不到</span><br><span class="line">package-lock.json</span><br><span class="line">.DS_Store</span><br><span class="line">*/.DS_Store</span><br><span class="line">.gitignore%  </span><br></pre></td></tr></tbody></table></figure><p></p>
+ <figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 在attributes中添加这些信息，将html文件全部记为jupyter notebook，将显示出来的“错误”的主语言改成你想要的就行了</span><br><span class="line">*.html linguist-language=jupyter notebook</span><br></pre></td></tr></tbody></table></figure>
 
-<p> 但是普通创建这些文件可能不行，用git bash来创建：<br> </p><figure class="highlight css"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">touch</span> <span class="selector-class">.gitignore</span></span><br></pre></td></tr></tbody></table></figure><p></p>
-<p> .gitignore里写需要忽略的文件即可，可以使用通配符*，之前在push过后想再忽略某些文件，直接改.gitignore不生效，需要执行：<br> </p><figure class="highlight ada"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -r <span class="comment">--cached .</span></span><br></pre></td></tr></tbody></table></figure><p></p>
+<p> 但是普通创建这些文件可能不行，用git bash来创建：<br> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch .gitignore</span><br></pre></td></tr></tbody></table></figure><p></p>
+<p> .gitignore里写需要忽略的文件即可，可以使用通配符*，之前在push过后想再忽略某些文件，直接改.gitignore不生效，需要执行：<br> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm -r --cached .</span><br></pre></td></tr></tbody></table></figure><p></p>
 <p> 清除本地的缓存，再重新add.然后commit</p>
-<h4 id="2-同步仓库操作"><a href="#2-同步仓库操作" class="headerlink" title="2. 同步仓库操作"></a>2. 同步仓库操作</h4><p>不太敢用在另一个分支上开发，pull到master再合并过来这种方法（翻车过怕自己又忘了），所以索性直接在本地master和远程master操作：<br> </p><figure class="highlight awk"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span> 准备上传的时候先把更改内容存入堆栈</span><br><span class="line">git stash</span><br><span class="line"><span class="regexp">//</span> 开始pull，不过有时候pull需要指定远程分支名</span><br><span class="line">git pull (origin master)</span><br><span class="line"><span class="regexp">//</span> 自动合并后应用存储，不敢用pop，会把堆栈中的内容删掉</span><br><span class="line">git stash apply</span><br><span class="line"><span class="regexp">//</span> 再push</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"info"</span></span><br><span class="line">git push (origin master)</span><br></pre></td></tr></tbody></table></figure><p></p>
+<h4 id="2-同步仓库操作"><a href="#2-同步仓库操作" class="headerlink" title="2. 同步仓库操作"></a>2. 同步仓库操作</h4><p>不太敢用在另一个分支上开发，pull到master再合并过来这种方法（翻车过怕自己又忘了），所以索性直接在本地master和远程master操作：<br> </p><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 准备上传的时候先把更改内容存入堆栈</span><br><span class="line">git stash</span><br><span class="line">// 开始pull，不过有时候pull需要指定远程分支名</span><br><span class="line">git pull (origin master)</span><br><span class="line">// 自动合并后应用存储，不敢用pop，会把堆栈中的内容删掉</span><br><span class="line">git stash apply</span><br><span class="line">// 再push</span><br><span class="line">git add .</span><br><span class="line">git commit -m "info"</span><br><span class="line">git push (origin master)</span><br></pre></td></tr></tbody></table></figure><p></p>
 <h4 id="3-Git个人Token双重认证"><a href="#3-Git个人Token双重认证" class="headerlink" title="3. Git个人Token双重认证"></a>3. Git个人Token双重认证</h4><p>2021年8月份左右Git开始实行双重认证，受影响的范围有命令行访问以及API等等，首先需要创建一个token，然后下载GMC core</p>
 <figure class="highlight properties"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">brew</span> <span class="string">tap microsoft/git</span></span><br><span class="line"><span class="attr">brew</span> <span class="string">install --cask git-credential-manager-core</span></span><br></pre></td></tr></tbody></table></figure>
 
 <p>如果跳出来登陆界面，密码填写token即可</p>
+<h4 id="4-修改分支名"><a href="#4-修改分支名" class="headerlink" title="4. 修改分支名"></a>4. 修改分支名</h4><p>假设分支名称为oldName，想要修改为 newName</p>
+<p><strong>1. 本地分支重命名(还没有推送到远程)</strong></p>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m oldName newName</span><br></pre></td></tr></tbody></table></figure>
+
+<p><strong>2. 远程分支重命名 (已经推送远程-假设本地分支和远程对应分支名称相同)</strong></p>
+<ol>
+<li>重命名远程分支对应的本地分支</li>
+</ol>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -m oldName newName</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="2">
+<li>删除远程分支</li>
+</ol>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --delete origin oldName</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="3">
+<li>上传新命名的本地分支</li>
+</ol>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push origin newName</span><br></pre></td></tr></tbody></table></figure>
+
+<ol start="4">
+<li>把修改后的本地分支与远程分支关联</li>
+</ol>
+<figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch --set-upstream-to origin/newName</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="5-删除项目中所有-DS-Store文件"><a href="#5-删除项目中所有-DS-Store文件" class="headerlink" title="5. 删除项目中所有.DS_Store文件"></a>5. 删除项目中所有.DS_Store文件</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find . -name .DS_Store -print0 | xargs -0 git rm -f --ignore-unmatch</span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="6-删除本地与远程分支"><a href="#6-删除本地与远程分支" class="headerlink" title="6. 删除本地与远程分支"></a>6. 删除本地与远程分支</h4><figure class="highlight shell"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 建议在合并进master后将分支删除</span></span><br><span class="line">git branch -d 本地分支</span><br><span class="line">git push --delete origin 远程分支</span><br></pre></td></tr></tbody></table></figure>
+
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -341,7 +370,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-08-16&nbsp;&nbsp;20:51:07</span>
+                        <span>2021-09-04&nbsp;&nbsp;18:55:06</span>
                 
                 
                     <p class="copyright-item">
@@ -370,9 +399,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Git/"># Git</a>
-                    
                         <a href="/tags/Notes/"># Notes</a>
+                    
+                        <a href="/tags/Git/"># Git</a>
                     
                     
                 </span>
