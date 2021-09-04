@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-08-16T12:51:07.385Z</updated>
+  <updated>2021-09-04T13:20:11.256Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -15,6 +15,40 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Stat 110-Probability】Theme 11</title>
+    <link href="http://a123wyn.studio/2021/09/04/stat-11/"/>
+    <id>http://a123wyn.studio/2021/09/04/stat-11/</id>
+    <published>2021-09-04T13:17:12.000Z</published>
+    <updated>2021-09-04T13:20:11.256Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;补充以下剩下的资料：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2021/09/04/stat-11/notes30.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2021/09/04/stat-11/notes31-32.jpg&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
+    
+    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
+    
+    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
+    
+  </entry>
   
   <entry>
     <title>【Google Ads】展示广告系列</title>
@@ -584,38 +618,7 @@
     <link href="http://a123wyn.studio/2020/12/07/stat-10/"/>
     <id>http://a123wyn.studio/2020/12/07/stat-10/</id>
     <published>2020-12-07T15:53:29.000Z</published>
-    <updated>2021-09-04T12:52:02.727Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;strong&gt;Harvard University,Stat 110,Fall 2011&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://projects.iq.harvard.edu/stat110/about&quot;&gt;课程网站链接&lt;/a&gt;&lt;br&gt;资料：&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
-    
-    
-    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
-    
-    <category term="Online" scheme="http://a123wyn.studio/tags/Online/"/>
-    
-    <category term="Probability" scheme="http://a123wyn.studio/tags/Probability/"/>
-    
-    <category term="Stat 110" scheme="http://a123wyn.studio/tags/Stat-110/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Stat 110-Probability】Theme 9</title>
-    <link href="http://a123wyn.studio/2020/12/05/stat-9/"/>
-    <id>http://a123wyn.studio/2020/12/05/stat-9/</id>
-    <published>2020-12-05T12:05:56.000Z</published>
-    <updated>2021-09-04T12:51:28.749Z</updated>
+    <updated>2021-09-04T13:13:13.781Z</updated>
     
     
       
