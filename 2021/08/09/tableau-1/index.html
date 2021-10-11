@@ -297,19 +297,19 @@
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{FIXED [Prc_Date] : SUM([Usd Total])}</span><br></pre></td></tr></tbody></table></figure>
 <p>虽然筛选器下有各个维度，但是该计算字段将实现只看当天的总GMV，在fixed后加入需要focus的维度，就可以只根据这些维度进行计算</p>
 <h2 id="实现条件格式"><a href="#实现条件格式" class="headerlink" title="实现条件格式"></a>实现条件格式</h2><p>最近想在tableau上实现类似excel里条件格式的功能，如下图：</p>
-<img src="/2021/08/09/tableau-1/wyn/Downloads/照片.jpg" alt="照片" style="zoom:67%;">
+<img src="/2021/08/09/tableau-1/wyn/yonna/Hexo-PW/source/_posts/tableau-1/效果.jpg" alt="效果" style="zoom:50%;float: left;">
 
 <ul>
 <li>首先需要创建计算字段，分别为&lt;0，&gt;0，=0的情况，使其返回一个字符“▼”，“▲”和“=”</li>
 </ul>
-<img src="/2021/08/09/tableau-1/wyn/Downloads/5d7b93d6-1a1e-43b6-bf4d-10cf796ebbb6.png" alt="5d7b93d6-1a1e-43b6-bf4d-10cf796ebbb6" style="zoom:50%;">
+<img src="/2021/08/09/tableau-1/wyn/yonna/Hexo-PW/source/_posts/tableau-1/步骤一.png" alt="步骤一" style="zoom:50%;float: left;">
 
 <ul>
 <li>随后将三个计算字段添加到标签，在标签内容中，对其设置不同的颜色</li>
 </ul>
-<img src="/2021/08/09/tableau-1/wyn/Downloads/cc23e207-cc6b-4c05-a39c-41bbde2f425d.png" alt="cc23e207-cc6b-4c05-a39c-41bbde2f425d" style="zoom:50%;">
+<img src="/2021/08/09/tableau-1/wyn/yonna/Hexo-PW/source/_posts/tableau-1/步骤二.png" alt="步骤二" style="zoom:50%;float: left;">
 
-<h2 id="分析中的默认计算方式为去重计算"><a href="#分析中的默认计算方式为去重计算" class="headerlink" title="分析中的默认计算方式为去重计算"></a>分析中的默认计算方式为去重计算</h2><img src="/2021/08/09/tableau-1/wyn/Downloads/fb7cc3c6-8c0c-4df2-bed5-2f34294ff853.png" alt="fb7cc3c6-8c0c-4df2-bed5-2f34294ff853" style="zoom:50%;">
+<h2 id="分析中的默认计算方式为去重计算"><a href="#分析中的默认计算方式为去重计算" class="headerlink" title="分析中的默认计算方式为去重计算"></a>分析中的默认计算方式为去重计算</h2><img src="/2021/08/09/tableau-1/wyn/yonna/Hexo-PW/source/_posts/tableau-1/参考.png" alt="参考" style="zoom:50%;float: left;">
 
 <p>若需要计算不去重的结果，只能新增计算字段，使用avg、median等函数来计算</p>
 <h2 id="设置参数达到筛选视图（工作簿）功能"><a href="#设置参数达到筛选视图（工作簿）功能" class="headerlink" title="设置参数达到筛选视图（工作簿）功能"></a>设置参数达到筛选视图（工作簿）功能</h2><p>通过添加参数后添加计算字段来实现，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3cf41307ebe4">参考网址</a></p>
@@ -350,7 +350,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-11&nbsp;&nbsp;21:44:53</span>
+                        <span>2021-10-11&nbsp;&nbsp;21:59:50</span>
                 
                 
                     <p class="copyright-item">
