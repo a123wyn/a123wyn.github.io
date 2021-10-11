@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【Stat 110-Probability】Theme 8 | Nananan&#39;s warehouse</title>
+<title>【BQ SQL】Some Notes(updating) | Nananan&#39;s warehouse</title>
 
 
 
@@ -45,45 +45,6 @@
 
     
     
-        
-            <!-- MathJax配置，可通过单美元符号书写行内公式等 -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-    "HTML-CSS": {
-        preferredFont: "TeX",
-        availableFonts: ["STIX","TeX"],
-        linebreaks: { automatic:true },
-        EqnChunk: (MathJax.Hub.Browser.isMobile ? 10 : 50)
-    },
-    tex2jax: {
-        inlineMath: [ ["$", "$"], ["\\(","\\)"] ],
-        processEscapes: true,
-        ignoreClass: "tex2jax_ignore|dno",
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        equationNumbers: { autoNumber: "AMS" },
-        noUndefined: { attributes: { mathcolor: "red", mathbackground: "#FFEEEE", mathsize: "90%" } },
-        Macros: { href: "{}" }
-    },
-    messageStyle: "none"
-    });
-</script>
-<!-- 给MathJax元素添加has-jax class -->
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
-<!-- 通过连接CDN加载MathJax的js代码 -->
-<script type="text/javascript" async
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
-</script>
-
-
         
     
 
@@ -283,7 +244,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【Stat 110-Probability】Theme 8</h1>
+            <h1 class="post-title">【BQ SQL】Some Notes(updating)</h1>
             
                 <div class="post-meta">
                     
@@ -293,10 +254,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2020-12-02&nbsp;&nbsp;14:09:12</a>
+                        <a href="#">2021-08-04&nbsp;&nbsp;16:26:14</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2020/12/02/stat-8/" class="leancloud-visitors view" data-flag-title="【Stat 110-Probability】Theme 8">
+                    <!-- <span id="/2021/08/04/bq-sql-1/" class="leancloud-visitors view" data-flag-title="【BQ SQL】Some Notes(updating)">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -321,13 +282,11 @@
                     
                         <span class="iconfont icon-tags"></span>
                             
-                                <a href="/tags/Notes/"># Notes</a>
+                                <a href="/tags/Records/"># Records</a>
                             
-                                <a href="/tags/Online/"># Online</a>
+                                <a href="/tags/SQL/"># SQL</a>
                             
-                                <a href="/tags/Probability/"># Probability</a>
-                            
-                                <a href="/tags/Stat-110/"># Stat 110</a>
+                                <a href="/tags/BigQuery/"># BigQuery</a>
                             
                     
                 </div>
@@ -335,11 +294,22 @@
         </header>
 
         <div class="post-content">
-            <p><strong>Harvard University,Stat 110,Fall 2011</strong><br><a target="_blank" rel="noopener" href="https://projects.iq.harvard.edu/stat110/about">课程网站链接</a><br>资料：<a target="_blank" rel="noopener" href="https://projects.iq.harvard.edu/files/stat110/files/strategic_practice_and_homework_8.pdf">SP&amp;HW</a></p>
-<h4 id="Lecture-21-Covariance-and-Correlation"><a href="#Lecture-21-Covariance-and-Correlation" class="headerlink" title="Lecture 21:Covariance and Correlation"></a>Lecture 21:Covariance and Correlation</h4><p>视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=IujCYxtpszU&amp;list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo&amp;index=21">链接地址</a><br><img src="/2020/12/02/stat-8/notes21.jpg" alt="F7CF5654EA6380B0D7F7090087ED9D3F.png"></p>
-<h4 id="Lecture-22-Transformations-and-Convolutions"><a href="#Lecture-22-Transformations-and-Convolutions" class="headerlink" title="Lecture 22:Transformations and Convolutions"></a>Lecture 22:Transformations and Convolutions</h4><p>视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=yXwPUAIvFyg&amp;list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo&amp;index=22">链接地址</a><br><img src="/2020/12/02/stat-8/notes22.jpg" alt="F722504CE3EBAD9DEE6D50A3D3E6DB3C.png"></p>
-<h4 id="Thoughts"><a href="#Thoughts" class="headerlink" title="Thoughts"></a>Thoughts</h4><p>突然想到自己的答案不如标答好看，还是不放出来献丑了…</p>
-<script>
+            <p>Hive QL的那篇暂时不更2333，因为现在工作的公司不用Hive，主要使用云数据库BigQuery～</p>
+<h4 id="unnest-数组转行"><a href="#unnest-数组转行" class="headerlink" title="unnest 数组转行"></a>unnest 数组转行</h4><p>目前的数据结构主要使用数组+结构体键值对(key,value)的形式，即数组元素是键值对，一贯先使用</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left join unnest(properties) p </span><br></pre></td></tr></tbody></table></figure>
+<p>然后使用</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX(IF(p.key = 'xxx',CONCAT(ifnull(p.string_value,''),ifnull(CAST(p.int_value AS string),''),ifnull(CAST(p.float_value AS string),''),ifnull(CAST(p.bool_value AS string),'')),NULL))</span><br></pre></td></tr></tbody></table></figure>
+<p>返回null表示没有这个键/字段，返回’’表示这个键/字段为null<br>同理，如果是需要取某个满足特定条件的字段值，可以使用if或者case when，但不能直接group by这个结果，因为其他字段会变成null，应该使用max(if(…))来实现这个功能</p>
+<h4 id="cast-强制类型转换"><a href="#cast-强制类型转换" class="headerlink" title="cast 强制类型转换"></a>cast 强制类型转换</h4><p>null转成任意类型后的值仍为null</p>
+<h4 id="concat-字符串拼接函数"><a href="#concat-字符串拼接函数" class="headerlink" title="concat 字符串拼接函数"></a>concat 字符串拼接函数</h4><p>concat里任意一个值为null，结果均为null，可以利用这个函数来<strong>绑定维度</strong>，用于去重统计或是group by功能</p>
+<h4 id="补全无日期记录的数据"><a href="#补全无日期记录的数据" class="headerlink" title="补全无日期记录的数据"></a>补全无日期记录的数据</h4><p>目前业务的需求是需要查看每天的情况，如果当日数据库没有任何记录，普通状况下当天的日期值是缺失的，导致图像会不连续，现在需要补全全部日期，使那些原本无当日记录的数据与上次有记录的数据对齐= 。 =</p>
+<p>目前的做法是需要创建一个有连续日期的表格，使得待补充的数据表与之进行关联，比如统计累计进行中活动的话可以通过</p>
+<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">all_day &gt;= 活动开始时间 and all_day &lt;= 活动结束时间</span><br></pre></td></tr></tbody></table></figure>
+
+<p>来将所有活动的日期补全，使在活动周期内的<strong>每天都有该记录</strong></p>
+<h4 id="unpivot函数，将列融成行（列转行）"><a href="#unpivot函数，将列融成行（列转行）" class="headerlink" title="unpivot函数，将列融成行（列转行）"></a>unpivot函数，将列融成行（列转行）</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sales,<span class="keyword">quarter</span> <span class="keyword">FROM</span> <span class="string">`表名`</span></span><br><span class="line"><span class="keyword">UNPIVOT</span>(sales <span class="keyword">FOR</span> <span class="keyword">quarter</span> <span class="keyword">IN</span> (</span><br><span class="line">    string_field_0,string_field_1,string_field_2,string_field_3</span><br><span class="line">))</span><br><span class="line"><span class="comment">-- 将含有括号内列出的列数据的字段命名为sales，而含有列名的字段命名为quarter</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h4 id="pivot函数，行转列"><a href="#pivot函数，行转列" class="headerlink" title="pivot函数，行转列"></a>pivot函数，行转列</h4><script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -371,12 +341,12 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2020-12-02&nbsp;&nbsp;14:09:12</span>
+                        <span>2021-08-04&nbsp;&nbsp;16:26:14</span>
                 
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-09-04&nbsp;&nbsp;21:10:53</span>
+                        <span>2021-10-01&nbsp;&nbsp;15:50:33</span>
                 
                 
                     <p class="copyright-item">
@@ -387,7 +357,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2020/12/02/stat-8/">http://a123wyn.studio/2020/12/02/stat-8/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/08/04/bq-sql-1/">http://a123wyn.studio/2021/08/04/bq-sql-1/</a></span>
                     </p>
                 
                 <!-- 
@@ -405,13 +375,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Notes/"># Notes</a>
+                        <a href="/tags/Records/"># Records</a>
                     
-                        <a href="/tags/Online/"># Online</a>
+                        <a href="/tags/SQL/"># SQL</a>
                     
-                        <a href="/tags/Probability/"># Probability</a>
-                    
-                        <a href="/tags/Stat-110/"># Stat 110</a>
+                        <a href="/tags/BigQuery/"># BigQuery</a>
                     
                     
                 </span>
@@ -424,10 +392,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2020/12/05/stat-9/">【Stat 110-Probability】Theme 9</a>
+                <a class="prev" rel="prev" href="/2021/08/09/tableau-1/">【Tableau】Tableau技巧汇总</a>
             
             
-                <a class="next" rel="next" href="/2020/11/29/stat-7/">【Stat 110-Probability】Theme 7</a>
+                <a class="next" rel="next" href="/2021/03/29/sql-14/">【HiveQL】Some Notes-1</a>
             
         </section>
         
