@@ -109,7 +109,7 @@
     <link href="http://a123wyn.studio/2021/08/09/tableau-1/"/>
     <id>http://a123wyn.studio/2021/08/09/tableau-1/</id>
     <published>2021-08-09T05:13:38.000Z</published>
-    <updated>2021-10-11T13:39:07.165Z</updated>
+    <updated>2021-10-11T13:44:53.613Z</updated>
     
     
       
@@ -117,10 +117,7 @@
         
         
     <summary type="html">&lt;p&gt;工作过程中主要使用tableau来做可视化报表，希望尽快能熟悉起来～～&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;忽略筛选器的计算&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;在Tableau上写的计算字段一般会根据筛选器进行实时计算，如果想忽略筛选器的限制的话，可以使用fixed方法，例如计算GMV占比</summary>
+&lt;h2 id=&quot;忽略筛选器的计算&quot;&gt;&lt;a href=&quot;#忽略筛选器的计算&quot; class=&quot;headerlink&quot;</summary>
         
       
     
