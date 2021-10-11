@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-10-01T07:50:33.370Z</updated>
+  <updated>2021-10-11T14:12:27.119Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -17,27 +17,30 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>bq-sql-2</title>
-    <link href="http://a123wyn.studio/2021/09/30/bq-sql-2/"/>
-    <id>http://a123wyn.studio/2021/09/30/bq-sql-2/</id>
-    <published>2021-09-30T03:18:02.000Z</published>
-    <updated>2021-10-01T07:50:33.370Z</updated>
+    <title>【ML】Regression Model</title>
+    <link href="http://a123wyn.studio/2021/10/11/ml-1/"/>
+    <id>http://a123wyn.studio/2021/10/11/ml-1/</id>
+    <published>2021-10-11T07:12:32.000Z</published>
+    <updated>2021-10-11T14:12:27.119Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-            if (!el.dataset.src) { return; }
-       </summary>
+    <summary type="html">&lt;p&gt;最近发现了一个讲MAE与MSE损失函数选择的文章：&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
         
       
     
     
     
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Machine Learning" scheme="http://a123wyn.studio/tags/Machine-Learning/"/>
     
   </entry>
   
@@ -109,7 +112,7 @@
     <link href="http://a123wyn.studio/2021/08/09/tableau-1/"/>
     <id>http://a123wyn.studio/2021/08/09/tableau-1/</id>
     <published>2021-08-09T05:13:38.000Z</published>
-    <updated>2021-10-11T13:59:50.402Z</updated>
+    <updated>2021-10-11T15:01:27.015Z</updated>
     
     
       

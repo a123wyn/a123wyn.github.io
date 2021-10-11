@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>bq-sql-2 | Nananan&#39;s warehouse</title>
+<title>【ML】Regression Model | Nananan&#39;s warehouse</title>
 
 
 
@@ -181,7 +181,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">bq-sql-2</h1>
+            <h1 class="post-title">【ML】Regression Model</h1>
             
                 <div class="post-meta">
                     
@@ -191,10 +191,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2021-09-30&nbsp;&nbsp;11:18:02</a>
+                        <a href="#">2021-10-11&nbsp;&nbsp;15:12:32</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2021/09/30/bq-sql-2/" class="leancloud-visitors view" data-flag-title="bq-sql-2">
+                    <!-- <span id="/2021/10/11/ml-1/" class="leancloud-visitors view" data-flag-title="【ML】Regression Model">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -210,14 +210,33 @@
                     
                     <br />
                     
+                        <span class="iconfont icon-category"></span>
+                            
+                                <a href="/categories/DS/">DS</a>
+                            
+                    
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    
+                        <span class="iconfont icon-tags"></span>
+                            
+                                <a href="/tags/Notes/"># Notes</a>
+                            
+                                <a href="/tags/Machine-Learning/"># Machine Learning</a>
+                            
                     
                 </div>
             
         </header>
 
         <div class="post-content">
-            <script>
+            <p>最近发现了一个讲MAE与MSE损失函数选择的文章：</p>
+<p><a target="_blank" rel="noopener" href="https://www.codenong.com/cs105811405/">如何选择回归损失：MAE还是MSE？</a></p>
+<p>其中有句话</p>
+<blockquote>
+<p>MAE存在一个严重的问题（特别是对于神经网络）：<strong>更新的梯度始终相同</strong>，也就是说，即使对于很小的损失值，梯度也很大。这样不利于模型的学习。为了解决这个缺陷，我们可以使用变化的学习率，在损失接近最小值时降低学习率。而MSE在这种情况下的表现就很好，即便使用固定的学习率也可以有效收敛。<strong>MSE损失的梯度随损失增大而增大，而损失趋于0时则会减小</strong>。这使得在训练结束时，使用MSE模型的结果会更精确。</p>
+</blockquote>
+<p>推导了一下梯度更新的式子，理解到了MSE自动调整更新步长的含义：</p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -249,12 +268,12 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2021-09-30&nbsp;&nbsp;11:18:02</span>
+                        <span>2021-10-11&nbsp;&nbsp;15:12:32</span>
                 
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-01&nbsp;&nbsp;15:50:33</span>
+                        <span>2021-10-11&nbsp;&nbsp;22:12:27</span>
                 
                 
                     <p class="copyright-item">
@@ -265,7 +284,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2021/09/30/bq-sql-2/">http://a123wyn.studio/2021/09/30/bq-sql-2/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/10/11/ml-1/">http://a123wyn.studio/2021/10/11/ml-1/</a></span>
                     </p>
                 
                 <!-- 
@@ -281,6 +300,12 @@
             <div>
                 <span>Tags:</span>
                 <span class="tag">
+                    
+                    
+                        <a href="/tags/Notes/"># Notes</a>
+                    
+                        <a href="/tags/Machine-Learning/"># Machine Learning</a>
+                    
                     
                 </span>
             </div>
