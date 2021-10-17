@@ -236,6 +236,7 @@
 <p>MAE存在一个严重的问题（特别是对于神经网络）：<strong>更新的梯度始终相同</strong>，也就是说，即使对于很小的损失值，梯度也很大。这样不利于模型的学习。为了解决这个缺陷，我们可以使用变化的学习率，在损失接近最小值时降低学习率。而MSE在这种情况下的表现就很好，即便使用固定的学习率也可以有效收敛。<strong>MSE损失的梯度随损失增大而增大，而损失趋于0时则会减小</strong>。这使得在训练结束时，使用MSE模型的结果会更精确。</p>
 </blockquote>
 <p>推导了一下梯度更新的式子，理解到了MSE自动调整更新步长的含义：</p>
+<img src="/2021/10/11/ml-1/推导过程.jpeg" alt="推导过程" style="zoom:50%;display:inline-block">
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -273,7 +274,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-11&nbsp;&nbsp;22:12:27</span>
+                        <span>2021-10-17&nbsp;&nbsp;21:14:03</span>
                 
                 
                     <p class="copyright-item">
