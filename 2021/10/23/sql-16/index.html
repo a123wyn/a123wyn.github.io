@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【BQ SQL】Some Notes(updating) | Nananan&#39;s warehouse</title>
+<title>【SQL-Leetcode】刷题记录-困难 | Nananan&#39;s warehouse</title>
 
 
 
@@ -177,74 +177,11 @@
             <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Top of post↑</a>
-        <a onclick="go_bottom()">Bottom of post↓</a>
-        <a href="javascript:window.history.back();">Back</a>
-    </div>
-</div>
-
-<script>
-    document.ready(
-        function () {
-            tocbot.init({
-                tocSelector: '.tocbot-list',
-                contentSelector: '.post-content',
-                headingSelector: 'h1, h2, h3, h4, h5',
-                collapseDepth: 1,
-                orderedList: false,
-                scrollSmooth: true,
-            })
-        }
-    )
-
-    function expand_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 6,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "collapse_toc()");
-        b.innerHTML = "Collapse all"
-    }
-
-    function collapse_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 1,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "expand_toc()");
-        b.innerHTML = "Expand all"
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【BQ SQL】Some Notes(updating)</h1>
+            <h1 class="post-title">【SQL-Leetcode】刷题记录-困难</h1>
             
                 <div class="post-meta">
                     
@@ -254,10 +191,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2021-08-04&nbsp;&nbsp;16:26:14</a>
+                        <a href="#">2021-10-23&nbsp;&nbsp;10:35:37</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2021/08/04/bq-sql-1/" class="leancloud-visitors view" data-flag-title="【BQ SQL】Some Notes(updating)">
+                    <!-- <span id="/2021/10/23/sql-16/" class="leancloud-visitors view" data-flag-title="【SQL-Leetcode】刷题记录-困难">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -282,11 +219,11 @@
                     
                         <span class="iconfont icon-tags"></span>
                             
-                                <a href="/tags/Records/"># Records</a>
-                            
                                 <a href="/tags/SQL/"># SQL</a>
                             
-                                <a href="/tags/BigQuery/"># BigQuery</a>
+                                <a href="/tags/Leetcode/"># Leetcode</a>
+                            
+                                <a href="/tags/Recorde/"># Recorde</a>
                             
                     
                 </div>
@@ -294,22 +231,11 @@
         </header>
 
         <div class="post-content">
-            <p>Hive QL的那篇暂时不更2333，因为现在工作的公司不用Hive，主要使用云数据库BigQuery～</p>
-<h4 id="unnest-数组转行"><a href="#unnest-数组转行" class="headerlink" title="unnest 数组转行"></a>unnest 数组转行</h4><p>目前的数据结构主要使用数组+结构体键值对(key,value)的形式，即数组元素是键值对，一贯先使用</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">left join unnest(properties) p </span><br></pre></td></tr></tbody></table></figure>
-<p>然后使用</p>
-<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MAX(IF(p.key = 'xxx',CONCAT(ifnull(p.string_value,''),ifnull(CAST(p.int_value AS string),''),ifnull(CAST(p.float_value AS string),''),ifnull(CAST(p.bool_value AS string),'')),NULL))</span><br></pre></td></tr></tbody></table></figure>
-<p>返回null表示没有这个键/字段，返回’’表示这个键/字段为null<br>同理，如果是需要取某个满足特定条件的字段值，可以使用if或者case when，但不能直接group by这个结果，因为其他字段会变成null，应该使用max(if(…))来实现这个功能</p>
-<h4 id="cast-强制类型转换"><a href="#cast-强制类型转换" class="headerlink" title="cast 强制类型转换"></a>cast 强制类型转换</h4><p>null转成任意类型后的值仍为null</p>
-<h4 id="concat-字符串拼接函数"><a href="#concat-字符串拼接函数" class="headerlink" title="concat 字符串拼接函数"></a>concat 字符串拼接函数</h4><p>concat里任意一个值为null，结果均为null，可以利用这个函数来<strong>绑定维度</strong>，用于去重统计或是group by功能</p>
-<h4 id="补全无日期记录的数据"><a href="#补全无日期记录的数据" class="headerlink" title="补全无日期记录的数据"></a>补全无日期记录的数据</h4><p>目前业务的需求是需要查看每天的情况，如果当日数据库没有任何记录，普通状况下当天的日期值是缺失的，导致图像会不连续，现在需要补全全部日期，使那些原本无当日记录的数据与上次有记录的数据对齐= 。 =</p>
-<p>目前的做法是需要创建一个有连续日期的表格，使得待补充的数据表与之进行关联，比如统计累计进行中活动的话可以通过</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">all_day &gt;= 活动开始时间 and all_day &lt;= 活动结束时间</span><br></pre></td></tr></tbody></table></figure>
-
-<p>来将所有活动的日期补全，使在活动周期内的<strong>每天都有该记录</strong></p>
-<h4 id="unpivot函数，将列融成行（列转行）"><a href="#unpivot函数，将列融成行（列转行）" class="headerlink" title="unpivot函数，将列融成行（列转行）"></a>unpivot函数，将列融成行（列转行）</h4><figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> sales,<span class="keyword">quarter</span> <span class="keyword">FROM</span> <span class="string">`表名`</span></span><br><span class="line"><span class="keyword">UNPIVOT</span>(sales <span class="keyword">FOR</span> <span class="keyword">quarter</span> <span class="keyword">IN</span> (</span><br><span class="line">    string_field_0,string_field_1,string_field_2,string_field_3</span><br><span class="line">))</span><br><span class="line"><span class="comment">-- 将含有括号内列出的列数据的字段命名为sales，而含有列名的字段命名为quarter</span></span><br></pre></td></tr></tbody></table></figure>
-
-<h4 id="pivot函数，行转列"><a href="#pivot函数，行转列" class="headerlink" title="pivot函数，行转列"></a>pivot函数，行转列</h4><script>
+            <p>为了刷力扣特意充了年费会员，400元真是太贵了呜呜呜</p>
+<p>刷题单：</p>
+<p><img src="/2021/10/23/sql-16/%E5%88%B7%E9%A2%98%E5%8D%951.png" alt="image-20211023103741259"></p>
+<p><img src="/2021/10/23/sql-16/%E5%88%B7%E9%A2%98%E5%8D%952.png" alt="image-20211023103842096"></p>
+<script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
             if (!el.dataset.src) { return; }
@@ -341,12 +267,12 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2021-08-04&nbsp;&nbsp;16:26:14</span>
+                        <span>2021-10-23&nbsp;&nbsp;10:35:37</span>
                 
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-01&nbsp;&nbsp;15:50:33</span>
+                        <span>2021-10-23&nbsp;&nbsp;10:39:07</span>
                 
                 
                     <p class="copyright-item">
@@ -357,7 +283,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2021/08/04/bq-sql-1/">http://a123wyn.studio/2021/08/04/bq-sql-1/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/10/23/sql-16/">http://a123wyn.studio/2021/10/23/sql-16/</a></span>
                     </p>
                 
                 <!-- 
@@ -375,11 +301,11 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Records/"># Records</a>
-                    
                         <a href="/tags/SQL/"># SQL</a>
                     
-                        <a href="/tags/BigQuery/"># BigQuery</a>
+                        <a href="/tags/Leetcode/"># Leetcode</a>
+                    
+                        <a href="/tags/Recorde/"># Recorde</a>
                     
                     
                 </span>
@@ -392,10 +318,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/08/09/tableau-1/">【Tableau】Tableau技巧汇总</a>
             
-            
-                <a class="next" rel="next" href="/2021/03/29/sql-14/">【HiveQL】Some Notes-1</a>
+                <a class="next" rel="next" href="/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/">【PM】B/C端产品设计思维的区别</a>
             
         </section>
         

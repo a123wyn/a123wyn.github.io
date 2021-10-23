@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-10-17T13:14:03.738Z</updated>
+  <updated>2021-10-23T02:39:07.512Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -15,6 +15,64 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【SQL-Leetcode】刷题记录-困难</title>
+    <link href="http://a123wyn.studio/2021/10/23/sql-16/"/>
+    <id>http://a123wyn.studio/2021/10/23/sql-16/</id>
+    <published>2021-10-23T02:35:37.000Z</published>
+    <updated>2021-10-23T02:39:07.512Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;为了刷力扣特意充了年费会员，400元真是太贵了呜呜呜&lt;/p&gt;
+&lt;p&gt;刷题单：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2021/10/23/sql-16/%E5%88%B7%E9%A2%98%E5%8D%951.png&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
+    
+    <category term="Leetcode" scheme="http://a123wyn.studio/tags/Leetcode/"/>
+    
+    <category term="Recorde" scheme="http://a123wyn.studio/tags/Recorde/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>【PM】B/C端产品设计思维的区别</title>
+    <link href="http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/"/>
+    <id>http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/</id>
+    <published>2021-10-19T01:36:51.000Z</published>
+    <updated>2021-10-19T09:18:18.624Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;一、设计起点与重点&quot;&gt;&lt;a href=&quot;#一、设计起点与重点&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="PM" scheme="http://a123wyn.studio/categories/PM/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="PM" scheme="http://a123wyn.studio/tags/PM/"/>
+    
+  </entry>
   
   <entry>
     <title>【ML】Regression Model</title>
@@ -108,11 +166,11 @@
   </entry>
   
   <entry>
-    <title>【Tableau】Tableau技巧汇总</title>
+    <title>【Tableau】Case Studies &amp; Notes</title>
     <link href="http://a123wyn.studio/2021/08/09/tableau-1/"/>
     <id>http://a123wyn.studio/2021/08/09/tableau-1/</id>
     <published>2021-08-09T05:13:38.000Z</published>
-    <updated>2021-10-11T15:01:27.015Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -136,11 +194,11 @@
   </entry>
   
   <entry>
-    <title>【BQ SQL】Some Notes(updating)</title>
-    <link href="http://a123wyn.studio/2021/08/04/bq-sql-1/"/>
-    <id>http://a123wyn.studio/2021/08/04/bq-sql-1/</id>
+    <title>【SQL-BigQuery】Case Studies &amp; Notes(updating)</title>
+    <link href="http://a123wyn.studio/2021/08/04/sql-15/"/>
+    <id>http://a123wyn.studio/2021/08/04/sql-15/</id>
     <published>2021-08-04T08:26:14.000Z</published>
-    <updated>2021-10-01T07:50:33.370Z</updated>
+    <updated>2021-10-21T05:13:13.872Z</updated>
     
     
       
@@ -148,7 +206,7 @@
         
         
     <summary type="html">&lt;p&gt;Hive QL的那篇暂时不更2333，因为现在工作的公司不用Hive，主要使用云数据库BigQuery～&lt;/p&gt;
-&lt;h4 id=&quot;unnest-数组转行&quot;&gt;&lt;a href=&quot;#unnest-数组转行&quot; class=&quot;headerlink&quot; title=&quot;unnest</summary>
+&lt;h2 id=&quot;unnest-数组转行&quot;&gt;&lt;a href=&quot;#unnest-数组转行&quot; class=&quot;headerlink&quot; title=&quot;unnest</summary>
         
       
     
@@ -166,11 +224,11 @@
   </entry>
   
   <entry>
-    <title>【HiveQL】Some Notes-1</title>
+    <title>【SQL-Hive】Case Studies &amp; Notes</title>
     <link href="http://a123wyn.studio/2021/03/29/sql-14/"/>
     <id>http://a123wyn.studio/2021/03/29/sql-14/</id>
     <published>2021-03-29T07:44:25.000Z</published>
-    <updated>2021-10-01T07:50:33.371Z</updated>
+    <updated>2021-10-21T05:13:05.959Z</updated>
     
     
       
@@ -196,11 +254,11 @@
   </entry>
   
   <entry>
-    <title>【BEGTUT-MySQL】Window functions-Summary</title>
+    <title>【SQL-BEGTUT】Window functions-Summary</title>
     <link href="http://a123wyn.studio/2021/03/03/sql-13/"/>
     <id>http://a123wyn.studio/2021/03/03/sql-13/</id>
     <published>2021-03-03T08:01:36.000Z</published>
-    <updated>2021-06-13T10:32:51.852Z</updated>
+    <updated>2021-10-21T05:08:53.407Z</updated>
     
     
       
@@ -228,11 +286,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-9+.COVID 19</title>
+    <title>【SQL-SQLZOO】Tutorials-9+.COVID 19</title>
     <link href="http://a123wyn.studio/2021/02/18/sql-12/"/>
     <id>http://a123wyn.studio/2021/02/18/sql-12/</id>
     <published>2021-02-18T08:41:20.000Z</published>
-    <updated>2021-06-13T10:32:51.852Z</updated>
+    <updated>2021-10-21T05:08:39.780Z</updated>
     
     
       
@@ -258,11 +316,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】References</title>
+    <title>【SQL-SQLZOO】References</title>
     <link href="http://a123wyn.studio/2021/02/18/sql-11/"/>
     <id>http://a123wyn.studio/2021/02/18/sql-11/</id>
     <published>2021-02-18T02:54:08.000Z</published>
-    <updated>2021-06-13T10:32:51.851Z</updated>
+    <updated>2021-10-21T05:08:31.828Z</updated>
     
     
       
@@ -287,11 +345,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-9-.Window functions</title>
+    <title>【SQL-SQLZOO】Tutorials-9-.Window functions</title>
     <link href="http://a123wyn.studio/2021/02/16/sql-10/"/>
     <id>http://a123wyn.studio/2021/02/16/sql-10/</id>
     <published>2021-02-16T01:58:38.000Z</published>
-    <updated>2021-06-13T10:32:51.851Z</updated>
+    <updated>2021-10-21T05:08:22.890Z</updated>
     
     
       
@@ -316,11 +374,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-9.Self JOIN</title>
+    <title>【SQL-SQLZOO】Tutorials-9.Self JOIN</title>
     <link href="http://a123wyn.studio/2021/02/15/sql-9/"/>
     <id>http://a123wyn.studio/2021/02/15/sql-9/</id>
     <published>2021-02-15T04:08:03.000Z</published>
-    <updated>2021-06-13T10:32:51.854Z</updated>
+    <updated>2021-10-21T05:08:15.772Z</updated>
     
     
       
@@ -345,11 +403,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-8.Using NULL</title>
+    <title>【SQL-SQLZOO】Tutorials-8.Using NULL</title>
     <link href="http://a123wyn.studio/2021/02/14/sql-8/"/>
     <id>http://a123wyn.studio/2021/02/14/sql-8/</id>
     <published>2021-02-14T06:36:22.000Z</published>
-    <updated>2021-06-13T10:32:51.854Z</updated>
+    <updated>2021-10-21T05:07:58.079Z</updated>
     
     
       
@@ -374,11 +432,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-7.More JOIN</title>
+    <title>【SQL-SQLZOO】Tutorials-7.More JOIN</title>
     <link href="http://a123wyn.studio/2021/02/13/sql-7/"/>
     <id>http://a123wyn.studio/2021/02/13/sql-7/</id>
     <published>2021-02-13T06:17:42.000Z</published>
-    <updated>2021-06-13T10:32:51.854Z</updated>
+    <updated>2021-10-21T05:07:50.627Z</updated>
     
     
       
@@ -403,11 +461,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-6.JOIN(合并表格)</title>
+    <title>【SQL-SQLZOO】Tutorials-6.JOIN(合并表格)</title>
     <link href="http://a123wyn.studio/2021/02/12/sql-6/"/>
     <id>http://a123wyn.studio/2021/02/12/sql-6/</id>
     <published>2021-02-12T06:19:23.000Z</published>
-    <updated>2021-06-13T10:32:51.853Z</updated>
+    <updated>2021-10-21T05:07:42.569Z</updated>
     
     
       
@@ -432,11 +490,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</title>
+    <title>【SQL-SQLZOO】Tutorials-5.SUM and COUNT(群组/聚合函数)</title>
     <link href="http://a123wyn.studio/2021/02/10/sql-5/"/>
     <id>http://a123wyn.studio/2021/02/10/sql-5/</id>
     <published>2021-02-10T02:59:47.000Z</published>
-    <updated>2021-06-13T10:32:51.853Z</updated>
+    <updated>2021-10-21T05:07:35.384Z</updated>
     
     
       
@@ -468,11 +526,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</title>
+    <title>【SQL-SQLZOO】Tutorials-4.SELECT within SELECT(子查询)</title>
     <link href="http://a123wyn.studio/2021/02/08/sql-4/"/>
     <id>http://a123wyn.studio/2021/02/08/sql-4/</id>
     <published>2021-02-08T06:34:59.000Z</published>
-    <updated>2021-06-13T10:32:51.853Z</updated>
+    <updated>2021-10-21T05:07:27.948Z</updated>
     
     
       
@@ -504,11 +562,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-3.SELECT from Nobel</title>
+    <title>【SQL-SQLZOO】Tutorials-3.SELECT from Nobel</title>
     <link href="http://a123wyn.studio/2021/02/05/sql-3/"/>
     <id>http://a123wyn.studio/2021/02/05/sql-3/</id>
     <published>2021-02-05T04:08:45.000Z</published>
-    <updated>2021-06-13T10:32:51.853Z</updated>
+    <updated>2021-10-21T05:07:20.107Z</updated>
     
     
       
@@ -539,11 +597,11 @@
   </entry>
   
   <entry>
-    <title>【SQLZOO】Tutorials-2.SELECT from World</title>
+    <title>【SQL-SQLZOO】Tutorials-2.SELECT from World</title>
     <link href="http://a123wyn.studio/2021/02/05/sql-2/"/>
     <id>http://a123wyn.studio/2021/02/05/sql-2/</id>
     <published>2021-02-05T02:48:14.000Z</published>
-    <updated>2021-08-07T13:00:08.368Z</updated>
+    <updated>2021-10-21T05:07:12.134Z</updated>
     
     
       
@@ -570,71 +628,6 @@
     <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
     
     <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SQLZOO】Tutorials-1.SELECT name</title>
-    <link href="http://a123wyn.studio/2021/02/03/sql-1/"/>
-    <id>http://a123wyn.studio/2021/02/03/sql-1/</id>
-    <published>2021-02-03T08:18:33.000Z</published>
-    <updated>2021-06-13T10:32:51.851Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;world表：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;continent&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;&lt;tr&gt;
-&lt;td</summary>
-        
-      
-    
-    
-    
-    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
-    
-    
-    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
-    
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
-    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【Project】学生健康信息平台（微信小程序）</title>
-    <link href="http://a123wyn.studio/2021/01/08/project1/"/>
-    <id>http://a123wyn.studio/2021/01/08/project1/</id>
-    <published>2021-01-07T16:16:39.000Z</published>
-    <updated>2021-06-13T10:32:51.837Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h3 id=&quot;空间与小程序appID设置&quot;&gt;&lt;a href=&quot;#空间与小程序appID设置&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="CS" scheme="http://a123wyn.studio/categories/CS/"/>
-    
-    
-    <category term="Project" scheme="http://a123wyn.studio/tags/Project/"/>
-    
-    <category term="Mini Program" scheme="http://a123wyn.studio/tags/Mini-Program/"/>
     
   </entry>
   
