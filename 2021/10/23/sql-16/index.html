@@ -177,6 +177,69 @@
             <div class="container">
     
     
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Top of post↑</a>
+        <a onclick="go_bottom()">Bottom of post↓</a>
+        <a href="javascript:window.history.back();">Back</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
 
     
     <article class="post-wrap">
@@ -235,6 +298,29 @@
 <p>刷题单：</p>
 <p><img src="/2021/10/23/sql-16/%E5%88%B7%E9%A2%98%E5%8D%951.png" alt="image-20211023103741259"></p>
 <p><img src="/2021/10/23/sql-16/%E5%88%B7%E9%A2%98%E5%8D%952.png" alt="image-20211023103842096"></p>
+<p>刷题过程中发现leetcode好像不能通过create生成表，只能用with as生成临时表，sad= 。 =</p>
+<p>今天学习到了一个新方法！！</p>
+<h2 id="使用WITH-RECURSIVE递归生成连续变量临时表"><a href="#使用WITH-RECURSIVE递归生成连续变量临时表" class="headerlink" title="使用WITH RECURSIVE递归生成连续变量临时表"></a>使用WITH RECURSIVE递归生成连续变量临时表</h2><p>如果有需求是需要补全数据的话，也就是在原数据表中不存在但是仍需在结果表中呈现该字段的时候，可以自己制作一个连续的临时表用来补全不连续的字段</p>
+<figure class="highlight sql"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">WITH</span> <span class="keyword">RECURSIVE</span> d <span class="keyword">AS</span> (</span><br><span class="line"><span class="keyword">select</span> <span class="number">0</span> <span class="keyword">as</span> n,<span class="number">1</span> <span class="keyword">as</span> fact</span><br><span class="line"><span class="keyword">UNION</span> <span class="keyword">ALL</span></span><br><span class="line"><span class="keyword">SELECT</span> n+<span class="number">1</span>, (n+<span class="number">1</span>)*fact <span class="keyword">FROM</span> d <span class="keyword">WHERE</span> n &lt; <span class="number">7</span></span><br><span class="line">)</span><br></pre></td></tr></tbody></table></figure>
+
+<h2 id="10-23进度-amp-总结"><a href="#10-23进度-amp-总结" class="headerlink" title="10-23进度&amp;总结"></a>10-23进度&amp;总结</h2><p>目前完成了11道题，进展有点缓慢= 。 =</p>
+<p>总结了一下在调试中出现错误的原因：</p>
+<ol>
+<li>总是忘记维度，比如经常做着做着就忘记了这个度量值应该在哪个维度下统计或是join的时候要思考好久on后的条件（归根结底，脑子太笨了）</li>
+<li>去重与不去重的情况一定要想清楚</li>
+<li>一些结果为null的值没有及时做处理</li>
+<li>自连接后一定要先排除自己和自己相连的行信息</li>
+</ol>
+<p>今天的全场最佳题目：<strong>2004. The Number of Seniors and Juniors to Join the Company</strong></p>
+<p>个人认为是比较新颖的~</p>
+<p>总结一些小技巧：</p>
+<ol>
+<li>递归生成连续变量的临时表</li>
+<li>笛卡尔积生成一个全信息表，作为左表用来实现补全数据的功能</li>
+<li>针对固定范围内统计（比如三天内，三个月内等等）生成辅助列，通过join between合并后进行聚合计算；如果需要统计一共连续了多久可以用row_number打行号的方式来做</li>
+<li>可以通过if(first_value(if(xxx=a,1,0)) over(…)=1,..,..)在原表中打标记来实现在规定范围内只要出现1个a，那么该范围内所有都打上标记/接收/排除的情况</li>
+<li>排除某种情况除了可以where xx not in(select …)方法之外，还可以left join两张表（待排除/接收的为右表），筛选条件为右表同字段is null/is not null，其实接收情况直接用inner join就可以</li>
+</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -272,7 +358,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-23&nbsp;&nbsp;10:39:07</span>
+                        <span>2021-10-23&nbsp;&nbsp;22:26:14</span>
                 
                 
                     <p class="copyright-item">
