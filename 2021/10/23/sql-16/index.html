@@ -311,7 +311,7 @@
 <li>一些结果为null的值没有及时做处理</li>
 <li>自连接后一定要先排除自己和自己相连的行信息</li>
 </ol>
-<p>今天的全场最佳题目：<strong>2004. The Number of Seniors and Juniors to Join the Company</strong></p>
+<p>今天的全场最佳题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/the-number-of-seniors-and-juniors-to-join-the-company/">2004. The Number of Seniors and Juniors to Join the Company</a></p>
 <p>个人认为是比较新颖的~</p>
 <p>总结一些小技巧：</p>
 <ol>
@@ -320,6 +320,18 @@
 <li>针对固定范围内统计（比如三天内，三个月内等等）生成辅助列，通过join between合并后进行聚合计算；如果需要统计一共连续了多久可以用row_number打行号的方式来做</li>
 <li>可以通过if(first_value(if(xxx=a,1,0)) over(…)=1,..,..)在原表中打标记来实现在规定范围内只要出现1个a，那么该范围内所有都打上标记/接收/排除的情况</li>
 <li>排除某种情况除了可以where xx not in(select …)方法之外，还可以left join两张表（待排除/接收的为右表），筛选条件为右表同字段is null/is not null，其实接收情况直接用inner join就可以</li>
+</ol>
+<h2 id="10-24进度-amp-总结"><a href="#10-24进度-amp-总结" class="headerlink" title="10-24进度&amp;总结"></a>10-24进度&amp;总结</h2><p>全场最佳：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-median-given-frequency-of-numbers/">571. 给定数字的频率查询中位数</a></p>
+<p>一开始只要找总数+1/2距离各项累计数最近的即可，后来发现没有这么简单= 。 =</p>
+<p>最麻烦：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/total-sales-amount-by-year/">1384. 按年度列出销售总额</a></p>
+<p>这道题的判断逻辑花了好久才弄明白（脑子短路ing）</p>
+<p>错误的原因：</p>
+<ol>
+<li><p>窗口函数的默认rows作用范围是unbounded preceding 到 current row，这就导致使用last_value() over(order by xx)和first_value() over(order by xx desc) 的结果是不一样的，会使得last_value并不是相对整个分区而言，而是到当前行，所以在后续筛选的时候会发生错误</p>
+<p><img src="/2021/10/23/sql-16/%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B.png" alt="窗口函数示例"></p>
+</li>
+<li><p>union默认是union distinct</p>
+</li>
 </ol>
 <script>
         document.querySelectorAll('.github-emoji')
@@ -358,7 +370,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-23&nbsp;&nbsp;22:26:14</span>
+                        <span>2021-10-24&nbsp;&nbsp;22:38:59</span>
                 
                 
                     <p class="copyright-item">
