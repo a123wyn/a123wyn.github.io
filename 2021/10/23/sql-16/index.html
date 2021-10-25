@@ -327,12 +327,22 @@
 <p>这道题的判断逻辑花了好久才弄明白（脑子短路ing）</p>
 <p>错误的原因：</p>
 <ol>
-<li><p>窗口函数的默认rows作用范围是unbounded preceding 到 current row，这就导致使用last_value() over(order by xx)和first_value() over(order by xx desc) 的结果是不一样的，会使得last_value并不是相对整个分区而言，而是到当前行，所以在后续筛选的时候会发生错误</p>
-<p><img src="/2021/10/23/sql-16/%E7%AA%97%E5%8F%A3%E5%87%BD%E6%95%B0%E7%A4%BA%E4%BE%8B.png" alt="窗口函数示例"></p>
+<li><p>over(partition by a order by b) 默认rows范围是在分区a按b排序下的<strong>unbounded preceding 到 current row</strong></p>
+<p>over(partition by a) 默认rows范围是在分区a下的<strong>unbounded preceding 到 unbounded following</strong></p>
+<p>over(order by a) 默认rows范围是在b排序下的<strong>unbounded preceding 到 current row</strong></p>
+<p>这导致下列两个语句：</p>
+<p>last_value() over(order by xx)</p>
+<p>first_value() over(order by xx desc) </p>
+<p>的结果是不一样的，first_value中unbounded preceding 到 current row可以保证选到第一行，但是last_value不能保证选到最后一行，下界是到当前行</p>
 </li>
 <li><p>union默认是union distinct</p>
 </li>
 </ol>
+<h2 id="10-25进度-amp-总结"><a href="#10-25进度-amp-总结" class="headerlink" title="10-25进度&amp;总结"></a>10-25进度&amp;总结</h2><p>全场最佳：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/students-report-by-geography/">618. 学生地理信息报告</a></p>
+<p>一直在思考怎么把所有值顶上去忽略null值，最后看了评论区大佬的答案恍然大悟，解决方法是根据排序打上行号，根据行号来group，在各大洲同个排序号下的就可以放到一行</p>
+<p>掌握recursive财富密码的题目：<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/find-the-subtasks-that-did-not-execute/">1767. 寻找没有被执行的任务对</a></p>
+<p>递归的层级结构类似这样：</p>
+<p><img src="/2021/10/23/sql-16/%E9%80%92%E5%BD%92%E7%A4%BA%E6%84%8F%E5%9B%BE.jpeg" alt="递归"></p>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -370,7 +380,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-24&nbsp;&nbsp;22:38:59</span>
+                        <span>2021-10-25&nbsp;&nbsp;22:04:23</span>
                 
                 
                     <p class="copyright-item">

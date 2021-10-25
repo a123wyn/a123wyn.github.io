@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-10-24T14:38:59.012Z</updated>
+  <updated>2021-10-25T14:04:23.246Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://a123wyn.studio/2021/10/23/sql-16/"/>
     <id>http://a123wyn.studio/2021/10/23/sql-16/</id>
     <published>2021-10-23T02:35:37.000Z</published>
-    <updated>2021-10-24T14:38:59.012Z</updated>
+    <updated>2021-10-25T14:04:23.246Z</updated>
     
     
       
@@ -52,7 +52,7 @@
     <link href="http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/"/>
     <id>http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/</id>
     <published>2021-10-19T01:36:51.000Z</published>
-    <updated>2021-10-19T09:18:18.624Z</updated>
+    <updated>2021-10-20T15:52:00.019Z</updated>
     
     
       
@@ -68,9 +68,9 @@
     <category term="PM" scheme="http://a123wyn.studio/categories/PM/"/>
     
     
-    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
-    
     <category term="PM" scheme="http://a123wyn.studio/tags/PM/"/>
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
     
   </entry>
   
@@ -79,7 +79,7 @@
     <link href="http://a123wyn.studio/2021/10/11/ml-1/"/>
     <id>http://a123wyn.studio/2021/10/11/ml-1/</id>
     <published>2021-10-11T07:12:32.000Z</published>
-    <updated>2021-10-17T13:14:03.738Z</updated>
+    <updated>2021-10-17T13:15:04.079Z</updated>
     
     
       
@@ -157,11 +157,11 @@
     <category term="Business" scheme="http://a123wyn.studio/categories/Business/"/>
     
     
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
     <category term="Marketing" scheme="http://a123wyn.studio/tags/Marketing/"/>
     
     <category term="Advertising" scheme="http://a123wyn.studio/tags/Advertising/"/>
-    
-    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
     
   </entry>
   
@@ -198,7 +198,7 @@
     <link href="http://a123wyn.studio/2021/08/04/sql-15/"/>
     <id>http://a123wyn.studio/2021/08/04/sql-15/</id>
     <published>2021-08-04T08:26:14.000Z</published>
-    <updated>2021-10-21T05:13:13.872Z</updated>
+    <updated>2021-10-25T12:03:22.738Z</updated>
     
     
       
@@ -206,7 +206,7 @@
         
         
     <summary type="html">&lt;p&gt;Hive QL的那篇暂时不更2333，因为现在工作的公司不用Hive，主要使用云数据库BigQuery～&lt;/p&gt;
-&lt;h2 id=&quot;unnest-数组转行&quot;&gt;&lt;a href=&quot;#unnest-数组转行&quot; class=&quot;headerlink&quot; title=&quot;unnest</summary>
+&lt;h2 id=&quot;SQL语句执行顺序&quot;&gt;&lt;a href=&quot;#SQL语句执行顺序&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -228,7 +228,7 @@
     <link href="http://a123wyn.studio/2021/03/29/sql-14/"/>
     <id>http://a123wyn.studio/2021/03/29/sql-14/</id>
     <published>2021-03-29T07:44:25.000Z</published>
-    <updated>2021-10-21T05:13:05.959Z</updated>
+    <updated>2021-10-22T11:37:40.967Z</updated>
     
     
       
@@ -258,7 +258,7 @@
     <link href="http://a123wyn.studio/2021/03/03/sql-13/"/>
     <id>http://a123wyn.studio/2021/03/03/sql-13/</id>
     <published>2021-03-03T08:01:36.000Z</published>
-    <updated>2021-10-21T05:08:53.407Z</updated>
+    <updated>2021-10-22T11:37:40.966Z</updated>
     
     
       
@@ -275,9 +275,9 @@
     <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
     
     
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
     <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
     
     <category term="BEGTUT" scheme="http://a123wyn.studio/tags/BEGTUT/"/>
     
@@ -290,7 +290,7 @@
     <link href="http://a123wyn.studio/2021/02/18/sql-12/"/>
     <id>http://a123wyn.studio/2021/02/18/sql-12/</id>
     <published>2021-02-18T08:41:20.000Z</published>
-    <updated>2021-10-21T05:08:39.780Z</updated>
+    <updated>2021-10-22T11:37:40.966Z</updated>
     
     
       
@@ -320,7 +320,7 @@
     <link href="http://a123wyn.studio/2021/02/18/sql-11/"/>
     <id>http://a123wyn.studio/2021/02/18/sql-11/</id>
     <published>2021-02-18T02:54:08.000Z</published>
-    <updated>2021-10-21T05:08:31.828Z</updated>
+    <updated>2021-10-22T11:37:40.966Z</updated>
     
     
       
@@ -349,7 +349,7 @@
     <link href="http://a123wyn.studio/2021/02/16/sql-10/"/>
     <id>http://a123wyn.studio/2021/02/16/sql-10/</id>
     <published>2021-02-16T01:58:38.000Z</published>
-    <updated>2021-10-21T05:08:22.890Z</updated>
+    <updated>2021-10-22T11:37:40.966Z</updated>
     
     
       
@@ -378,7 +378,7 @@
     <link href="http://a123wyn.studio/2021/02/15/sql-9/"/>
     <id>http://a123wyn.studio/2021/02/15/sql-9/</id>
     <published>2021-02-15T04:08:03.000Z</published>
-    <updated>2021-10-21T05:08:15.772Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -407,7 +407,7 @@
     <link href="http://a123wyn.studio/2021/02/14/sql-8/"/>
     <id>http://a123wyn.studio/2021/02/14/sql-8/</id>
     <published>2021-02-14T06:36:22.000Z</published>
-    <updated>2021-10-21T05:07:58.079Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -436,7 +436,7 @@
     <link href="http://a123wyn.studio/2021/02/13/sql-7/"/>
     <id>http://a123wyn.studio/2021/02/13/sql-7/</id>
     <published>2021-02-13T06:17:42.000Z</published>
-    <updated>2021-10-21T05:07:50.627Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -465,7 +465,7 @@
     <link href="http://a123wyn.studio/2021/02/12/sql-6/"/>
     <id>http://a123wyn.studio/2021/02/12/sql-6/</id>
     <published>2021-02-12T06:19:23.000Z</published>
-    <updated>2021-10-21T05:07:42.569Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -494,7 +494,7 @@
     <link href="http://a123wyn.studio/2021/02/10/sql-5/"/>
     <id>http://a123wyn.studio/2021/02/10/sql-5/</id>
     <published>2021-02-10T02:59:47.000Z</published>
-    <updated>2021-10-21T05:07:35.384Z</updated>
+    <updated>2021-10-22T11:37:40.971Z</updated>
     
     
       
@@ -530,7 +530,7 @@
     <link href="http://a123wyn.studio/2021/02/08/sql-4/"/>
     <id>http://a123wyn.studio/2021/02/08/sql-4/</id>
     <published>2021-02-08T06:34:59.000Z</published>
-    <updated>2021-10-21T05:07:27.948Z</updated>
+    <updated>2021-10-22T11:37:40.970Z</updated>
     
     
       
@@ -566,7 +566,7 @@
     <link href="http://a123wyn.studio/2021/02/05/sql-3/"/>
     <id>http://a123wyn.studio/2021/02/05/sql-3/</id>
     <published>2021-02-05T04:08:45.000Z</published>
-    <updated>2021-10-21T05:07:20.107Z</updated>
+    <updated>2021-10-22T11:37:40.970Z</updated>
     
     
       
@@ -601,7 +601,7 @@
     <link href="http://a123wyn.studio/2021/02/05/sql-2/"/>
     <id>http://a123wyn.studio/2021/02/05/sql-2/</id>
     <published>2021-02-05T02:48:14.000Z</published>
-    <updated>2021-10-21T05:07:12.134Z</updated>
+    <updated>2021-10-22T11:37:40.970Z</updated>
     
     
       
