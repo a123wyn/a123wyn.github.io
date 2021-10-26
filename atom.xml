@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-10-25T14:20:47.504Z</updated>
+  <updated>2021-10-26T12:35:04.037Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【FineBI】调研文档</title>
+    <link href="http://a123wyn.studio/2021/10/26/finebi/"/>
+    <id>http://a123wyn.studio/2021/10/26/finebi/</id>
+    <published>2021-10-26T08:59:16.000Z</published>
+    <updated>2021-10-26T12:35:04.037Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;FineBI问题：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;排序问题&lt;/li&gt;
+&lt;/ol&gt;
+&lt;script&gt;
+        document.querySelectorAll(&#39;.github-emoji&#39;)
+          .forEach(el =&gt; {
+          </summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
+    
+    <category term="BI" scheme="http://a123wyn.studio/tags/BI/"/>
+    
+    <category term="FineBI" scheme="http://a123wyn.studio/tags/FineBI/"/>
+    
+  </entry>
   
   <entry>
     <title>【SQL-Leetcode】刷题记录-困难</title>
@@ -172,7 +208,7 @@
     <link href="http://a123wyn.studio/2021/08/09/tableau-1/"/>
     <id>http://a123wyn.studio/2021/08/09/tableau-1/</id>
     <published>2021-08-09T05:13:38.000Z</published>
-    <updated>2021-10-22T11:37:40.971Z</updated>
+    <updated>2021-10-26T12:35:04.037Z</updated>
     
     
       
@@ -192,6 +228,8 @@
     <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
     
     <category term="Tableau" scheme="http://a123wyn.studio/tags/Tableau/"/>
+    
+    <category term="BI" scheme="http://a123wyn.studio/tags/BI/"/>
     
   </entry>
   
@@ -581,41 +619,6 @@
 &lt;tr&gt;
 &lt;th align=&quot;center&quot;&gt;yr&lt;/th&gt;
 &lt;th align=&quot;center&quot;&gt;subject&lt;/th&gt;
-&lt;th</summary>
-        
-      
-    
-    
-    
-    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
-    
-    
-    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
-    
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
-    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SQL-SQLZOO】Tutorials-2.SELECT from World</title>
-    <link href="http://a123wyn.studio/2021/02/05/sql-2/"/>
-    <id>http://a123wyn.studio/2021/02/05/sql-2/</id>
-    <published>2021-02-05T02:48:14.000Z</published>
-    <updated>2021-10-22T11:37:40.970Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;自己做的主要是中文版，但是目前发现中英文的题目并不完全相同…有部分是摘自英文版&lt;/p&gt;
-&lt;p&gt;world表：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
 &lt;th</summary>
         
       

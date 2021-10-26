@@ -18,7 +18,7 @@
     <meta name="keywords" content="Nananan,python,Data-science,Big-data">
 
 
-<title>【Tableau】Case Studies &amp; Notes | Nananan&#39;s warehouse</title>
+<title>【FineBI】调研文档 | Nananan&#39;s warehouse</title>
 
 
 
@@ -177,74 +177,11 @@
             <div class="container">
     
     
-        <div class="post-toc">
-    <div class="tocbot-list">
-    </div>
-    <div class="tocbot-list-menu">
-        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
-        <a onclick="go_top()">Top of post↑</a>
-        <a onclick="go_bottom()">Bottom of post↓</a>
-        <a href="javascript:window.history.back();">Back</a>
-    </div>
-</div>
-
-<script>
-    document.ready(
-        function () {
-            tocbot.init({
-                tocSelector: '.tocbot-list',
-                contentSelector: '.post-content',
-                headingSelector: 'h1, h2, h3, h4, h5',
-                collapseDepth: 1,
-                orderedList: false,
-                scrollSmooth: true,
-            })
-        }
-    )
-
-    function expand_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 6,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "collapse_toc()");
-        b.innerHTML = "Collapse all"
-    }
-
-    function collapse_toc() {
-        var b = document.querySelector(".tocbot-toc-expand");
-        tocbot.init({
-            tocSelector: '.tocbot-list',
-            contentSelector: '.post-content',
-            headingSelector: 'h1, h2, h3, h4, h5',
-            collapseDepth: 1,
-            orderedList: false,
-            scrollSmooth: true,
-        });
-        b.setAttribute("onclick", "expand_toc()");
-        b.innerHTML = "Expand all"
-    }
-
-    function go_top() {
-        window.scrollTo(0, 0);
-    }
-
-    function go_bottom() {
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-</script>
-    
 
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">【Tableau】Case Studies &amp; Notes</h1>
+            <h1 class="post-title">【FineBI】调研文档</h1>
             
                 <div class="post-meta">
                     
@@ -254,10 +191,10 @@
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     
                         <span class="iconfont icon-date"></span>
-                        <a href="#">2021-08-09&nbsp;&nbsp;13:13:38</a>
+                        <a href="#">2021-10-26&nbsp;&nbsp;16:59:16</a>
                     
                     <span style='mso-tab-count:1'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    <!-- <span id="/2021/08/09/tableau-1/" class="leancloud-visitors view" data-flag-title="【Tableau】Case Studies &amp; Notes">
+                    <!-- <span id="/2021/10/26/finebi/" class="leancloud-visitors view" data-flag-title="【FineBI】调研文档">
                         <em class="post-meta-item-text">Pageviews:</em>
                         <i class="leancloud-visitors-count">loading</i>
                     </span> -->
@@ -284,9 +221,9 @@
                             
                                 <a href="/tags/Records/"># Records</a>
                             
-                                <a href="/tags/Tableau/"># Tableau</a>
-                            
                                 <a href="/tags/BI/"># BI</a>
+                            
+                                <a href="/tags/FineBI/"># FineBI</a>
                             
                     
                 </div>
@@ -294,35 +231,10 @@
         </header>
 
         <div class="post-content">
-            <p>工作过程中主要使用tableau来做可视化报表，希望尽快能熟悉起来～～</p>
-<h2 id="忽略筛选器的计算"><a href="#忽略筛选器的计算" class="headerlink" title="忽略筛选器的计算"></a>忽略筛选器的计算</h2><p>在Tableau上写的计算字段一般会根据筛选器进行实时计算，如果想忽略筛选器的限制的话，可以使用fixed方法，例如计算GMV占比，需要计算一个当天全平台GMV的值（分母）：</p>
-<figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{FIXED [Prc_Date] : SUM([Usd Total])}</span><br></pre></td></tr></tbody></table></figure>
-<p>虽然筛选器下有各个维度，但是该计算字段将实现只看当天的总GMV，在fixed后加入需要focus的维度，就可以只根据这些维度进行计算</p>
-<h2 id="实现条件格式"><a href="#实现条件格式" class="headerlink" title="实现条件格式"></a>实现条件格式</h2><p>最近想在tableau上实现类似excel里条件格式的功能，如下图：</p>
-<img src="/2021/08/09/tableau-1/效果.jpg" alt="效果" style="zoom:50%;display:inline-block">
-
-<ul>
-<li>首先需要创建计算字段，分别为&lt;0，&gt;0，=0的情况，使其返回一个字符“▼”，“▲”和“=”</li>
-<li>随后将三个计算字段添加到标签，在标签内容中，对其设置不同的颜色</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">步骤一</th>
-<th align="center">步骤二</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><img src="/2021/08/09/tableau-1/%E6%AD%A5%E9%AA%A4%E4%B8%80.png" alt="步骤一"></td>
-<td align="center"><img src="/2021/08/09/tableau-1/%E6%AD%A5%E9%AA%A4%E4%BA%8C.png" alt="步骤二"></td>
-</tr>
-</tbody></table>
-<h2 id="分析中的默认计算方式为去重计算"><a href="#分析中的默认计算方式为去重计算" class="headerlink" title="分析中的默认计算方式为去重计算"></a>分析中的默认计算方式为去重计算</h2><img src="/2021/08/09/tableau-1/参考.png" alt="效果" style="zoom:50%;display:inline-block">
-
-<p>若需要计算不去重的结果，只能新增计算字段，使用avg、median等函数来计算</p>
-<h2 id="设置参数达到筛选视图（工作簿）功能"><a href="#设置参数达到筛选视图（工作簿）功能" class="headerlink" title="设置参数达到筛选视图（工作簿）功能"></a>设置参数达到筛选视图（工作簿）功能</h2><p>通过添加参数后添加计算字段来实现，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3cf41307ebe4">参考网址</a></p>
-<h2 id="行标签重复-amp-扩展维度下进行排序"><a href="#行标签重复-amp-扩展维度下进行排序" class="headerlink" title="行标签重复&amp;扩展维度下进行排序"></a>行标签重复&amp;扩展维度下进行排序</h2><p>解决绑定维度后不能在全局范围内进行排序的问题，需要将维度合并起来，这样既实现“重复行标签”又能实现“忽略维度，度量值全局排序”的问题</p>
-<p>官方教程：<a target="_blank" rel="noopener" href="https://kb.tableau.com/articles/howto/displaying-row-labels-for-each-row?lang=zh-cn">https://kb.tableau.com/articles/howto/displaying-row-labels-for-each-row?lang=zh-cn</a></p>
+            <p>FineBI问题：</p>
+<ol>
+<li>排序问题</li>
+</ol>
 <script>
         document.querySelectorAll('.github-emoji')
           .forEach(el => {
@@ -355,7 +267,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Post Date:</span>
-                        <span>2021-08-09&nbsp;&nbsp;13:13:38</span>
+                        <span>2021-10-26&nbsp;&nbsp;16:59:16</span>
                 
                 
                     <p class="copyright-item"></p>
@@ -371,7 +283,7 @@
                 
                     <p class="copyright-item">
                         <span>Permalink:</span>
-                        <span><a href="http://a123wyn.studio/2021/08/09/tableau-1/">http://a123wyn.studio/2021/08/09/tableau-1/</a></span>
+                        <span><a href="http://a123wyn.studio/2021/10/26/finebi/">http://a123wyn.studio/2021/10/26/finebi/</a></span>
                     </p>
                 
                 <!-- 
@@ -391,9 +303,9 @@
                     
                         <a href="/tags/Records/"># Records</a>
                     
-                        <a href="/tags/Tableau/"># Tableau</a>
-                    
                         <a href="/tags/BI/"># BI</a>
+                    
+                        <a href="/tags/FineBI/"># FineBI</a>
                     
                     
                 </span>
@@ -406,10 +318,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2021/08/16/google-ads-1/">【Google Ads】展示广告系列</a>
             
-            
-                <a class="next" rel="next" href="/2021/08/04/sql-15/">【SQL-BigQuery】Case Studies & Notes(updating)</a>
+                <a class="next" rel="next" href="/2021/10/23/sql-16/">【SQL-Leetcode】刷题记录-困难</a>
             
         </section>
         
