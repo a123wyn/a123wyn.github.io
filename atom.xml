@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-10-26T12:35:04.037Z</updated>
+  <updated>2021-11-01T13:56:26.395Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://a123wyn.studio/2021/10/26/finebi/"/>
     <id>http://a123wyn.studio/2021/10/26/finebi/</id>
     <published>2021-10-26T08:59:16.000Z</published>
-    <updated>2021-10-26T12:35:04.037Z</updated>
+    <updated>2021-11-01T13:56:26.395Z</updated>
     
     
       
@@ -29,13 +29,9 @@
         
         
     <summary type="html">&lt;p&gt;FineBI问题：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;排序问题&lt;/li&gt;
-&lt;/ol&gt;
-&lt;script&gt;
-        document.querySelectorAll(&#39;.github-emoji&#39;)
-          .forEach(el =&gt; {
-          </summary>
+&lt;ol start=&quot;2&quot;&gt;
+&lt;li&gt;不能使用双引号，字符串一律使用双引号&lt;/li&gt;
+&lt;li&gt;不能使用””以及各种注释#</summary>
         
       
     
@@ -90,7 +86,7 @@
     <link href="http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/"/>
     <id>http://a123wyn.studio/2021/10/19/b-duan-he-c-duan-chan-pin-qu-bie/</id>
     <published>2021-10-19T01:36:51.000Z</published>
-    <updated>2021-10-20T15:52:00.019Z</updated>
+    <updated>2021-10-27T12:49:36.896Z</updated>
     
     
       
@@ -208,7 +204,7 @@
     <link href="http://a123wyn.studio/2021/08/09/tableau-1/"/>
     <id>http://a123wyn.studio/2021/08/09/tableau-1/</id>
     <published>2021-08-09T05:13:38.000Z</published>
-    <updated>2021-10-26T12:35:04.037Z</updated>
+    <updated>2021-11-08T12:00:34.016Z</updated>
     
     
       
@@ -216,7 +212,7 @@
         
         
     <summary type="html">&lt;p&gt;工作过程中主要使用tableau来做可视化报表，希望尽快能熟悉起来～～&lt;/p&gt;
-&lt;h2 id=&quot;忽略筛选器的计算&quot;&gt;&lt;a href=&quot;#忽略筛选器的计算&quot; class=&quot;headerlink&quot;</summary>
+&lt;h2 id=&quot;忽略筛选器的计算&quot;&gt;&lt;a href=&quot;#忽略筛选器的计算&quot; class=&quot;headerlink&quot; title=&quot;忽略筛选器的计算&quot;&gt;&lt;/a&gt;忽略筛选器的计算&lt;/h2&gt;&lt;h3</summary>
         
       
     
@@ -227,9 +223,9 @@
     
     <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
     
-    <category term="Tableau" scheme="http://a123wyn.studio/tags/Tableau/"/>
-    
     <category term="BI" scheme="http://a123wyn.studio/tags/BI/"/>
+    
+    <category term="Tableau" scheme="http://a123wyn.studio/tags/Tableau/"/>
     
   </entry>
   

@@ -284,9 +284,9 @@
                             
                                 <a href="/tags/Records/"># Records</a>
                             
-                                <a href="/tags/Tableau/"># Tableau</a>
-                            
                                 <a href="/tags/BI/"># BI</a>
+                            
+                                <a href="/tags/Tableau/"># Tableau</a>
                             
                     
                 </div>
@@ -295,9 +295,10 @@
 
         <div class="post-content">
             <p>工作过程中主要使用tableau来做可视化报表，希望尽快能熟悉起来～～</p>
-<h2 id="忽略筛选器的计算"><a href="#忽略筛选器的计算" class="headerlink" title="忽略筛选器的计算"></a>忽略筛选器的计算</h2><p>在Tableau上写的计算字段一般会根据筛选器进行实时计算，如果想忽略筛选器的限制的话，可以使用fixed方法，例如计算GMV占比，需要计算一个当天全平台GMV的值（分母）：</p>
+<h2 id="忽略筛选器的计算"><a href="#忽略筛选器的计算" class="headerlink" title="忽略筛选器的计算"></a>忽略筛选器的计算</h2><h3 id="Fixed"><a href="#Fixed" class="headerlink" title="Fixed"></a>Fixed</h3><p>在Tableau上写的计算字段一般会根据筛选器进行实时计算，如果想忽略筛选器的限制的话，可以使用fixed方法，例如计算GMV占比，需要计算一个当天全平台GMV的值（分母）：</p>
 <figure class="highlight"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{FIXED [Prc_Date] : SUM([Usd Total])}</span><br></pre></td></tr></tbody></table></figure>
 <p>虽然筛选器下有各个维度，但是该计算字段将实现只看当天的总GMV，在fixed后加入需要focus的维度，就可以只根据这些维度进行计算</p>
+<h3 id="Exclude-Include"><a href="#Exclude-Include" class="headerlink" title="Exclude/Include"></a>Exclude/Include</h3><p>如果需要创建忽略<strong>一定维度</strong>的计算字段，可以使用exclude/include</p>
 <h2 id="实现条件格式"><a href="#实现条件格式" class="headerlink" title="实现条件格式"></a>实现条件格式</h2><p>最近想在tableau上实现类似excel里条件格式的功能，如下图：</p>
 <img src="/2021/08/09/tableau-1/效果.jpg" alt="效果" style="zoom:50%;display:inline-block">
 
@@ -360,7 +361,7 @@
                 
                     <p class="copyright-item"></p>
                         <span>Update Date:</span>
-                        <span>2021-10-26&nbsp;&nbsp;20:35:04</span>
+                        <span>2021-11-08&nbsp;&nbsp;20:00:34</span>
                 
                 
                     <p class="copyright-item">
@@ -391,9 +392,9 @@
                     
                         <a href="/tags/Records/"># Records</a>
                     
-                        <a href="/tags/Tableau/"># Tableau</a>
-                    
                         <a href="/tags/BI/"># BI</a>
+                    
+                        <a href="/tags/Tableau/"># Tableau</a>
                     
                     
                 </span>
