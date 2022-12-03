@@ -6,7 +6,7 @@
   <link href="http://a123wyn.studio/atom.xml" rel="self"/>
   
   <link href="http://a123wyn.studio/"/>
-  <updated>2021-11-01T13:56:26.395Z</updated>
+  <updated>2022-12-03T15:41:40.790Z</updated>
   <id>http://a123wyn.studio/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【Python】Pandas Notes</title>
+    <link href="http://a123wyn.studio/2022/12/01/python-1/"/>
+    <id>http://a123wyn.studio/2022/12/01/python-1/</id>
+    <published>2022-12-01T06:46:46.000Z</published>
+    <updated>2022-12-03T15:41:40.790Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;stack and unstack&lt;/strong&gt;&lt;br&gt;默认level参数为最内层索引，stack是列名转行名，unstack是行名转列名&lt;br&gt;groupby聚合后也可以用这个方法，实现生成类似数据透视表的功能&lt;/p&gt;
+&lt;script&gt;
+      </summary>
+        
+      
+    
+    
+    
+    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
+    
+    
+    <category term="Notes" scheme="http://a123wyn.studio/tags/Notes/"/>
+    
+    <category term="Python" scheme="http://a123wyn.studio/tags/Python/"/>
+    
+  </entry>
   
   <entry>
     <title>【FineBI】调研文档</title>
@@ -580,41 +609,6 @@
 &lt;th align=&quot;center&quot;&gt;name&lt;/th&gt;
 &lt;th align=&quot;center&quot;&gt;continent&lt;/th&gt;
 &lt;th align=&quot;center&quot;&gt;area&lt;/th&gt;
-&lt;th</summary>
-        
-      
-    
-    
-    
-    <category term="DS" scheme="http://a123wyn.studio/categories/DS/"/>
-    
-    
-    <category term="Records" scheme="http://a123wyn.studio/tags/Records/"/>
-    
-    <category term="SQL" scheme="http://a123wyn.studio/tags/SQL/"/>
-    
-    <category term="SQLZOO" scheme="http://a123wyn.studio/tags/SQLZOO/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>【SQL-SQLZOO】Tutorials-3.SELECT from Nobel</title>
-    <link href="http://a123wyn.studio/2021/02/05/sql-3/"/>
-    <id>http://a123wyn.studio/2021/02/05/sql-3/</id>
-    <published>2021-02-05T04:08:45.000Z</published>
-    <updated>2021-10-22T11:37:40.970Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;nobel表：&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;center&quot;&gt;yr&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;subject&lt;/th&gt;
 &lt;th</summary>
         
       
